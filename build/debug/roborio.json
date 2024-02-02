@@ -1,9 +1,0 @@
-[
-  {
-    "type": "java",
-    "name": "frcJava",
-    "port": 8349,
-    "target": "10.86.4.2",
-    "project": "2024Main_drivetrain"
-  }
-]
