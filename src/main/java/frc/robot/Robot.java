@@ -14,6 +14,8 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 
+import frc.Constants;
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -22,15 +24,8 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public class Robot extends TimedRobot {
   private static final String CANBUS_NAME = "rio";
-  private final TalonFX leftLeader = new TalonFX(3, CANBUS_NAME);
-  private final TalonFX leftFollower = new TalonFX(4, CANBUS_NAME);
-  private final TalonFX rightLeader = new TalonFX(1, CANBUS_NAME);
-  private final TalonFX rightFollower = new TalonFX(2, CANBUS_NAME);
+  
 
-  private final DutyCycleOut leftOut = new DutyCycleOut(0);
-  private final DutyCycleOut rightOut = new DutyCycleOut(0);
-
-  private final XboxController joystick = new XboxController(0);
 
   private int printCount = 0;
 
@@ -48,22 +43,22 @@ public class Robot extends TimedRobot {
     leftConfiguration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
     rightConfiguration.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
-    leftLeader.getConfigurator().apply(leftConfiguration);
-    leftFollower.getConfigurator().apply(leftConfiguration);
-    rightLeader.getConfigurator().apply(rightConfiguration);
-    rightFollower.getConfigurator().apply(rightConfiguration);
+    Constants.leftLeader.getConfigurator().apply(leftConfiguration);
+    Constants.leftFollower.getConfigurator().apply(leftConfiguration);
+    Constants.rightLeader.getConfigurator().apply(rightConfiguration);
+    Constants.rightFollower.getConfigurator().apply(rightConfiguration);
 
     /* Set up followers to follow leaders */
-    leftFollower.setControl(new Follower(leftLeader.getDeviceID(), false));
-    rightFollower.setControl(new Follower(rightLeader.getDeviceID(), false));
+    Constants.leftFollower.setControl(new Follower(Constants.leftLeader.getDeviceID(), false));
+    Constants.rightFollower.setControl(new Follower(Constants.rightLeader.getDeviceID(), false));
   
-    leftLeader.setSafetyEnabled(true);
-    rightLeader.setSafetyEnabled(true);
+    Constants.leftLeader.setSafetyEnabled(true);
+    Constants.rightLeader.setSafetyEnabled(true);
 
     /* Currently in simulation, we do not support FOC, so disable it while simulating */
     if (Utils.isSimulation()){
-      leftOut.EnableFOC = false;
-      rightOut.EnableFOC = false;
+      Constants.leftOut.EnableFOC = false;
+      Constants.rightOut.EnableFOC = false;
     }
   }
 
@@ -71,10 +66,10 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     if (++printCount >= 10) {
       printCount = 0;
-      System.out.println("Left out: " + leftLeader.get());
-      System.out.println("Right out: " + rightLeader.get());
-      System.out.println("Left Pos: " + leftLeader.getPosition());
-      System.out.println("Right Pos: " + rightLeader.getPosition());
+      System.out.println("Left out: " + Constants.leftLeader.get());
+      System.out.println("Right out: " + Constants.rightLeader.get());
+      System.out.println("Left Pos: " + Constants.leftLeader.getPosition());
+      System.out.println("Right Pos: " + Constants.rightLeader.getPosition());
     }
   }
 
@@ -91,18 +86,41 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
-    //double fwd = -joystick.getLeftY();
-    //double rot = joystick.getRightX();
-    double fwd = -joystick.getRawAxis(5);
-    double rot = joystick.getRawAxis(0);
+    //code from joystic for drivetrain
+    double fwd = -Constants.joystick.getY();
+    double rot;
+    double rot1 = Constants.joystick.getX();
+    double rot2 = Constants.joystick.getZ()*1.5;
+    if (rot2 > 1){
+      rot2 = 1;
+    } else if (rot2 < -1){
+      rot2 = -1;
+    }
+    //gets either the bigger of twist or sideways
+    if (Math.abs(rot1) >= Math.abs(rot2)){
+      rot = rot1;
+    } else {
+      rot = rot2;
+    }
+    //dead zone
+    if (rot < 0.08 && rot > -0.08){
+      rot = 0;
+    }
+    if (fwd < 0.08 && fwd > -0.08){
+      fwd = 0;
+    }
+
+    //Code from controller for drivertain
+    //double fwd = -Constants.joystick.getRawAxis(Constants.FOWARDCONTROL);
+    //double rot = Constants.joystick.getRawAxis(Constants.TURNCONTROL);
 
     /* Set output to control frames */
-    leftOut.Output = fwd + rot;
-    rightOut.Output = fwd - rot;
+    Constants.leftOut.Output = fwd + rot;
+    Constants.rightOut.Output = fwd - rot;
     /* And set them to the motors */
-    if (!joystick.getAButton()) {
-      leftLeader.setControl(leftOut);
-      rightLeader.setControl(rightOut);
+    if (!Constants.joystick.getRawButtonPressed(2)/*getAButton()*/) {
+      Constants.leftLeader.setControl(Constants.leftOut);
+      Constants.rightLeader.setControl(Constants.rightOut);
     }
   }
 
@@ -112,10 +130,10 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     /* Zero out controls so we aren't just relying on the enable frame */
-    leftOut.Output = 0;
-    rightOut.Output = 0;
-    leftLeader.setControl(leftOut);
-    rightLeader.setControl(rightOut);
+    Constants.leftOut.Output = 0;
+    Constants.rightOut.Output = 0;
+    Constants.leftLeader.setControl(Constants.leftOut);
+    Constants.rightLeader.setControl(Constants.rightOut);
   }
 
   @Override
