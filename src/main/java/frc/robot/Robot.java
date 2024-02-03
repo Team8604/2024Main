@@ -14,7 +14,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 
-import frc.Constants;
+import frc.robot.Constants;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -33,33 +33,12 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  private RobotContainer robotContainer;
+
   @Override
   public void robotInit() {
-    /* Configure the devices */
-    var leftConfiguration = new TalonFXConfiguration();
-    var rightConfiguration = new TalonFXConfiguration();
+    robotContainer = new RobotContainer();
 
-    /* User can optionally change the configs or leave it alone to perform a factory default */
-    leftConfiguration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-    rightConfiguration.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-
-    Constants.leftLeader.getConfigurator().apply(leftConfiguration);
-    Constants.leftFollower.getConfigurator().apply(leftConfiguration);
-    Constants.rightLeader.getConfigurator().apply(rightConfiguration);
-    Constants.rightFollower.getConfigurator().apply(rightConfiguration);
-
-    /* Set up followers to follow leaders */
-    Constants.leftFollower.setControl(new Follower(Constants.leftLeader.getDeviceID(), false));
-    Constants.rightFollower.setControl(new Follower(Constants.rightLeader.getDeviceID(), false));
-  
-    Constants.leftLeader.setSafetyEnabled(true);
-    Constants.rightLeader.setSafetyEnabled(true);
-
-    /* Currently in simulation, we do not support FOC, so disable it while simulating */
-    if (Utils.isSimulation()){
-      Constants.leftOut.EnableFOC = false;
-      Constants.rightOut.EnableFOC = false;
-    }
   }
 
   @Override

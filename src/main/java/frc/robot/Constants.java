@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc;
+package frc.robot;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -36,7 +36,7 @@ public final class Constants {
     //public static final XboxController joystick = new XboxController(0);
     public static Joystick joystick = new Joystick(0);
 
-    //nums for driving with XboxController
+    //nums for driving with XboxController deleate once flight stick arrives
     //public static final int FOWARDCONTROL = 5;
     //public static final int TURNCONTROL = 0;
     
