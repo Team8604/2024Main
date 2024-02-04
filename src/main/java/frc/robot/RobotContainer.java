@@ -6,13 +6,15 @@ package frc.robot;
 
 import frc.robot.Constants;
 import frc.robot.Subsystems.Drivetrain;
-import frc.robot.Subsystems.IntakeShooter;
+import frc.robot.Subsystems.Intake;
+import frc.robot.Subsystems.Shooter;
 
 public class RobotContainer {
     public static Drivetrain drivetrain = new Drivetrain();
-    public static IntakeShooter intakeShooter = new IntakeShooter();
+    public static Intake intake = new Intake();
+    public static Shooter shooter = new Shooter();
 
     public RobotContainer(){
-        
+
     }
 }

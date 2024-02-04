@@ -5,10 +5,4 @@
 package frc.robot.Subsystems;
 
 /** Add your docs here. */
-public class IntakeShooter {
-    public IntakeShooter(){
-        //add code to control the intake and shooter
-        
-
-    }
-}
+public class Shooter {}

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 
 import frc.robot.Constants;
+import frc.robot.Subsystems.Intake;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -66,10 +67,10 @@ public class Robot extends TimedRobot {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystic for drivetrain
-    double fwd = -Constants.joystick.getY();
+    double fwd = -Constants.driverJoystick.getY();
     double rot;
-    double rot1 = Constants.joystick.getX();
-    double rot2 = Constants.joystick.getZ()*1.5;
+    double rot1 = Constants.driverJoystick.getX();
+    double rot2 = Constants.driverJoystick.getZ()*1.5;
     if (rot2 > 1){
       rot2 = 1;
     } else if (rot2 < -1){
@@ -97,9 +98,25 @@ public class Robot extends TimedRobot {
     Constants.leftOut.Output = fwd + rot;
     Constants.rightOut.Output = fwd - rot;
     /* And set them to the motors */
-    if (!Constants.joystick.getRawButtonPressed(2)/*getAButton()*/) {
+    if (!Constants.driverJoystick.getRawButtonPressed(2)/*getAButton()*/) {
       Constants.leftLeader.setControl(Constants.leftOut);
       Constants.rightLeader.setControl(Constants.rightOut);
+    }
+
+    //intake and shooter control
+    boolean intakeFwd = Constants.operator.getAButton();
+    boolean intakeBwd = Constants.operator.getYButton();
+    boolean shooterSpin = Constants.operator.getBButton();
+
+    if (intakeFwd=true){
+      //spin intake motor foward
+      
+    } else if (intakeBwd=true) {
+      //spin intake motor backwards (gets rid of jamed note)
+
+    } else {
+      //set intake motor to stop
+
     }
   }
 
