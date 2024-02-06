@@ -70,13 +70,16 @@ public class Robot extends TimedRobot {
     double fwd = -Constants.driverJoystick.getY();
     double rot;
     double rot1 = Constants.driverJoystick.getX();
-    double rot2 = Constants.driverJoystick.getZ()*1.5;
+    double rot2 = Constants.driverJoystick.getZ()*1.2;
     if (rot2 > 1){
       rot2 = 1;
     } else if (rot2 < -1){
       rot2 = -1;
     }
     //gets either the bigger of twist or sideways
+    if (rot2 < 0.1){
+      rot2=0;
+    }
     if (Math.abs(rot1) >= Math.abs(rot2)){
       rot = rot1;
     } else {
@@ -89,7 +92,9 @@ public class Robot extends TimedRobot {
     if (fwd < 0.08 && fwd > -0.08){
       fwd = 0;
     }
-
+    //sets drivetrain motors to 25% speed
+    fwd *=0.25;
+    rot *=0.25;
     //Code from controller for drivertain
     //double fwd = -Constants.joystick.getRawAxis(Constants.FOWARDCONTROL);
     //double rot = Constants.joystick.getRawAxis(Constants.TURNCONTROL);
@@ -108,10 +113,10 @@ public class Robot extends TimedRobot {
     boolean intakeBwd = Constants.operator.getYButton();
     boolean shooterSpin = Constants.operator.getBButton();
 
-    if (intakeFwd=true){
+    if (intakeFwd){
       //spin intake motor foward
       
-    } else if (intakeBwd=true) {
+    } else if (intakeBwd) {
       //spin intake motor backwards (gets rid of jamed note)
 
     } else {

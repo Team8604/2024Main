@@ -111,6 +111,9 @@ public class Intake {
        *  com.revrobotics.CANSparkMax.ControlType.kPosition
        *  com.revrobotics.CANSparkMax.ControlType.kVelocity
        *  com.revrobotics.CANSparkMax.ControlType.kVoltage
+       * 
+       * 
+       * 
        */
       m_pidController.setReference(rotations, CANSparkMax.ControlType.kPosition);
       

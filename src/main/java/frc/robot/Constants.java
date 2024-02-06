@@ -34,7 +34,7 @@ public final class Constants {
 
     //controls
     public static final XboxController operator = new XboxController(1);
-    public static Joystick driverJoystick = new Joystick(0);
+    public static final Joystick driverJoystick = new Joystick(0);
 
     //nums for driving with XboxController deleate once flight stick arrives
     //public static final int FOWARDCONTROL = 5;
