@@ -11,8 +11,8 @@ import frc.robot.Subsystems.Shooter;
 
 public class RobotContainer {
     public static Drivetrain drivetrain = new Drivetrain();
-    public static Intake intake = new Intake();
-    public static Shooter shooter = new Shooter();
+    public Intake intake = new Intake();
+    public Shooter shooter = new Shooter();
 
     public RobotContainer(){
 

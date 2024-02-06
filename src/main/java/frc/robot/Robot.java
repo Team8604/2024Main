@@ -10,12 +10,15 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.Subsystems.Intake;
+import frc.robot.Subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -71,6 +74,9 @@ public class Robot extends TimedRobot {
     double rot;
     double rot1 = Constants.driverJoystick.getX();
     double rot2 = Constants.driverJoystick.getZ()*1.2;
+    SparkPIDController m_pidController;
+    m_pidController = Constants.intake.getPIDController();
+
     if (rot2 > 1){
       rot2 = 1;
     } else if (rot2 < -1){
@@ -107,22 +113,44 @@ public class Robot extends TimedRobot {
       Constants.leftLeader.setControl(Constants.leftOut);
       Constants.rightLeader.setControl(Constants.rightOut);
     }
+    
+      //intake control
+      boolean intakeFwd = Constants.operator.getAButton();
+      boolean intakeBwd = Constants.operator.getBButton();
+      //shooter conrol
+      boolean shooterFwd = Constants.operator.getXButton();
+      boolean shooterBwd = Constants.operator.getYButton();
+  
+      //intake
+      if (intakeFwd){
+        //spin intake motor foward
+        robotContainer.intake.setRotations(0.5);
+        System.out.println("Intake set to 0.5");
+      } else if (intakeBwd) {
+        //spin intake motor backwards (gets rid of jamed note)
+        robotContainer.intake.setRotations(-0.5);
+        System.out.println("Intake set to -0.5");
+      } else {
+        //set intake motor to stop
+        robotContainer.intake.setRotations(0);
+        System.out.println("Intake set to 0");
+      }
 
-    //intake and shooter control
-    boolean intakeFwd = Constants.operator.getAButton();
-    boolean intakeBwd = Constants.operator.getYButton();
-    boolean shooterSpin = Constants.operator.getBButton();
-
-    if (intakeFwd){
-      //spin intake motor foward
-      
-    } else if (intakeBwd) {
-      //spin intake motor backwards (gets rid of jamed note)
-
-    } else {
-      //set intake motor to stop
-
-    }
+      //shooter
+      if (shooterFwd){
+        //spin shooter motor foward
+        robotContainer.shooter.setRotations(0.5);
+        System.out.println("Shooter set to 0.5");
+      } else if (shooterBwd) {
+        //spin shooter motor backwards (gets rid of jamed note)
+        robotContainer.shooter.setRotations(-0.5);
+        System.out.println("Shooter set to -0.5");
+      } else {
+        //set shooter motor to stop
+        robotContainer.shooter.setRotations(0);
+        System.out.println("Shooter set to 0");
+      }
+    
   }
 
   @Override
@@ -135,6 +163,11 @@ public class Robot extends TimedRobot {
     Constants.rightOut.Output = 0;
     Constants.leftLeader.setControl(Constants.leftOut);
     Constants.rightLeader.setControl(Constants.rightOut);
+    Constants.intake.sesetReference(0, CANSparkMax.ControlType.kVelocity);
+
+    robotContainer.intake.setRotations(0);
+    robotContainer.shooter.setRotations(0);
+
   }
 
   @Override

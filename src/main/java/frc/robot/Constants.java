@@ -6,10 +6,16 @@ package frc.robot;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
+
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 
 /** Add your docs here. */
@@ -23,6 +29,8 @@ public final class Constants {
   
     public static final DutyCycleOut leftOut = new DutyCycleOut(0);
     public static final DutyCycleOut rightOut = new DutyCycleOut(0);
+    public static final CANSparkMax intake = new CANSparkMax(5, MotorType.kBrushless);
+
   
     //percents for different drivemodes
     //needs to be incorpritated

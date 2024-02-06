@@ -12,6 +12,7 @@ package frc.robot.Subsystems;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -22,6 +23,17 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 /** Add your docs here. */
 public class Intake {
+
+  public double rotations = 0;
+
+  public double getRotations(){
+    return rotations;
+  }
+
+  public void setRotations(double r){
+    rotations = r;
+  }
+
     public Intake(){
         int deviceID = 5;//5 for the intake 6 for shooter
         CANSparkMax m_motor;
@@ -31,20 +43,20 @@ public class Intake {
         
         // initialize motor
       m_motor = new CANSparkMax(deviceID, MotorType.kBrushless);
-
+         m_pidController = m_motor.getPIDController();
       /**
        * The restoreFactoryDefaults method can be used to reset the configuration parameters
        * in the SPARK MAX to their factory default state. If no argument is passed, these
        * parameters will not persist between power cycles
        */
-      m_motor.restoreFactoryDefaults();
+      // m_motor.restoreFactoryDefaults();
 
       /**
        * In order to use PID functionality for a controller, a SparkPIDController object
        * is constructed by calling the getPIDController() method on an existing
        * CANSparkMax object
        */
-      m_pidController = m_motor.getPIDController();
+      
 
       // Encoder object created to display position values
       //m_encoder = m_motor.getEncoder();
@@ -84,7 +96,7 @@ public class Intake {
       double ff = SmartDashboard.getNumber("Feed Forward", 0);
       double max = SmartDashboard.getNumber("Max Output", 0);
       double min = SmartDashboard.getNumber("Min Output", 0);
-      double rotations = SmartDashboard.getNumber("Set Rotations", 0);
+      rotations = SmartDashboard.getNumber("Set Rotations", 0);
 
 
       // if PID coefficients on SmartDashboard have changed, write new values to controller
@@ -115,9 +127,9 @@ public class Intake {
        * 
        * 
        */
-      m_pidController.setReference(rotations, CANSparkMax.ControlType.kPosition);
       
-      SmartDashboard.putNumber("SetPoint", rotations);
-      //SmartDashboard.putNumber("ProcessVariable", m_encoder.getPosition());
-    }
+    //m_pidController.setReference(rotations, CANSparkMax.ControlType.kVelocity);
+    SmartDashboard.putNumber("SetPoint", rotations);
+    //SmartDashboard.putNumber("ProcessVariable", m_encoder.getPosition());
+  }
 }
