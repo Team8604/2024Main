@@ -4,50 +4,12 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.revrobotics.CANSparkMax;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
-
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-
-
 /** Add your docs here. */
 public final class Constants {
-    //drivetrain 
-    public static final String CANBUS_NAME = "rio";
-    public static final TalonFX leftLeader = new TalonFX(3, CANBUS_NAME);
-    public static final TalonFX leftFollower = new TalonFX(4, CANBUS_NAME);
-    public static final TalonFX rightLeader = new TalonFX(1, CANBUS_NAME);
-    public static final TalonFX rightFollower = new TalonFX(2, CANBUS_NAME);
-  
-    public static final DutyCycleOut leftOut = new DutyCycleOut(0);
-    public static final DutyCycleOut rightOut = new DutyCycleOut(0);
-    public static final CANSparkMax intake = new CANSparkMax(5, MotorType.kBrushless);
-
-  
-    //percents for different drivemodes
-    //needs to be incorpritated
-    //when certain button is pressed movenment will be multiplied by percent
-    //public final double NORMALSPEEDPERCENT = 0.7; //adjust - normal speed lowered to prevent slamming and further issues
-    //public final double SLOWMODESPEEDPERCENT = 0.4; //adjust for nessary speed
-    //public final double FASTMODESPEEDPERCENT = 1.0; //100% of possible power applied to wheeles
-
-
     //controls
     public static final XboxController operator = new XboxController(1);
     public static final Joystick driverJoystick = new Joystick(0);
-
-    //nums for driving with XboxController deleate once flight stick arrives
-    //public static final int FOWARDCONTROL = 5;
-    //public static final int TURNCONTROL = 0;
-    
-    //public static final int FASTMODE;//add value that goes with button on controller
-    //public static final int SLOWMODE;//add value that goes with button on controller
 }

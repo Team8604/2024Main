@@ -49,10 +49,10 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     if (++printCount >= 10) {
       printCount = 0;
-      System.out.println("Left out: " + Constants.leftLeader.get());
-      System.out.println("Right out: " + Constants.rightLeader.get());
-      System.out.println("Left Pos: " + Constants.leftLeader.getPosition());
-      System.out.println("Right Pos: " + Constants.rightLeader.getPosition());
+      System.out.println("Left out: " + RobotContainer.leftLeader.get());
+      System.out.println("Right out: " + RobotContainer.rightLeader.get());
+      System.out.println("Left Pos: " + RobotContainer.leftLeader.getPosition());
+      System.out.println("Right Pos: " + RobotContainer.rightLeader.getPosition());
     }
   }
 
@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
     double rot1 = Constants.driverJoystick.getX();
     double rot2 = Constants.driverJoystick.getZ()*1.2;
     SparkPIDController m_pidController;
-    m_pidController = Constants.intake.getPIDController();
+    m_pidController = robotContainer.intake.getPIDController();
 
     if (rot2 > 1){
       rot2 = 1;
@@ -106,12 +106,12 @@ public class Robot extends TimedRobot {
     //double rot = Constants.joystick.getRawAxis(Constants.TURNCONTROL);
 
     /* Set output to control frames */
-    Constants.leftOut.Output = fwd + rot;
-    Constants.rightOut.Output = fwd - rot;
+    RobotContainer.leftOut.Output = fwd + rot;
+    RobotContainer.rightOut.Output = fwd - rot;
     /* And set them to the motors */
     if (!Constants.driverJoystick.getRawButtonPressed(2)/*getAButton()*/) {
-      Constants.leftLeader.setControl(Constants.leftOut);
-      Constants.rightLeader.setControl(Constants.rightOut);
+      RobotContainer.leftLeader.setControl(RobotContainer.leftOut);
+      RobotContainer.rightLeader.setControl(RobotContainer.rightOut);
     }
     
       //intake control
@@ -159,13 +159,15 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     /* Zero out controls so we aren't just relying on the enable frame */
-    Constants.leftOut.Output = 0;
-    Constants.rightOut.Output = 0;
-    Constants.leftLeader.setControl(Constants.leftOut);
-    Constants.rightLeader.setControl(Constants.rightOut);
-    Constants.intake.sesetReference(0, CANSparkMax.ControlType.kVelocity);
-
+    //drivetrian
+    RobotContainer.leftOut.Output = 0;
+    RobotContainer.rightOut.Output = 0;
+    RobotContainer.leftLeader.setControl(RobotContainer.leftOut);
+    RobotContainer.rightLeader.setControl(RobotContainer.rightOut);
+    //intake
+    //m_pidController.setReference(0, CANSparkMax.ControlType.kVelocity);
     robotContainer.intake.setRotations(0);
+    //shooter
     robotContainer.shooter.setRotations(0);
 
   }

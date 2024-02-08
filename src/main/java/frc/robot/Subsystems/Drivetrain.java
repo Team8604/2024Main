@@ -10,6 +10,7 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 /** Add your docs here. */
 public class Drivetrain {
@@ -22,22 +23,22 @@ public class Drivetrain {
         leftConfiguration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         rightConfiguration.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
-        Constants.leftLeader.getConfigurator().apply(leftConfiguration);
-        Constants.leftFollower.getConfigurator().apply(leftConfiguration);
-        Constants.rightLeader.getConfigurator().apply(rightConfiguration);
-        Constants.rightFollower.getConfigurator().apply(rightConfiguration);
+        RobotContainer.leftLeader.getConfigurator().apply(leftConfiguration);
+        RobotContainer.leftFollower.getConfigurator().apply(leftConfiguration);
+        RobotContainer.rightLeader.getConfigurator().apply(rightConfiguration);
+        RobotContainer.rightFollower.getConfigurator().apply(rightConfiguration);
 
         /* Set up followers to follow leaders */
-        Constants.leftFollower.setControl(new Follower(Constants.leftLeader.getDeviceID(), false));
-        Constants.rightFollower.setControl(new Follower(Constants.rightLeader.getDeviceID(), false));
+        RobotContainer.leftFollower.setControl(new Follower(RobotContainer.leftLeader.getDeviceID(), false));
+        RobotContainer.rightFollower.setControl(new Follower(RobotContainer.rightLeader.getDeviceID(), false));
     
-        Constants.leftLeader.setSafetyEnabled(true);
-        Constants.rightLeader.setSafetyEnabled(true);
+        RobotContainer.leftLeader.setSafetyEnabled(true);
+        RobotContainer.rightLeader.setSafetyEnabled(true);
 
         /* Currently in simulation, we do not support FOC, so disable it while simulating */
         if (Utils.isSimulation()){
-        Constants.leftOut.EnableFOC = false;
-        Constants.rightOut.EnableFOC = false;
+        RobotContainer.leftOut.EnableFOC = false;
+        RobotContainer.rightOut.EnableFOC = false;
         }
 
     }

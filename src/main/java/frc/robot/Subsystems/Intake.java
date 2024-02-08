@@ -13,6 +13,7 @@ package frc.robot.Subsystems;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -35,15 +36,13 @@ public class Intake {
   }
 
     public Intake(){
-        int deviceID = 5;//5 for the intake 6 for shooter
-        CANSparkMax m_motor;
+        //int deviceID = 5;//5 for the intake 6 for shooter
         SparkPIDController m_pidController;
         //RelativeEncoder m_encoder;
         double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
         
         // initialize motor
-      m_motor = new CANSparkMax(deviceID, MotorType.kBrushless);
-         m_pidController = m_motor.getPIDController();
+         m_pidController = RobotContainer.intakemotor.getPIDController();
       /**
        * The restoreFactoryDefaults method can be used to reset the configuration parameters
        * in the SPARK MAX to their factory default state. If no argument is passed, these

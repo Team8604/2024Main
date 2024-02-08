@@ -13,6 +13,7 @@ package frc.robot.Subsystems;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -35,14 +36,12 @@ public class Shooter {
   }
 
     public Shooter(){
-        int deviceID = 6;//5 for the intake 6 for shooter
-        CANSparkMax m_motor;
+        //int deviceID = 6;//5 for the intake 6 for shooter
         SparkPIDController m_pidController;
         //RelativeEncoder m_encoder;
         double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
         
         // initialize motor
-      m_motor = new CANSparkMax(deviceID, MotorType.kBrushless);
 
       /**
        * The restoreFactoryDefaults method can be used to reset the configuration parameters
@@ -56,7 +55,7 @@ public class Shooter {
        * is constructed by calling the getPIDController() method on an existing
        * CANSparkMax object
        */
-      m_pidController = m_motor.getPIDController();
+      m_pidController = RobotContainer.shootermotor.getPIDController();
 
       // Encoder object created to display position values
       //m_encoder = m_motor.getEncoder();
