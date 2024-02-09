@@ -61,21 +61,21 @@ public class Shooter {
 
 
       // set PID coefficients
-      m_pidController.setP(kShooterP);
-      m_pidController.setI(kShooterI);
-      m_pidController.setD(kShooterD);
-      m_pidController.setIZone(kShooterIz);
-      m_pidController.setFF(kShooterFF);
-      m_pidController.setOutputRange(kShooterMinOutput, kShooterMaxOutput);
+      m_pidController.setP(Constants.kShooterP);
+      m_pidController.setI(Constants.kShooterI);
+      m_pidController.setD(Constants.kShooterD);
+      m_pidController.setIZone(Constants.kShooterIz);
+      m_pidController.setFF(Constants.kShooterFF);
+      m_pidController.setOutputRange(Constants.kShooterMinOutput, Constants.kShooterMaxOutput);
 
       // display PID coefficients on SmartDashboard
-      SmartDashboard.putNumber("P Gain", kShooterP);
-      SmartDashboard.putNumber("I Gain", kShooterI);
-      SmartDashboard.putNumber("D Gain", kShooterD);
-      SmartDashboard.putNumber("I Zone", kShooterIz);
-      SmartDashboard.putNumber("Feed Forward", kShooterFF);
-      SmartDashboard.putNumber("Max Output", kShooterMaxOutput);
-      SmartDashboard.putNumber("Min Output", kShooterMinOutput);
+      SmartDashboard.putNumber("P Gain", Constants.kShooterP);
+      SmartDashboard.putNumber("I Gain", Constants.kShooterI);
+      SmartDashboard.putNumber("D Gain", Constants.kShooterD);
+      SmartDashboard.putNumber("I Zone", Constants.kShooterIz);
+      SmartDashboard.putNumber("Feed Forward", Constants.kShooterFF);
+      SmartDashboard.putNumber("Max Output", Constants.kShooterMaxOutput);
+      SmartDashboard.putNumber("Min Output", Constants.kShooterMinOutput);
       SmartDashboard.putNumber("Set Rotations", 0);
 
       // read PID coefficients from SmartDashboard
@@ -90,14 +90,14 @@ public class Shooter {
 
 
       // if PID coefficients on SmartDashboard have changed, write new values to controller
-      if((p != kShooterP)) { m_pidController.setP(p); kShooterP = p; }
-      if((i != kShooterI)) { m_pidController.setI(i); kShooterI = i; }
-      if((d != kShooterD)) { m_pidController.setD(d); kShooterD = d; }
-      if((iz != kShooterIz)) { m_pidController.setIZone(iz); kShooterIz = iz; }
-      if((ff != kShooterFF)) { m_pidController.setFF(ff); kShooterFF = ff; }
-      if((max != kShooterMaxOutput) || (min != kShooterMinOutput)) { 
+      if((p != Constants.kShooterP)) { m_pidController.setP(p); Constants.kShooterP = p; }
+      if((i != Constants.kShooterI)) { m_pidController.setI(i); Constants.kShooterI = i; }
+      if((d != Constants.kShooterD)) { m_pidController.setD(d); Constants.kShooterD = d; }
+      if((iz != Constants.kShooterIz)) { m_pidController.setIZone(iz); Constants.kShooterIz = iz; }
+      if((ff != Constants.kShooterFF)) { m_pidController.setFF(ff); Constants.kShooterFF = ff; }
+      if((max != Constants.kShooterMaxOutput) || (min != Constants.kShooterMinOutput)) { 
         m_pidController.setOutputRange(min, max); 
-        kShooterMinOutput = min; kShooterMaxOutput = max; 
+        Constants.kShooterMinOutput = min; Constants.kShooterMaxOutput = max; 
       }
 
       /**
