@@ -19,16 +19,16 @@ import frc.robot.Subsystems.Shooter;
 public class RobotContainer {
     //drivetrain 
     public static final String CANBUS_NAME = "rio";
-    public static final TalonFX leftLeader = new TalonFX(3, CANBUS_NAME);
-    public static final TalonFX leftFollower = new TalonFX(4, CANBUS_NAME);
-    public static final TalonFX rightLeader = new TalonFX(1, CANBUS_NAME);
-    public static final TalonFX rightFollower = new TalonFX(2, CANBUS_NAME);
+    public static final TalonFX leftLeader = new TalonFX(Constants.kLeftLeader, CANBUS_NAME);
+    public static final TalonFX leftFollower = new TalonFX(Constants.kLeftFollower, CANBUS_NAME);
+    public static final TalonFX rightLeader = new TalonFX(Constants.kRightLeader, CANBUS_NAME);
+    public static final TalonFX rightFollower = new TalonFX(Constants.kRightFollower, CANBUS_NAME);
   
     public static final DutyCycleOut leftOut = new DutyCycleOut(0);
     public static final DutyCycleOut rightOut = new DutyCycleOut(0);
 
-    public static final CANSparkMax intakemotor = new CANSparkMax(5, MotorType.kBrushless);
-    public static final CANSparkMax shootermotor = new CANSparkMax(6, MotorType.kBrushless);
+    public static final CANSparkMax intakeMotor = new CANSparkMax(Constants.kIntakeMotor, MotorType.kBrushless);
+    public static final CANSparkMax shooterMotor = new CANSparkMax(Constants.kShooterMotor, MotorType.kBrushless);
 
     public static final XboxController operator = new XboxController(1);
     public static final Joystick driverJoystick = new Joystick(0);
