@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Shooter;
 
@@ -70,10 +71,10 @@ public class Robot extends TimedRobot {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystic for drivetrain
-    double fwd = -Constants.driverJoystick.getY();
+    double fwd = -RobotContainer.driverJoystick.getY();
     double rot;
-    double rot1 = Constants.driverJoystick.getX();
-    double rot2 = Constants.driverJoystick.getZ()*1.2;
+    double rot1 = RobotContainer.driverJoystick.getX();
+    double rot2 = RobotContainer.driverJoystick.getZ()*1.2;
     SparkPIDController m_pidController;
     m_pidController = robotContainer.intake.getPIDController();
 
@@ -102,24 +103,24 @@ public class Robot extends TimedRobot {
     fwd *=0.25;
     rot *=0.25;
     //Code from controller for drivertain
-    //double fwd = -Constants.joystick.getRawAxis(Constants.FOWARDCONTROL);
-    //double rot = Constants.joystick.getRawAxis(Constants.TURNCONTROL);
+    //double fwd = -RobotContainer.joystick.getRawAxis(Constants.FOWARDCONTROL);
+    //double rot = RobotContainer.joystick.getRawAxis(Constants.TURNCONTROL);
 
     /* Set output to control frames */
     RobotContainer.leftOut.Output = fwd + rot;
     RobotContainer.rightOut.Output = fwd - rot;
     /* And set them to the motors */
-    if (!Constants.driverJoystick.getRawButtonPressed(2)/*getAButton()*/) {
+    if (!RobotContainer.driverJoystick.getRawButtonPressed(2)/*getAButton()*/) {
       RobotContainer.leftLeader.setControl(RobotContainer.leftOut);
       RobotContainer.rightLeader.setControl(RobotContainer.rightOut);
     }
     
       //intake control
-      boolean intakeFwd = Constants.operator.getAButton();
-      boolean intakeBwd = Constants.operator.getBButton();
+      boolean intakeFwd = RobotContainer.operator.getAButton();
+      boolean intakeBwd = RobotContainer.operator.getBButton();
       //shooter conrol
-      boolean shooterFwd = Constants.operator.getXButton();
-      boolean shooterBwd = Constants.operator.getYButton();
+      boolean shooterFwd = RobotContainer.operator.getXButton();
+      boolean shooterBwd = RobotContainer.operator.getYButton();
   
       //intake
       if (intakeFwd){
