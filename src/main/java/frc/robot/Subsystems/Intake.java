@@ -60,21 +60,21 @@ public class Intake {
       //m_encoder = m_motor.getEncoder();
 
       // set PID coefficients
-      m_pidController.setP(kIntakeP);
-      m_pidController.setI(kIntakeI);
-      m_pidController.setD(kIntakeD);
-      m_pidController.setIZone(kIntakeIz);
-      m_pidController.setFF(kIntakeFF);
-      m_pidController.setOutputRange(kIntakeMinOutput, kIntakeMaxOutput);
+      m_pidController.setP(Constants.kIntakeP);
+      m_pidController.setI(Constants.kIntakeI);
+      m_pidController.setD(Constants.kIntakeD);
+      m_pidController.setIZone(Constants.kIntakeIz);
+      m_pidController.setFF(Constants.kIntakeFF);
+      m_pidController.setOutputRange(Constants.kIntakeMinOutput, Constants.kIntakeMaxOutput);
 
       // display PID coefficients on SmartDashboard
-      SmartDashboard.putNumber("P Gain", kIntakeP);
-      SmartDashboard.putNumber("I Gain", kIntakeI);
-      SmartDashboard.putNumber("D Gain", kIntakeD);
-      SmartDashboard.putNumber("I Zone", kIntakeIz);
-      SmartDashboard.putNumber("Feed Forward", kIntakeFF);
-      SmartDashboard.putNumber("Max Output", kIntakeMaxOutput);
-      SmartDashboard.putNumber("Min Output", kIntakeMinOutput);
+      SmartDashboard.putNumber("P Gain", Constants.kIntakeP);
+      SmartDashboard.putNumber("I Gain", Constants.kIntakeI);
+      SmartDashboard.putNumber("D Gain", Constants.kIntakeD);
+      SmartDashboard.putNumber("I Zone", Constants.kIntakeIz);
+      SmartDashboard.putNumber("Feed Forward", Constants.kIntakeFF);
+      SmartDashboard.putNumber("Max Output", Constants.kIntakeMaxOutput);
+      SmartDashboard.putNumber("Min Output", Constants.kIntakeMinOutput);
       SmartDashboard.putNumber("Set Rotations", 0);
 
       // read PID coefficients from SmartDashboard
@@ -89,14 +89,14 @@ public class Intake {
 
 
       // if PID coefficients on SmartDashboard have changed, write new values to controller
-      if((p != kIntakeP)) { m_pidController.setP(p); kIntakeP = p; }
-      if((i != kIntakeI)) { m_pidController.setI(i); kIntakeI = i; }
-      if((d != kIntakeD)) { m_pidController.setD(d); kIntakeD = d; }
-      if((iz != kIntakeIz)) { m_pidController.setIZone(iz); kIntakeIz = iz; }
-      if((ff != kIntakeFF)) { m_pidController.setFF(ff); kIntakeFF = ff; }
-      if((max != kIntakeMaxOutput) || (min != kIntakeMinOutput)) { 
+      if((p != Constants.kIntakeP)) { m_pidController.setP(p); Constants.kIntakeP = p; }
+      if((i != Constants.kIntakeI)) { m_pidController.setI(i); Constants.kIntakeI = i; }
+      if((d != Constants.kIntakeD)) { m_pidController.setD(d); Constants.kIntakeD = d; }
+      if((iz != Constants.kIntakeIz)) { m_pidController.setIZone(iz); Constants.kIntakeIz = iz; }
+      if((ff != Constants.kIntakeFF)) { m_pidController.setFF(ff); Constants.kIntakeFF = ff; }
+      if((max != Constants.kIntakeMaxOutput) || (min != Constants.kIntakeMinOutput)) { 
         m_pidController.setOutputRange(min, max); 
-        kIntakeMinOutput = min; kIntakeMaxOutput = max; 
+        Constants.kIntakeMinOutput = min; Constants.kIntakeMaxOutput = max; 
       }
 
       /**
