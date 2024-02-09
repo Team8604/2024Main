@@ -4,12 +4,25 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 
 /** Add your docs here. */
 public final class Constants {
-    //controls
-    public static final XboxController operator = new XboxController(1);
-    public static final Joystick driverJoystick = new Joystick(0);
+    
+    //PID numbers *TO BE MARKED FINAL ONCE TESTED* for Intake
+    public static double kIntakeP = 0.1;
+    public static double kIntakeI = 1e-4;
+    public static double kIntakeD = 1;
+    public static double kIntakeIz = 0;
+    public static double kIntakeFF = 0;
+    public static double kIntakeMaxOutput = 1;
+    public static double kIntakeMinOutput = -1;
+
+    //PID numbers *TO BE MARKED FINAL ONCE TESTED* for Shooter
+    public static double kShooterP = 0.1;
+    public static double kShooterI = 1e-4;
+    public static double kShooterD = 1;
+    public static double kShooterIz = 0;
+    public static double kShooterFF = 0;
+    public static double kShooterMaxOutput = 1;
+    public static double kShooterMinOutput = -1;
 }

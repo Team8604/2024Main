@@ -8,6 +8,8 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 
 import frc.robot.Constants;
 import frc.robot.Subsystems.Drivetrain;
@@ -28,6 +30,8 @@ public class RobotContainer {
     public static final CANSparkMax intakemotor = new CANSparkMax(5, MotorType.kBrushless);
     public static final CANSparkMax shootermotor = new CANSparkMax(6, MotorType.kBrushless);
 
+    public static final XboxController operator = new XboxController(1);
+    public static final Joystick driverJoystick = new Joystick(0);
 
     public static Drivetrain drivetrain = new Drivetrain();
     public Intake intake = new Intake();

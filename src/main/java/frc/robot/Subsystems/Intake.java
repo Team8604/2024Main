@@ -39,7 +39,6 @@ public class Intake {
         //int deviceID = 5;//5 for the intake 6 for shooter
         SparkPIDController m_pidController;
         //RelativeEncoder m_encoder;
-        double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
         
         // initialize motor
          m_pidController = RobotContainer.intakemotor.getPIDController();
@@ -60,31 +59,22 @@ public class Intake {
       // Encoder object created to display position values
       //m_encoder = m_motor.getEncoder();
 
-      // PID coefficients
-      kP = 0.1; 
-      kI = 1e-4;
-      kD = 1; 
-      kIz = 0; 
-      kFF = 0; 
-      kMaxOutput = 1; 
-      kMinOutput = -1;
-
       // set PID coefficients
-      m_pidController.setP(kP);
-      m_pidController.setI(kI);
-      m_pidController.setD(kD);
-      m_pidController.setIZone(kIz);
-      m_pidController.setFF(kFF);
-      m_pidController.setOutputRange(kMinOutput, kMaxOutput);
+      m_pidController.setP(Constants.kIntakeP);
+      m_pidController.setI(Constants.kIntakeI);
+      m_pidController.setD(Constants.kIntakeD);
+      m_pidController.setIZone(Constants.kIntakeIz);
+      m_pidController.setFF(Constants.kIntakeFF);
+      m_pidController.setOutputRange(Constants.kIntakeMinOutput, Constants.kIntakeMaxOutput);
 
       // display PID coefficients on SmartDashboard
-      SmartDashboard.putNumber("P Gain", kP);
-      SmartDashboard.putNumber("I Gain", kI);
-      SmartDashboard.putNumber("D Gain", kD);
-      SmartDashboard.putNumber("I Zone", kIz);
-      SmartDashboard.putNumber("Feed Forward", kFF);
-      SmartDashboard.putNumber("Max Output", kMaxOutput);
-      SmartDashboard.putNumber("Min Output", kMinOutput);
+      SmartDashboard.putNumber("P Gain", Constants.kIntakeP);
+      SmartDashboard.putNumber("I Gain", Constants.kIntakeI);
+      SmartDashboard.putNumber("D Gain", Constants.kIntakeD);
+      SmartDashboard.putNumber("I Zone", Constants.kIntakeIz);
+      SmartDashboard.putNumber("Feed Forward", Constants.kIntakeFF);
+      SmartDashboard.putNumber("Max Output", Constants.kIntakeMaxOutput);
+      SmartDashboard.putNumber("Min Output", Constants.kIntakeMinOutput);
       SmartDashboard.putNumber("Set Rotations", 0);
 
       // read PID coefficients from SmartDashboard
@@ -99,14 +89,14 @@ public class Intake {
 
 
       // if PID coefficients on SmartDashboard have changed, write new values to controller
-      if((p != kP)) { m_pidController.setP(p); kP = p; }
-      if((i != kI)) { m_pidController.setI(i); kI = i; }
-      if((d != kD)) { m_pidController.setD(d); kD = d; }
-      if((iz != kIz)) { m_pidController.setIZone(iz); kIz = iz; }
-      if((ff != kFF)) { m_pidController.setFF(ff); kFF = ff; }
-      if((max != kMaxOutput) || (min != kMinOutput)) { 
+      if((p != Constants.kIntakeP)) { m_pidController.setP(p); Constants.kIntakeP = p; }
+      if((i != Constants.kIntakeI)) { m_pidController.setI(i); Constants.kIntakeI = i; }
+      if((d != Constants.kIntakeD)) { m_pidController.setD(d); Constants.kIntakeD = d; }
+      if((iz != Constants.kIntakeIz)) { m_pidController.setIZone(iz); Constants.kIntakeIz = iz; }
+      if((ff != Constants.kIntakeFF)) { m_pidController.setFF(ff); Constants.kIntakeFF = ff; }
+      if((max != Constants.kIntakeMaxOutput) || (min != Constants.kIntakeMinOutput)) { 
         m_pidController.setOutputRange(min, max); 
-        kMinOutput = min; kMaxOutput = max; 
+        Constants.kIntakeMinOutput = min; Constants.kIntakeMaxOutput = max; 
       }
 
       /**
