@@ -39,7 +39,6 @@ public class Shooter {
         //int deviceID = 6;//5 for the intake 6 for shooter
         SparkPIDController m_pidController;
         //RelativeEncoder m_encoder;
-        double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
         
         // initialize motor
 
@@ -60,31 +59,23 @@ public class Shooter {
       // Encoder object created to display position values
       //m_encoder = m_motor.getEncoder();
 
-      // PID coefficients
-      kP = 0.1; 
-      kI = 1e-4;
-      kD = 1; 
-      kIz = 0; 
-      kFF = 0; 
-      kMaxOutput = 1; 
-      kMinOutput = -1;
 
       // set PID coefficients
-      m_pidController.setP(kP);
-      m_pidController.setI(kI);
-      m_pidController.setD(kD);
-      m_pidController.setIZone(kIz);
-      m_pidController.setFF(kFF);
-      m_pidController.setOutputRange(kMinOutput, kMaxOutput);
+      m_pidController.setP(kShooterP);
+      m_pidController.setI(kShooterI);
+      m_pidController.setD(kShooterD);
+      m_pidController.setIZone(kShooterIz);
+      m_pidController.setFF(kShooterFF);
+      m_pidController.setOutputRange(kShooterMinOutput, kShooterMaxOutput);
 
       // display PID coefficients on SmartDashboard
-      SmartDashboard.putNumber("P Gain", kP);
-      SmartDashboard.putNumber("I Gain", kI);
-      SmartDashboard.putNumber("D Gain", kD);
-      SmartDashboard.putNumber("I Zone", kIz);
-      SmartDashboard.putNumber("Feed Forward", kFF);
-      SmartDashboard.putNumber("Max Output", kMaxOutput);
-      SmartDashboard.putNumber("Min Output", kMinOutput);
+      SmartDashboard.putNumber("P Gain", kShooterP);
+      SmartDashboard.putNumber("I Gain", kShooterI);
+      SmartDashboard.putNumber("D Gain", kShooterD);
+      SmartDashboard.putNumber("I Zone", kShooterIz);
+      SmartDashboard.putNumber("Feed Forward", kShooterFF);
+      SmartDashboard.putNumber("Max Output", kShooterMaxOutput);
+      SmartDashboard.putNumber("Min Output", kShooterMinOutput);
       SmartDashboard.putNumber("Set Rotations", 0);
 
       // read PID coefficients from SmartDashboard
@@ -99,14 +90,14 @@ public class Shooter {
 
 
       // if PID coefficients on SmartDashboard have changed, write new values to controller
-      if((p != kP)) { m_pidController.setP(p); kP = p; }
-      if((i != kI)) { m_pidController.setI(i); kI = i; }
-      if((d != kD)) { m_pidController.setD(d); kD = d; }
-      if((iz != kIz)) { m_pidController.setIZone(iz); kIz = iz; }
-      if((ff != kFF)) { m_pidController.setFF(ff); kFF = ff; }
-      if((max != kMaxOutput) || (min != kMinOutput)) { 
+      if((p != kShooterP)) { m_pidController.setP(p); kShooterP = p; }
+      if((i != kShooterI)) { m_pidController.setI(i); kShooterI = i; }
+      if((d != kShooterD)) { m_pidController.setD(d); kShooterD = d; }
+      if((iz != kShooterIz)) { m_pidController.setIZone(iz); kShooterIz = iz; }
+      if((ff != kShooterFF)) { m_pidController.setFF(ff); kShooterFF = ff; }
+      if((max != kShooterMaxOutput) || (min != kShooterMinOutput)) { 
         m_pidController.setOutputRange(min, max); 
-        kMinOutput = min; kMaxOutput = max; 
+        kShooterMinOutput = min; kShooterMaxOutput = max; 
       }
 
       /**
