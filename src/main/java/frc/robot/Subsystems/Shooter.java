@@ -86,7 +86,7 @@ public class Shooter {
       double ff = SmartDashboard.getNumber("Feed Forward", 0);
       double max = SmartDashboard.getNumber("Max Output", 0);
       double min = SmartDashboard.getNumber("Min Output", 0);
-      rotations = SmartDashboard.getNumber("Set Rotations", 0);
+      rotations = SmartDashboard.getNumber("Set Rotations", 10);
 
 
       // if PID coefficients on SmartDashboard have changed, write new values to controller
