@@ -31,8 +31,6 @@ import frc.robot.Subsystems.Shooter;
 public class Robot extends TimedRobot {
   private static final String CANBUS_NAME = "rio";
   
-
-
   private int printCount = 0;
 
   /**
@@ -76,8 +74,6 @@ public class Robot extends TimedRobot {
     double rot;
     double rot1 = RobotContainer.driverJoystick.getX();
     double rot2 = RobotContainer.driverJoystick.getZ()*1.2;
-    SparkPIDController m_pidController;
-    m_pidController = RobotContainer.intakeMotor.getPIDController();
 
     if (rot2 > 1){
       rot2 = 1;
@@ -169,10 +165,9 @@ public class Robot extends TimedRobot {
     RobotContainer.leftLeader.setControl(RobotContainer.leftOut);
     RobotContainer.rightLeader.setControl(RobotContainer.rightOut);
     //intake
-    //m_pidController.setReference(0, CANSparkMax.ControlType.kVelocity);
-    /* RobotContainer.intakeMotor.setRotations(0);
+    RobotContainer.intakeMotor.set(0);
     //shooter
-    RobotContainer.shooterMotor.setRotations(0); */
+    RobotContainer.shooterMotor.set(0);
 
   }
 
