@@ -4,18 +4,19 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.Utils;
+import com.revrobotics.CANSparkMax;
+/*import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax;*/
 import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.TimedRobot;/**
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.Subsystem;*/
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Subsystems.Intake;
@@ -38,11 +39,11 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  private RobotContainer robotContainer;
+  private RobotContainer RobotContainer;
 
   @Override
   public void robotInit() {
-    robotContainer = new RobotContainer();
+    RobotContainer = new RobotContainer();
 
   }
 
@@ -102,10 +103,7 @@ public class Robot extends TimedRobot {
     //sets drivetrain motors to 25% speed
     fwd *=0.25;
     rot *=0.25;
-    //Code from controller for drivertain
-    //double fwd = -RobotContainer.joystick.getRawAxis(Constants.FOWARDCONTROL);
-    //double rot = RobotContainer.joystick.getRawAxis(Constants.TURNCONTROL);
-
+    
     /* Set output to control frames */
     RobotContainer.leftOut.Output = fwd + rot;
     RobotContainer.rightOut.Output = fwd - rot;
@@ -121,37 +119,42 @@ public class Robot extends TimedRobot {
       //shooter conrol
       boolean shooterFwd = RobotContainer.operator.getXButton();
       boolean shooterBwd = RobotContainer.operator.getYButton();
-  
+      
       //intake
       if (intakeFwd){
         //spin intake motor foward
-        robotContainer.intake.setRotations(0.5);
-        System.out.println("Intake set to 0.5");
+        if (intakeFwd && shooterFwd){
+          RobotContainer.intakeMotor.set(1);
+          System.out.println("Intake set to 1");
+        } else{
+          RobotContainer.intakeMotor.set(0.25);
+          System.out.println("Intake set to 0.8");
+        }
       } else if (intakeBwd) {
         //spin intake motor backwards (gets rid of jamed note)
-        robotContainer.intake.setRotations(-0.5);
+        RobotContainer.intakeMotor.set(-0.25);
         System.out.println("Intake set to -0.5");
       } else {
         //set intake motor to stop
-        robotContainer.intake.setRotations(0);
+        RobotContainer.intakeMotor.set(0);
         System.out.println("Intake set to 0");
       }
-
+      
       //shooter
       if (shooterFwd){
         //spin shooter motor foward
-        robotContainer.shooter.setRotations(0.5);
+        RobotContainer.shooterMotor.set(1);
         System.out.println("Shooter set to 0.5");
       } else if (shooterBwd) {
         //spin shooter motor backwards (gets rid of jamed note)
-        robotContainer.shooter.setRotations(-0.5);
+        RobotContainer.shooterMotor.set(-0.5);
         System.out.println("Shooter set to -0.5");
       } else {
         //set shooter motor to stop
-        robotContainer.shooter.setRotations(0);
+        RobotContainer.shooterMotor.set(0);
         System.out.println("Shooter set to 0");
       }
-    
+      
   }
 
   @Override
@@ -167,9 +170,9 @@ public class Robot extends TimedRobot {
     RobotContainer.rightLeader.setControl(RobotContainer.rightOut);
     //intake
     //m_pidController.setReference(0, CANSparkMax.ControlType.kVelocity);
-    robotContainer.intake.setRotations(0);
+    /* RobotContainer.intakeMotor.setRotations(0);
     //shooter
-    robotContainer.shooter.setRotations(0);
+    RobotContainer.shooterMotor.setRotations(0); */
 
   }
 

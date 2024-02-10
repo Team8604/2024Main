@@ -24,7 +24,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 /** Add your docs here. */
 public class Intake {
-
+  public double p, i, d, iz, ff, max, min;
   public double rotations = 0;
 
   public double getRotations(){
@@ -60,36 +60,37 @@ public class Intake {
       //m_encoder = m_motor.getEncoder();
 
       // set PID coefficients
+      /*
       m_pidController.setP(Constants.kIntakeP);
       m_pidController.setI(Constants.kIntakeI);
       m_pidController.setD(Constants.kIntakeD);
       m_pidController.setIZone(Constants.kIntakeIz);
       m_pidController.setFF(Constants.kIntakeFF);
-      m_pidController.setOutputRange(Constants.kIntakeMinOutput, Constants.kIntakeMaxOutput);
+      m_pidController.setOutputRange(Constants.kIntakeMinOutput, Constants.kIntakeMaxOutput); */
 
       // display PID coefficients on SmartDashboard
-      SmartDashboard.putNumber("P Gain", Constants.kIntakeP);
-      SmartDashboard.putNumber("I Gain", Constants.kIntakeI);
-      SmartDashboard.putNumber("D Gain", Constants.kIntakeD);
-      SmartDashboard.putNumber("I Zone", Constants.kIntakeIz);
-      SmartDashboard.putNumber("Feed Forward", Constants.kIntakeFF);
-      SmartDashboard.putNumber("Max Output", Constants.kIntakeMaxOutput);
-      SmartDashboard.putNumber("Min Output", Constants.kIntakeMinOutput);
-      SmartDashboard.putNumber("Set Rotations", 0);
+      SmartDashboard.putNumber("P Gain", p);
+      SmartDashboard.putNumber("I Gain", i);
+      SmartDashboard.putNumber("D Gain", d);
+      SmartDashboard.putNumber("I Zone", iz);
+      SmartDashboard.putNumber("Feed Forward", ff);
+      SmartDashboard.putNumber("Max Output", max);
+      SmartDashboard.putNumber("Min Output", min);
+      SmartDashboard.putNumber("Set Rotations", rotations);
 
       // read PID coefficients from SmartDashboard
-      double p = SmartDashboard.getNumber("P Gain", 0);
-      double i = SmartDashboard.getNumber("I Gain", 0);
-      double d = SmartDashboard.getNumber("D Gain", 0);
-      double iz = SmartDashboard.getNumber("I Zone", 0);
-      double ff = SmartDashboard.getNumber("Feed Forward", 0);
-      double max = SmartDashboard.getNumber("Max Output", 0);
-      double min = SmartDashboard.getNumber("Min Output", 0);
-      rotations = SmartDashboard.getNumber("Set Rotations", 0);
+      p = SmartDashboard.getNumber("P Gain", 0);
+      i = SmartDashboard.getNumber("I Gain", 0);
+      d = SmartDashboard.getNumber("D Gain", 0);
+      iz = SmartDashboard.getNumber("I Zone", 0);
+      ff = SmartDashboard.getNumber("Feed Forward", 0);
+      max = SmartDashboard.getNumber("Max Output", 1);
+      min = SmartDashboard.getNumber("Min Output", -1);
+      rotations = SmartDashboard.getNumber("Set Rotations", 250);
 
 
       // if PID coefficients on SmartDashboard have changed, write new values to controller
-      if((p != Constants.kIntakeP)) { m_pidController.setP(p); Constants.kIntakeP = p; }
+      /* if((p != Constants.kIntakeP)) { m_pidController.setP(p); Constants.kIntakeP = p; }
       if((i != Constants.kIntakeI)) { m_pidController.setI(i); Constants.kIntakeI = i; }
       if((d != Constants.kIntakeD)) { m_pidController.setD(d); Constants.kIntakeD = d; }
       if((iz != Constants.kIntakeIz)) { m_pidController.setIZone(iz); Constants.kIntakeIz = iz; }
@@ -97,7 +98,13 @@ public class Intake {
       if((max != Constants.kIntakeMaxOutput) || (min != Constants.kIntakeMinOutput)) { 
         m_pidController.setOutputRange(min, max); 
         Constants.kIntakeMinOutput = min; Constants.kIntakeMaxOutput = max; 
-      }
+      } */
+      m_pidController.setP(p);
+      m_pidController.setI(i);
+      m_pidController.setD(d);
+      m_pidController.setIZone(iz);
+      m_pidController.setFF(ff);
+      m_pidController.setOutputRange(min, max);
 
       /**
        * PIDController objects are commanded to a set point using the 
@@ -117,7 +124,7 @@ public class Intake {
        * 
        */
       
-    //m_pidController.setReference(rotations, CANSparkMax.ControlType.kVelocity);
+    m_pidController.setReference(rotations, CANSparkMax.ControlType.kVelocity);
     SmartDashboard.putNumber("SetPoint", rotations);
     //SmartDashboard.putNumber("ProcessVariable", m_encoder.getPosition());
   }
