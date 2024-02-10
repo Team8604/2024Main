@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
     double rot1 = RobotContainer.driverJoystick.getX();
     double rot2 = RobotContainer.driverJoystick.getZ()*1.2;
     SparkPIDController m_pidController;
-    m_pidController = RobotContainer.intakemotor.getPIDController();
+    m_pidController = RobotContainer.intakeMotor.getPIDController();
 
     if (rot2 > 1){
       rot2 = 1;

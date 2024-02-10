@@ -54,7 +54,7 @@ public class Shooter {
        * is constructed by calling the getPIDController() method on an existing
        * CANSparkMax object
        */
-      m_pidController = RobotContainer.shootermotor.getPIDController();
+      m_pidController = RobotContainer.shooterMotor.getPIDController();
 
       // Encoder object created to display position values
       //m_encoder = m_motor.getEncoder();

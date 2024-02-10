@@ -41,7 +41,7 @@ public class Intake {
         //RelativeEncoder m_encoder;
         
         // initialize motor
-         m_pidController = RobotContainer.intakemotor.getPIDController();
+         m_pidController = RobotContainer.intakeMotor.getPIDController();
       /**
        * The restoreFactoryDefaults method can be used to reset the configuration parameters
        * in the SPARK MAX to their factory default state. If no argument is passed, these
