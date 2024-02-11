@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 /** Add your docs here. */
 public class Arm {
+  
   public Arm(RobotContainer RobotContainer){
     RobotContainer.m_RightArmMotor.restoreFactoryDefaults();
     RobotContainer.m_LeftArmMotor.restoreFactoryDefaults();
@@ -21,8 +22,17 @@ public class Arm {
 
   }
 
-  public void accelerate(double topSpeed){
-    
+  public static void accelerate(double topSpeed, double totalRotations){
+    double encoderStartPosition = RobotContainer.m_ArmEncoder.getPosition();
+    double encoderEndPosition = encoderStartPosition+totalRotations;
+
+    RobotContainer.m_RightArmMotor.set(0);
+    for (double encoderPostion = RobotContainer.m_ArmEncoder.getPosition(); encoderPostion < encoderEndPosition; encoderPostion = RobotContainer.m_ArmEncoder.getPosition()) {
+      double percentageRelativeToRotation = (encoderPostion-encoderStartPosition)/totalRotations;
+      RobotContainer.m_RightArmMotor.set(0.079);
+      System.out.println("arm motor should be set to 0.1"+ topSpeed * percentageRelativeToRotation);
+      //RobotContainer.m_RightArmMotor.set(topSpeed * percentageRelativeToRotation);
+    }
   }
 
 
