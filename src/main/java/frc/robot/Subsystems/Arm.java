@@ -13,8 +13,9 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 /** Add your docs here. */
 public class Arm {
-  
-  public Arm(RobotContainer RobotContainer){
+  RobotContainer RobotContainer;
+  public Arm(RobotContainer rc){
+    this.RobotContainer = rc;
     RobotContainer.m_RightArmMotor.restoreFactoryDefaults();
     RobotContainer.m_LeftArmMotor.restoreFactoryDefaults();
 
@@ -22,7 +23,7 @@ public class Arm {
 
   }
 
-  public static void accelerate(double topSpeed, double totalRotations){
+  public void accelerate(double topSpeed, double totalRotations){
     double encoderStartPosition = RobotContainer.m_ArmEncoder.getPosition();
     double encoderEndPosition = encoderStartPosition+totalRotations;
 
