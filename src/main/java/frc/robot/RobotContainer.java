@@ -12,7 +12,6 @@ import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import com.revrobotics.CANSparkMax;
 
 
 import frc.robot.Constants;
@@ -28,14 +27,15 @@ public class RobotContainer {
     public final TalonFX leftFollower = new TalonFX(Constants.kLeftFollower, CANBUS_NAME);
     public final TalonFX rightLeader = new TalonFX(Constants.kRightLeader, CANBUS_NAME);
     public final TalonFX rightFollower = new TalonFX(Constants.kRightFollower, CANBUS_NAME);
-  
+
+    //drivetrain duty cycles
     public final DutyCycleOut leftOut = new DutyCycleOut(0);
     public final DutyCycleOut rightOut = new DutyCycleOut(0);
 
     //arm
-    public static final CANSparkMax m_RightArmMotor = new CANSparkMax(Constants.kRightArm, MotorType.kBrushless);
-    public static final CANSparkMax m_LeftArmMotor = new CANSparkMax(Constants.kLeftArm, MotorType.kBrushless);
-    public static final RelativeEncoder m_ArmEncoder = m_RightArmMotor.getEncoder(); 
+    public final CANSparkMax m_RightArmMotor = new CANSparkMax(Constants.kRightArm, MotorType.kBrushless);
+    public final CANSparkMax m_LeftArmMotor = new CANSparkMax(Constants.kLeftArm, MotorType.kBrushless);
+    public final RelativeEncoder m_ArmEncoder = m_RightArmMotor.getEncoder(); 
 
     //intake and shooter
     public final CANSparkMax intakeMotor = new CANSparkMax(Constants.kIntakeMotor, MotorType.kBrushless);
@@ -46,10 +46,10 @@ public class RobotContainer {
     public final Joystick driverJoystick = new Joystick(0);
   
     //initialize subsystems
-    public Drivetrain drivetrain;
+    public Drivetrain drivetrain = new Drivetrain(this);
     public Intake intake = new Intake();
     public Shooter shooter = new Shooter();
-    public Arm arm = new Arm();
+    public Arm arm = new Arm(this);
 
     public RobotContainer(){}
 }
