@@ -4,19 +4,8 @@
 
 package frc.robot;
 
-/*import com.ctre.phoenix6.Utils;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue; */
-//import com.ctre.phoenix6.StatusSignal;
-//import com.revrobotics.CANSparkMax;
-//import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.wpilibj.TimedRobot;/**
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Subsystem;*/
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
