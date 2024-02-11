@@ -23,6 +23,7 @@ import frc.robot.RobotContainer;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Shooter;
+import frc.robot.Subsystems.Arm;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -117,42 +118,63 @@ public class Robot extends TimedRobot {
       //shooter conrol
       boolean shooterFwd = RobotContainer.operator.getXButton();
       boolean shooterBwd = RobotContainer.operator.getYButton();
+
+      //arm control
+      boolean armFwd = RobotContainer.operator.getLeftBumperPressed(); 
       
       //intake
       if (intakeFwd){
         //spin intake motor foward
         if (intakeFwd && shooterFwd){
           RobotContainer.intakeMotor.set(1);
-          System.out.println("Intake set to 1");
+          //System.out.println("Intake set to 1");
         } else{
           RobotContainer.intakeMotor.set(0.25);
-          System.out.println("Intake set to 0.8");
+          //System.out.println("Intake set to 0.8");
         }
       } else if (intakeBwd) {
         //spin intake motor backwards (gets rid of jamed note)
         RobotContainer.intakeMotor.set(-0.25);
-        System.out.println("Intake set to -0.5");
+        //System.out.println("Intake set to -0.5");
       } else {
         //set intake motor to stop
         RobotContainer.intakeMotor.set(0);
-        System.out.println("Intake set to 0");
+        //System.out.println("Intake set to 0");
       }
       
       //shooter
       if (shooterFwd){
         //spin shooter motor foward
         RobotContainer.shooterMotor.set(1);
-        System.out.println("Shooter set to 0.5");
+        //System.out.println("Shooter set to 0.5");
       } else if (shooterBwd) {
         //spin shooter motor backwards (gets rid of jamed note)
         RobotContainer.shooterMotor.set(-0.5);
-        System.out.println("Shooter set to -0.5");
+        //System.out.println("Shooter set to -0.5");
       } else {
         //set shooter motor to stop
         RobotContainer.shooterMotor.set(0);
-        System.out.println("Shooter set to 0");
+        //System.out.println("Shooter set to 0");
       }
-      
+
+
+      //arm
+      //gear box is 100-1
+      if (armFwd){
+        double start = RobotContainer.m_ArmEncoder.getPosition();
+        double end = start +100;
+        double disiredSpeed = 0.1; //10% of full speed for arm
+        SmartDashboard.putNumber("Encoder Position start", RobotContainer.m_ArmEncoder.getPosition());
+
+        RobotContainer.m_RightArmMotor.set(0.1/*RobotContainer.operator.getLeftX()*/);
+        while (RobotContainer.m_ArmEncoder.getPosition() < end){
+          
+          System.out.println("motor should be set to 0.1----");
+          SmartDashboard.putNumber("Encoder Position", RobotContainer.m_ArmEncoder.getPosition());
+        }
+        RobotContainer.m_RightArmMotor.set(0/*RobotContainer.operator.getLeftX()*/);
+
+      }
   }
 
   @Override

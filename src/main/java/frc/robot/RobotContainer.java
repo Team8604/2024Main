@@ -8,13 +8,18 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import com.revrobotics.CANSparkMax;
+
 
 import frc.robot.Constants;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Shooter;
+import frc.robot.Subsystems.Arm;
 
 public class RobotContainer {
     //drivetrain 
@@ -27,15 +32,24 @@ public class RobotContainer {
     public final DutyCycleOut leftOut = new DutyCycleOut(0);
     public final DutyCycleOut rightOut = new DutyCycleOut(0);
 
+    //arm
+    public static final CANSparkMax m_RightArmMotor = new CANSparkMax(Constants.kRightArm, MotorType.kBrushless);
+    public static final CANSparkMax m_LeftArmMotor = new CANSparkMax(Constants.kLeftArm, MotorType.kBrushless);
+    public static final RelativeEncoder m_ArmEncoder = m_RightArmMotor.getEncoder(); 
+
+    //intake and shooter
     public final CANSparkMax intakeMotor = new CANSparkMax(Constants.kIntakeMotor, MotorType.kBrushless);
     public final CANSparkMax shooterMotor = new CANSparkMax(Constants.kShooterMotor, MotorType.kBrushless);
 
+    //controllers
     public final XboxController operator = new XboxController(1);
     public final Joystick driverJoystick = new Joystick(0);
-
+  
+    //initialize subsystems
     public Drivetrain drivetrain;
     public Intake intake = new Intake();
     public Shooter shooter = new Shooter();
+    public Arm arm = new Arm();
 
     public RobotContainer(){}
 }
