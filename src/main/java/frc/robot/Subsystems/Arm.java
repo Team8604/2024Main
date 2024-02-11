@@ -4,7 +4,6 @@
 
 package frc.robot.Subsystems;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -14,8 +13,8 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 /** Add your docs here. */
 public class Arm {
-  public RobotContainer rc;
-  public Arm(){
+  
+  public Arm(RobotContainer RobotContainer){
     RobotContainer.m_RightArmMotor.restoreFactoryDefaults();
     RobotContainer.m_LeftArmMotor.restoreFactoryDefaults();
 
