@@ -166,12 +166,16 @@ public class Robot extends TimedRobot {
         double disiredSpeed = 0.1; //10% of full speed for arm
         SmartDashboard.putNumber("Encoder Position start", RobotContainer.m_ArmEncoder.getPosition());
 
-        RobotContainer.m_RightArmMotor.set(0.1/*RobotContainer.operator.getLeftX()*/);
-        while (RobotContainer.m_ArmEncoder.getPosition() < end){
+        RobotContainer.m_RightArmMotor.set(0/*RobotContainer.operator.getLeftX()*/);
+        /*while (robotContainer.m_ArmEncoder.getPosition() < end){
           
           System.out.println("motor should be set to 0.1----");
-          SmartDashboard.putNumber("Encoder Position", RobotContainer.m_ArmEncoder.getPosition());
-        }
+          SmartDashboard.putNumber("Encoder Position", robotContainer.m_ArmEncoder.getPosition());
+        }*/
+        System.out.println("Accelerate start------");
+        Arm.accelerate(disiredSpeed, (end/4));
+        System.out.println("Accelerate end------");
+
         RobotContainer.m_RightArmMotor.set(0/*RobotContainer.operator.getLeftX()*/);
 
       }
