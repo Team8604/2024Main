@@ -4,21 +4,23 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
 /*import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.revrobotics.CANSparkMax;*/
+import com.ctre.phoenix6.signals.InvertedValue; */
+import com.ctre.phoenix6.StatusSignal;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj.TimedRobot;/**
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Subsystem;*/
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Intake;
 import frc.robot.Subsystems.Shooter;
 
@@ -29,7 +31,6 @@ import frc.robot.Subsystems.Shooter;
  * project.
  */
 public class Robot extends TimedRobot {
-  private static final String CANBUS_NAME = "rio";
   
   private int printCount = 0;
 
@@ -42,6 +43,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     RobotContainer = new RobotContainer();
+    RobotContainer.drivetrain = new Drivetrain(RobotContainer);
 
   }
 
@@ -49,10 +51,10 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     if (++printCount >= 10) {
       printCount = 0;
-      System.out.println("Left out: " + RobotContainer.leftLeader.get());
-      System.out.println("Right out: " + RobotContainer.rightLeader.get());
-      System.out.println("Left Pos: " + RobotContainer.leftLeader.getPosition());
-      System.out.println("Right Pos: " + RobotContainer.rightLeader.getPosition());
+      SmartDashboard.putNumber("Left out", RobotContainer.leftLeader.getVelocity().getValueAsDouble());
+      SmartDashboard.putNumber("Right out", RobotContainer.rightLeader.getVelocity().getValueAsDouble());
+      SmartDashboard.putNumber("Left Position", RobotContainer.leftLeader.getPosition().getValueAsDouble());
+      SmartDashboard.putNumber("Right Position", RobotContainer.rightLeader.getPosition().getValueAsDouble());
     }
   }
 

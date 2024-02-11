@@ -18,26 +18,24 @@ import frc.robot.Subsystems.Shooter;
 
 public class RobotContainer {
     //drivetrain 
-    public static final String CANBUS_NAME = "rio";
-    public static final TalonFX leftLeader = new TalonFX(Constants.kLeftLeader, CANBUS_NAME);
-    public static final TalonFX leftFollower = new TalonFX(Constants.kLeftFollower, CANBUS_NAME);
-    public static final TalonFX rightLeader = new TalonFX(Constants.kRightLeader, CANBUS_NAME);
-    public static final TalonFX rightFollower = new TalonFX(Constants.kRightFollower, CANBUS_NAME);
+    public final String CANBUS_NAME = "rio";
+    public final TalonFX leftLeader = new TalonFX(Constants.kLeftLeader, CANBUS_NAME);
+    public final TalonFX leftFollower = new TalonFX(Constants.kLeftFollower, CANBUS_NAME);
+    public final TalonFX rightLeader = new TalonFX(Constants.kRightLeader, CANBUS_NAME);
+    public final TalonFX rightFollower = new TalonFX(Constants.kRightFollower, CANBUS_NAME);
   
-    public static final DutyCycleOut leftOut = new DutyCycleOut(0);
-    public static final DutyCycleOut rightOut = new DutyCycleOut(0);
+    public final DutyCycleOut leftOut = new DutyCycleOut(0);
+    public final DutyCycleOut rightOut = new DutyCycleOut(0);
 
-    public static final CANSparkMax intakeMotor = new CANSparkMax(Constants.kIntakeMotor, MotorType.kBrushless);
-    public static final CANSparkMax shooterMotor = new CANSparkMax(Constants.kShooterMotor, MotorType.kBrushless);
+    public final CANSparkMax intakeMotor = new CANSparkMax(Constants.kIntakeMotor, MotorType.kBrushless);
+    public final CANSparkMax shooterMotor = new CANSparkMax(Constants.kShooterMotor, MotorType.kBrushless);
 
-    public static final XboxController operator = new XboxController(1);
-    public static final Joystick driverJoystick = new Joystick(0);
+    public final XboxController operator = new XboxController(1);
+    public final Joystick driverJoystick = new Joystick(0);
 
-    public static Drivetrain drivetrain = new Drivetrain();
+    public Drivetrain drivetrain;
     public Intake intake = new Intake();
     public Shooter shooter = new Shooter();
 
-    public RobotContainer(){
-
-    }
+    public RobotContainer(){}
 }

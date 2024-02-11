@@ -14,7 +14,7 @@ import frc.robot.RobotContainer;
 
 /** Add your docs here. */
 public class Drivetrain {
-    public Drivetrain(){
+    public Drivetrain(RobotContainer RobotContainer){
         /* Configure the devices */
         var leftConfiguration = new TalonFXConfiguration();
         var rightConfiguration = new TalonFXConfiguration();

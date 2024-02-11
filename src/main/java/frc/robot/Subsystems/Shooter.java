@@ -4,13 +4,6 @@
 
 package frc.robot.Subsystems;
 
-//depricated import com.revrobotics.CANEncoder;
-//depricated import com.revrobotics.CANPIDController;
-//import com.revrobotics.CANSparkMax;
-//depricated import com.revrobotics.ControlType;
-//depricated import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
