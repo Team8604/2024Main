@@ -15,26 +15,7 @@ public final class Constants {
     public static final int kLeftFollower = 4;
     public static final int kIntakeMotor = 5;
     public static final int kShooterMotor = 6;
-
     public static final int kRightArm = 7;
     public static final int kLeftArm = 8;
-  
 
-    //PID numbers *TO BE MARKED FINAL ONCE TESTED* for Intake
-    public static double kIntakeP = 0.0010;
-    public static double kIntakeI = 0.00000;
-    public static double kIntakeD = 0;
-    public static double kIntakeIz = 0;
-    public static double kIntakeFF = 0;
-    public static double kIntakeMaxOutput = 1;
-    public static double kIntakeMinOutput = -1;
-
-    //PID numbers *TO BE MARKED FINAL ONCE TESTED* for Shooter
-    public static double kShooterP = 0.00;
-    public static double kShooterI = 0.00000;
-    public static double kShooterD = 0;
-    public static double kShooterIz = 0;
-    public static double kShooterFF = 0;
-    public static double kShooterMaxOutput = 1;
-    public static double kShooterMinOutput = -1;
 }
