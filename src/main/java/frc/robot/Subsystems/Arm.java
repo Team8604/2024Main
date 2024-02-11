@@ -4,5 +4,28 @@
 
 package frc.robot.Subsystems;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 /** Add your docs here. */
-public class Arm {}
+public class Arm {
+  public Arm(){
+    RobotContainer.m_RightArmMotor.restoreFactoryDefaults();
+    RobotContainer.m_LeftArmMotor.restoreFactoryDefaults();
+
+    RobotContainer.m_LeftArmMotor.follow(RobotContainer.m_RightArmMotor, true);
+
+  }
+
+  public void accelerate(double topSpeed){
+    
+  }
+
+
+}
+

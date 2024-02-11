@@ -16,6 +16,10 @@ public final class Constants {
     public static final int kIntakeMotor = 5;
     public static final int kShooterMotor = 6;
 
+    public static final int kRightArm = 7;
+    public static final int kLeftArm = 8;
+  
+
     //PID numbers *TO BE MARKED FINAL ONCE TESTED* for Intake
     public static double kIntakeP = 0.0010;
     public static double kIntakeI = 0.00000;
