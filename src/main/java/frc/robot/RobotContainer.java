@@ -32,9 +32,9 @@ public class RobotContainer {
     public final DutyCycleOut rightOut = new DutyCycleOut(0);
 
     //arm
-    public final CANSparkMax m_RightArmMotor = new CANSparkMax(Constants.kRightArm, MotorType.kBrushless);
-    public final CANSparkMax m_LeftArmMotor = new CANSparkMax(Constants.kLeftArm, MotorType.kBrushless);
-    public final RelativeEncoder m_ArmEncoder = m_RightArmMotor.getEncoder(); 
+    public final CANSparkMax rightArm = new CANSparkMax(Constants.kRightArm, MotorType.kBrushless);
+    public final CANSparkMax leftArm = new CANSparkMax(Constants.kLeftArm, MotorType.kBrushless);
+    public final RelativeEncoder armEncoder = rightArm.getEncoder(); 
 
     //intake and shooter
     public final CANSparkMax intakeMotor = new CANSparkMax(Constants.kIntakeMotor, MotorType.kBrushless);

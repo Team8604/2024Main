@@ -16,23 +16,23 @@ public class Arm {
   RobotContainer RobotContainer;
   public Arm(RobotContainer rc){
     this.RobotContainer = rc;
-    RobotContainer.m_RightArmMotor.restoreFactoryDefaults();
-    RobotContainer.m_LeftArmMotor.restoreFactoryDefaults();
+    RobotContainer.rightArm.restoreFactoryDefaults();
+    RobotContainer.leftArm.restoreFactoryDefaults();
 
-    RobotContainer.m_LeftArmMotor.follow(RobotContainer.m_RightArmMotor, true);
+    RobotContainer.leftArm.follow(RobotContainer.rightArm, true);
 
   }
 
   public void accelerate(double topSpeed, double totalRotations){
-    double encoderStartPosition = RobotContainer.m_ArmEncoder.getPosition();
+    double encoderStartPosition = RobotContainer.armEncoder.getPosition();
     double encoderEndPosition = encoderStartPosition+totalRotations;
 
-    RobotContainer.m_RightArmMotor.set(0);
-    for (double encoderPostion = RobotContainer.m_ArmEncoder.getPosition(); encoderPostion < encoderEndPosition; encoderPostion = RobotContainer.m_ArmEncoder.getPosition()) {
+    RobotContainer.rightArm.set(0);
+    for (double encoderPostion = RobotContainer.armEncoder.getPosition(); encoderPostion < encoderEndPosition; encoderPostion = RobotContainer.armEncoder.getPosition()) {
       double percentageRelativeToRotation = (encoderPostion-encoderStartPosition)/totalRotations;
-      RobotContainer.m_RightArmMotor.set(0.079);
+      RobotContainer.rightArm.set(0.079);
       System.out.println("arm motor should be set to 0.1"+ topSpeed * percentageRelativeToRotation);
-      //RobotContainer.m_RightArmMotor.set(topSpeed * percentageRelativeToRotation);
+      //RobotContainer.rightArm.set(topSpeed * percentageRelativeToRotation);
     }
   }
 
