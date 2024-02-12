@@ -4,128 +4,15 @@
 
 package frc.robot.Subsystems;
 
-//depricated import com.revrobotics.CANEncoder;
-//depricated import com.revrobotics.CANPIDController;
-//import com.revrobotics.CANSparkMax;
-//depricated import com.revrobotics.ControlType;
-//depricated import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 
 
 
 /** Add your docs here. */
 public class Intake {
-  public double p, i, d, iz, ff, max, min;
-  public double rotations = 0;
-
-  public double getRotations(){
-    return rotations;
-  }
-
-  public void setRotations(double r){
-    rotations = r;
-  }
-
-    public Intake(){
-        //int deviceID = 5;//5 for the intake 6 for shooter
-        SparkPIDController m_pidController;
-        //RelativeEncoder m_encoder;
+  
+  public Intake(){
         
-        // initialize motor
-         m_pidController = RobotContainer.intakeMotor.getPIDController();
-      /**
-       * The restoreFactoryDefaults method can be used to reset the configuration parameters
-       * in the SPARK MAX to their factory default state. If no argument is passed, these
-       * parameters will not persist between power cycles
-       */
-      // m_motor.restoreFactoryDefaults();
-
-      /**
-       * In order to use PID functionality for a controller, a SparkPIDController object
-       * is constructed by calling the getPIDController() method on an existing
-       * CANSparkMax object
-       */
-      
-
-      // Encoder object created to display position values
-      //m_encoder = m_motor.getEncoder();
-
-      // set PID coefficients
-      /*
-      m_pidController.setP(Constants.kIntakeP);
-      m_pidController.setI(Constants.kIntakeI);
-      m_pidController.setD(Constants.kIntakeD);
-      m_pidController.setIZone(Constants.kIntakeIz);
-      m_pidController.setFF(Constants.kIntakeFF);
-      m_pidController.setOutputRange(Constants.kIntakeMinOutput, Constants.kIntakeMaxOutput); */
-
-      // display PID coefficients on SmartDashboard
-      SmartDashboard.putNumber("P Gain", p);
-      SmartDashboard.putNumber("I Gain", i);
-      SmartDashboard.putNumber("D Gain", d);
-      SmartDashboard.putNumber("I Zone", iz);
-      SmartDashboard.putNumber("Feed Forward", ff);
-      SmartDashboard.putNumber("Max Output", max);
-      SmartDashboard.putNumber("Min Output", min);
-      SmartDashboard.putNumber("Set Rotations", rotations);
-
-      // read PID coefficients from SmartDashboard
-      p = SmartDashboard.getNumber("P Gain", 0);
-      i = SmartDashboard.getNumber("I Gain", 0);
-      d = SmartDashboard.getNumber("D Gain", 0);
-      iz = SmartDashboard.getNumber("I Zone", 0);
-      ff = SmartDashboard.getNumber("Feed Forward", 0);
-      max = SmartDashboard.getNumber("Max Output", 1);
-      min = SmartDashboard.getNumber("Min Output", -1);
-      rotations = SmartDashboard.getNumber("Set Rotations", 250);
-
-
-      // if PID coefficients on SmartDashboard have changed, write new values to controller
-      /* if((p != Constants.kIntakeP)) { m_pidController.setP(p); Constants.kIntakeP = p; }
-      if((i != Constants.kIntakeI)) { m_pidController.setI(i); Constants.kIntakeI = i; }
-      if((d != Constants.kIntakeD)) { m_pidController.setD(d); Constants.kIntakeD = d; }
-      if((iz != Constants.kIntakeIz)) { m_pidController.setIZone(iz); Constants.kIntakeIz = iz; }
-      if((ff != Constants.kIntakeFF)) { m_pidController.setFF(ff); Constants.kIntakeFF = ff; }
-      if((max != Constants.kIntakeMaxOutput) || (min != Constants.kIntakeMinOutput)) { 
-        m_pidController.setOutputRange(min, max); 
-        Constants.kIntakeMinOutput = min; Constants.kIntakeMaxOutput = max; 
-      } */
-      m_pidController.setP(p);
-      m_pidController.setI(i);
-      m_pidController.setD(d);
-      m_pidController.setIZone(iz);
-      m_pidController.setFF(ff);
-      m_pidController.setOutputRange(min, max);
-
-      /**
-       * PIDController objects are commanded to a set point using the 
-       * SetReference() method.
-       * 
-       * The first parameter is the value of the set point, whose units vary
-       * depending on the control type set in the second parameter.
-       * 
-       * The second parameter is the control type can be set to one of four 
-       * parameters:
-       *  com.revrobotics.CANSparkMax.ControlType.kDutyCycle
-       *  com.revrobotics.CANSparkMax.ControlType.kPosition
-       *  com.revrobotics.CANSparkMax.ControlType.kVelocity
-       *  com.revrobotics.CANSparkMax.ControlType.kVoltage
-       * 
-       * 
-       * 
-       */
-      
-    m_pidController.setReference(rotations, CANSparkMax.ControlType.kVelocity);
-    SmartDashboard.putNumber("SetPoint", rotations);
-    //SmartDashboard.putNumber("ProcessVariable", m_encoder.getPosition());
   }
 }

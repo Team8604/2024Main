@@ -9,12 +9,11 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.signals.InvertedValue;
 
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 /** Add your docs here. */
 public class Drivetrain {
-    public Drivetrain(){
+    public Drivetrain(RobotContainer RobotContainer){
         /* Configure the devices */
         var leftConfiguration = new TalonFXConfiguration();
         var rightConfiguration = new TalonFXConfiguration();

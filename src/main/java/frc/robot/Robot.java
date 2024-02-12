@@ -4,23 +4,10 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
-/*import com.ctre.phoenix6.Utils;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.revrobotics.CANSparkMax;*/
-import com.revrobotics.SparkPIDController;
 
-import edu.wpi.first.wpilibj.TimedRobot;/**
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Subsystem;*/
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.Subsystems.Intake;
-import frc.robot.Subsystems.Shooter;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Commands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,21 +16,18 @@ import frc.robot.Subsystems.Shooter;
  * project.
  */
 public class Robot extends TimedRobot {
-  private static final String CANBUS_NAME = "rio";
   
-
-
   private int printCount = 0;
 
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  private RobotContainer RobotContainer;
+  private RobotContainer robotContainer;
 
   @Override
   public void robotInit() {
-    RobotContainer = new RobotContainer();
+    robotContainer = new RobotContainer();
 
   }
 
@@ -51,10 +35,11 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     if (++printCount >= 10) {
       printCount = 0;
-      System.out.println("Left out: " + RobotContainer.leftLeader.get());
-      System.out.println("Right out: " + RobotContainer.rightLeader.get());
-      System.out.println("Left Pos: " + RobotContainer.leftLeader.getPosition());
-      System.out.println("Right Pos: " + RobotContainer.rightLeader.getPosition());
+      SmartDashboard.putNumber("Left out", robotContainer.leftLeader.getVelocity().getValueAsDouble());
+      SmartDashboard.putNumber("Right out", robotContainer.rightLeader.getVelocity().getValueAsDouble());
+      SmartDashboard.putNumber("Left Position", robotContainer.leftLeader.getPosition().getValueAsDouble());
+      SmartDashboard.putNumber("Right Position", robotContainer.rightLeader.getPosition().getValueAsDouble());
+      SmartDashboard.putNumber("Arm Position", robotContainer.m_ArmEncoder.getPosition());
     }
   }
 
@@ -72,12 +57,10 @@ public class Robot extends TimedRobot {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystic for drivetrain
-    double fwd = -RobotContainer.driverJoystick.getY();
+    double fwd = -robotContainer.driverJoystick.getY();
     double rot;
-    double rot1 = RobotContainer.driverJoystick.getX();
-    double rot2 = RobotContainer.driverJoystick.getZ()*1.2;
-    SparkPIDController m_pidController;
-    m_pidController = RobotContainer.intakeMotor.getPIDController();
+    double rot1 = robotContainer.driverJoystick.getX();
+    double rot2 = robotContainer.driverJoystick.getZ()*1.2;
 
     if (rot2 > 1){
       rot2 = 1;
@@ -105,56 +88,81 @@ public class Robot extends TimedRobot {
     rot *=0.25;
     
     /* Set output to control frames */
-    RobotContainer.leftOut.Output = fwd + rot;
-    RobotContainer.rightOut.Output = fwd - rot;
+    robotContainer.leftOut.Output = fwd + rot;
+    robotContainer.rightOut.Output = fwd - rot;
     /* And set them to the motors */
-    if (!RobotContainer.driverJoystick.getRawButtonPressed(2)/*getAButton()*/) {
-      RobotContainer.leftLeader.setControl(RobotContainer.leftOut);
-      RobotContainer.rightLeader.setControl(RobotContainer.rightOut);
+    if (!robotContainer.driverJoystick.getRawButtonPressed(2)/*getAButton()*/) {
+      robotContainer.leftLeader.setControl(robotContainer.leftOut);
+      robotContainer.rightLeader.setControl(robotContainer.rightOut);
     }
     
       //intake control
-      boolean intakeFwd = RobotContainer.operator.getAButton();
-      boolean intakeBwd = RobotContainer.operator.getBButton();
+      boolean intakeFwd = robotContainer.operator.getAButton();
+      boolean intakeBwd = robotContainer.operator.getBButton();
       //shooter conrol
-      boolean shooterFwd = RobotContainer.operator.getXButton();
-      boolean shooterBwd = RobotContainer.operator.getYButton();
+      boolean shooterFwd = robotContainer.operator.getXButton();
+      boolean shooterBwd = robotContainer.operator.getYButton();
+
+      //arm control
+      boolean armFwd = robotContainer.operator.getLeftBumperPressed(); 
       
       //intake
       if (intakeFwd){
         //spin intake motor foward
         if (intakeFwd && shooterFwd){
-          RobotContainer.intakeMotor.set(1);
-          System.out.println("Intake set to 1");
+          robotContainer.intakeMotor.set(1);
+          //System.out.println("Intake set to 1");
         } else{
-          RobotContainer.intakeMotor.set(0.25);
-          System.out.println("Intake set to 0.8");
+          robotContainer.intakeMotor.set(0.25);
+          //System.out.println("Intake set to 0.8");
         }
       } else if (intakeBwd) {
         //spin intake motor backwards (gets rid of jamed note)
-        RobotContainer.intakeMotor.set(-0.25);
-        System.out.println("Intake set to -0.5");
+        robotContainer.intakeMotor.set(-0.25);
+        //System.out.println("Intake set to -0.5");
       } else {
         //set intake motor to stop
-        RobotContainer.intakeMotor.set(0);
-        System.out.println("Intake set to 0");
+        robotContainer.intakeMotor.set(0);
+        //System.out.println("Intake set to 0");
       }
       
       //shooter
       if (shooterFwd){
-        //spin shooter motor foward
-        RobotContainer.shooterMotor.set(1);
-        System.out.println("Shooter set to 0.5");
+        //spin shooter motor fowardss
+        robotContainer.shooterMotor.set(1);
+        //System.out.println("Shooter set to 0.5");
       } else if (shooterBwd) {
         //spin shooter motor backwards (gets rid of jamed note)
-        RobotContainer.shooterMotor.set(-0.5);
-        System.out.println("Shooter set to -0.5");
+        robotContainer.shooterMotor.set(-0.5);
+        //System.out.println("Shooter set to -0.5");
       } else {
         //set shooter motor to stop
-        RobotContainer.shooterMotor.set(0);
-        System.out.println("Shooter set to 0");
+        robotContainer.shooterMotor.set(0);
+        //System.out.println("Shooter set to 0");
       }
-      
+
+
+      //arm
+      //gear box is 100-1
+      if (armFwd){
+        double start = robotContainer.m_ArmEncoder.getPosition();//uses built in encoder
+        double end = start +100;
+        double disiredSpeed = 0.1; //10% of full speed for arm
+        SmartDashboard.putNumber("Encoder Position start", robotContainer.m_ArmEncoder.getPosition());
+
+        robotContainer.m_RightArmMotor.set(0/*RobotContainer.operator.getLeftX()*/);
+        /*while (robotContainer.m_ArmEncoder.getPosition() < end){
+          
+          System.out.println("motor should be set to 0.1----");
+          SmartDashboard.putNumber("Encoder Position", robotContainer.m_ArmEncoder.getPosition());
+        }*/
+        System.out.println("Accelerate start------");
+        AccelerateArm.accelerateArm(robotContainer, disiredSpeed, (end/4));
+        System.out.println("Accelerate end------");
+
+        robotContainer.m_RightArmMotor.set(0/*robotContainer.operator.getLeftX()*/);
+
+      }
   }
 
   @Override
@@ -164,15 +172,16 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     /* Zero out controls so we aren't just relying on the enable frame */
     //drivetrian
-    RobotContainer.leftOut.Output = 0;
-    RobotContainer.rightOut.Output = 0;
-    RobotContainer.leftLeader.setControl(RobotContainer.leftOut);
-    RobotContainer.rightLeader.setControl(RobotContainer.rightOut);
+    robotContainer.leftOut.Output = 0;
+    robotContainer.rightOut.Output = 0;
+    robotContainer.leftLeader.setControl(robotContainer.leftOut);
+    robotContainer.rightLeader.setControl(robotContainer.rightOut);
     //intake
-    //m_pidController.setReference(0, CANSparkMax.ControlType.kVelocity);
-    /* RobotContainer.intakeMotor.setRotations(0);
+    robotContainer.intakeMotor.set(0);
     //shooter
-    RobotContainer.shooterMotor.setRotations(0); */
+    robotContainer.shooterMotor.set(0);
+    //arm
+    robotContainer.m_RightArmMotor.set(0);
 
   }
 

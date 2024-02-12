@@ -4,14 +4,18 @@
 
 package frc.robot.Subsystems;
 
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 
 /** Add your docs here. */
-public class Shooter {
+public class Arm {
+  
+  public Arm(RobotContainer RobotContainer){
+    RobotContainer.m_RightArmMotor.restoreFactoryDefaults();
+    RobotContainer.m_LeftArmMotor.restoreFactoryDefaults();
 
-  public Shooter(){
-        
+    RobotContainer.m_LeftArmMotor.follow(RobotContainer.m_RightArmMotor, true);
   }
+
 }
+
