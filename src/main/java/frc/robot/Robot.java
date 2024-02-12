@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
       rot2 = -1;
     }
     //gets either the bigger of twist or sideways
-    if (rot2 < 0.1){
+    if (Math.abs(rot2) < 0.1){
       rot2=0;
     }
     if (Math.abs(rot1) >= Math.abs(rot2)){
@@ -84,8 +84,8 @@ public class Robot extends TimedRobot {
       fwd = 0;
     }
     //sets drivetrain motors to 25% speed
-    fwd *=0.25;
-    rot *=0.25;
+    fwd *= Constants.kDrivetrainSpeed;
+    rot *= Constants.kDrivetrainSpeed;
     
     /* Set output to control frames */
     robotContainer.leftOut.Output = fwd + rot;
@@ -118,7 +118,7 @@ public class Robot extends TimedRobot {
         }
       } else if (intakeBwd) {
         //spin intake motor backwards (gets rid of jamed note)
-        robotContainer.intakeMotor.set(-0.25);
+        robotContainer.intakeMotor.set(-1 * Constants.kIntakeSpeed);
         //System.out.println("Intake set to -0.5");
       } else {
         //set intake motor to stop
@@ -129,11 +129,11 @@ public class Robot extends TimedRobot {
       //shooter
       if (shooterFwd){
         //spin shooter motor fowardss
-        robotContainer.shooterMotor.set(1);
+        robotContainer.shooterMotor.set(Constants.kShooterSpeed);
         //System.out.println("Shooter set to 0.5");
       } else if (shooterBwd) {
         //spin shooter motor backwards (gets rid of jamed note)
-        robotContainer.shooterMotor.set(-0.5);
+        robotContainer.shooterMotor.set(-0.5 * Constants.kShooterSpeed);
         //System.out.println("Shooter set to -0.5");
       } else {
         //set shooter motor to stop
