@@ -20,35 +20,35 @@ import frc.robot.Subsystems.Shooter;
 import frc.robot.Subsystems.Arm;
 
 public class RobotContainer {
-    //drivetrain 
-    public final String CANBUS_NAME = "rio";
-    public final TalonFX leftLeader = new TalonFX(Constants.kLeftLeader, CANBUS_NAME);
-    public final TalonFX leftFollower = new TalonFX(Constants.kLeftFollower, CANBUS_NAME);
-    public final TalonFX rightLeader = new TalonFX(Constants.kRightLeader, CANBUS_NAME);
-    public final TalonFX rightFollower = new TalonFX(Constants.kRightFollower, CANBUS_NAME);
+  //drivetrain 
+  public final String CANBUS_NAME = "rio";
+  public final TalonFX leftLeader = new TalonFX(Constants.kLeftLeader, CANBUS_NAME);
+  public final TalonFX leftFollower = new TalonFX(Constants.kLeftFollower, CANBUS_NAME);
+  public final TalonFX rightLeader = new TalonFX(Constants.kRightLeader, CANBUS_NAME);
+  public final TalonFX rightFollower = new TalonFX(Constants.kRightFollower, CANBUS_NAME);
 
-    //drivetrain duty cycles
-    public final DutyCycleOut leftOut = new DutyCycleOut(0);
-    public final DutyCycleOut rightOut = new DutyCycleOut(0);
+  //drivetrain duty cycles
+  public final DutyCycleOut leftOut = new DutyCycleOut(0);
+  public final DutyCycleOut rightOut = new DutyCycleOut(0);
 
-    //arm
-    public final CANSparkMax rightArm = new CANSparkMax(Constants.kRightArm, MotorType.kBrushless);
-    public final CANSparkMax leftArm = new CANSparkMax(Constants.kLeftArm, MotorType.kBrushless);
-    public final RelativeEncoder armEncoder = rightArm.getEncoder(); 
+  //arm
+  public final CANSparkMax rightArm = new CANSparkMax(Constants.kRightArm, MotorType.kBrushless);
+  public final CANSparkMax leftArm = new CANSparkMax(Constants.kLeftArm, MotorType.kBrushless);
+  public final RelativeEncoder armEncoder = rightArm.getEncoder(); 
 
-    //intake and shooter
-    public final CANSparkMax intakeMotor = new CANSparkMax(Constants.kIntakeMotor, MotorType.kBrushless);
-    public final CANSparkMax shooterMotor = new CANSparkMax(Constants.kShooterMotor, MotorType.kBrushless);
+  //intake and shooter
+  public final CANSparkMax intakeMotor = new CANSparkMax(Constants.kIntakeMotor, MotorType.kBrushless);
+  public final CANSparkMax shooterMotor = new CANSparkMax(Constants.kShooterMotor, MotorType.kBrushless);
 
-    //controllers
-    public final XboxController operator = new XboxController(1);
-    public final Joystick driverJoystick = new Joystick(0);
+  //controllers
+  public final XboxController operator = new XboxController(1);
+  public final Joystick driverJoystick = new Joystick(0);
   
-    //initialize subsystems
-    public Drivetrain drivetrain = new Drivetrain(this);
-    public Intake intake = new Intake();
-    public Shooter shooter = new Shooter();
-    public Arm arm = new Arm(this);
+  //initialize subsystems
+  public Drivetrain drivetrain = new Drivetrain(this);
+  public Intake intake = new Intake();
+  public Shooter shooter = new Shooter();
+  public Arm arm = new Arm(this);
 
-    public RobotContainer(){}
+  public RobotContainer(){}
 }

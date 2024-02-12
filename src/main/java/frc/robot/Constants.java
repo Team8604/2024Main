@@ -7,15 +7,15 @@ package frc.robot;
 
 /** Add your docs here. */
 public final class Constants {
-    
-    //CAN IDs for devices
-    public static final int kRightLeader = 1;
-    public static final int kRightFollower = 2;
-    public static final int kLeftLeader = 3;
-    public static final int kLeftFollower = 4;
-    public static final int kIntakeMotor = 5;
-    public static final int kShooterMotor = 6;
-    public static final int kRightArm = 7;
-    public static final int kLeftArm = 8;
+
+  //CAN IDs for devices
+  public static final int kRightLeader = 1;
+  public static final int kRightFollower = 2;
+  public static final int kLeftLeader = 3;
+  public static final int kLeftFollower = 4;
+  public static final int kIntakeMotor = 5;
+  public static final int kShooterMotor = 6;
+  public static final int kRightArm = 7;
+  public static final int kLeftArm = 8;
 
 }
