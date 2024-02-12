@@ -7,6 +7,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Commands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,11 +23,11 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  private RobotContainer RobotContainer;
+  private RobotContainer robotContainer;
 
   @Override
   public void robotInit() {
-    RobotContainer = new RobotContainer();
+    robotContainer = new RobotContainer();
 
   }
 
@@ -56,10 +57,10 @@ public class Robot extends TimedRobot {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystic for drivetrain
-    double fwd = -RobotContainer.driverJoystick.getY();
+    double fwd = -robotContainer.driverJoystick.getY();
     double rot;
-    double rot1 = RobotContainer.driverJoystick.getX();
-    double rot2 = RobotContainer.driverJoystick.getZ()*1.2;
+    double rot1 = robotContainer.driverJoystick.getX();
+    double rot2 = robotContainer.driverJoystick.getZ()*1.2;
 
     if (rot2 > 1){
       rot2 = 1;
@@ -87,56 +88,56 @@ public class Robot extends TimedRobot {
     rot *=0.25;
     
     /* Set output to control frames */
-    RobotContainer.leftOut.Output = fwd + rot;
-    RobotContainer.rightOut.Output = fwd - rot;
+    robotContainer.leftOut.Output = fwd + rot;
+    robotContainer.rightOut.Output = fwd - rot;
     /* And set them to the motors */
-    if (!RobotContainer.driverJoystick.getRawButtonPressed(2)/*getAButton()*/) {
-      RobotContainer.leftLeader.setControl(RobotContainer.leftOut);
-      RobotContainer.rightLeader.setControl(RobotContainer.rightOut);
+    if (!robotContainer.driverJoystick.getRawButtonPressed(2)/*getAButton()*/) {
+      robotContainer.leftLeader.setControl(robotContainer.leftOut);
+      robotContainer.rightLeader.setControl(robotContainer.rightOut);
     }
     
       //intake control
-      boolean intakeFwd = RobotContainer.operator.getAButton();
-      boolean intakeBwd = RobotContainer.operator.getBButton();
+      boolean intakeFwd = robotContainer.operator.getAButton();
+      boolean intakeBwd = robotContainer.operator.getBButton();
       //shooter conrol
-      boolean shooterFwd = RobotContainer.operator.getXButton();
-      boolean shooterBwd = RobotContainer.operator.getYButton();
+      boolean shooterFwd = robotContainer.operator.getXButton();
+      boolean shooterBwd = robotContainer.operator.getYButton();
 
       //arm control
-      boolean armFwd = RobotContainer.operator.getLeftBumperPressed(); 
+      boolean armFwd = robotContainer.operator.getLeftBumperPressed(); 
       
       //intake
       if (intakeFwd){
         //spin intake motor foward
         if (intakeFwd && shooterFwd){
-          RobotContainer.intakeMotor.set(1);
+          robotContainer.intakeMotor.set(1);
           //System.out.println("Intake set to 1");
         } else{
-          RobotContainer.intakeMotor.set(0.25);
+          robotContainer.intakeMotor.set(0.25);
           //System.out.println("Intake set to 0.8");
         }
       } else if (intakeBwd) {
         //spin intake motor backwards (gets rid of jamed note)
-        RobotContainer.intakeMotor.set(-0.25);
+        robotContainer.intakeMotor.set(-0.25);
         //System.out.println("Intake set to -0.5");
       } else {
         //set intake motor to stop
-        RobotContainer.intakeMotor.set(0);
+        robotContainer.intakeMotor.set(0);
         //System.out.println("Intake set to 0");
       }
       
       //shooter
       if (shooterFwd){
-        //spin shooter motor foward
-        RobotContainer.shooterMotor.set(1);
+        //spin shooter motor fowardss
+        robotContainer.shooterMotor.set(1);
         //System.out.println("Shooter set to 0.5");
       } else if (shooterBwd) {
         //spin shooter motor backwards (gets rid of jamed note)
-        RobotContainer.shooterMotor.set(-0.5);
+        robotContainer.shooterMotor.set(-0.5);
         //System.out.println("Shooter set to -0.5");
       } else {
         //set shooter motor to stop
-        RobotContainer.shooterMotor.set(0);
+        robotContainer.shooterMotor.set(0);
         //System.out.println("Shooter set to 0");
       }
 
@@ -176,7 +177,7 @@ public class Robot extends TimedRobot {
     RobotContainer.leftLeader.setControl(RobotContainer.leftOut);
     RobotContainer.rightLeader.setControl(RobotContainer.rightOut);
     //intake
-    RobotContainer.intakeMotor.set(0);
+    robotContainer.intakeMotor.set(0);
     //shooter
     RobotContainer.shooterMotor.set(0);
     //arm

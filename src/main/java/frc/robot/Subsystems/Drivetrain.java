@@ -9,7 +9,6 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.signals.InvertedValue;
 
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 /** Add your docs here. */

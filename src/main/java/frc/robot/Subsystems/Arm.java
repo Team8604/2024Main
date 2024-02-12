@@ -4,12 +4,8 @@
 
 package frc.robot.Subsystems;
 
-import edu.wpi.first.wpilibj.TimedRobot;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 
 /** Add your docs here. */
 public class Arm {
@@ -35,7 +31,6 @@ public class Arm {
       //RobotContainer.rightArm.set(topSpeed * percentageRelativeToRotation);
     }
   }
-
 
 }
 
