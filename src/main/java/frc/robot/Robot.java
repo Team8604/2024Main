@@ -56,10 +56,10 @@ public class Robot extends TimedRobot {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystic for drivetrain
-    double fwd = -robotContainer.driverJoystick.getY();
+    double fwd = -1 * Math.pow(robotContainer.driverJoystick.getY(), 2.6);
     double rot;
-    double rot1 = robotContainer.driverJoystick.getX();
-    double rot2 = robotContainer.driverJoystick.getZ()*1.2;
+    double rot1 = Math.pow(robotContainer.driverJoystick.getX(), 2.6);
+    double rot2 = Math.pow(robotContainer.driverJoystick.getZ(), 2.6);
 
     if (rot2 > 1){
       rot2 = 1;
@@ -96,26 +96,26 @@ public class Robot extends TimedRobot {
     }
     
       //intake control
-      boolean intakeFwd = robotContainer.operator.getAButton();
-      boolean intakeBwd = robotContainer.operator.getBButton();
+      boolean operatorA = robotContainer.operator.getAButton();
+      boolean operatorB = robotContainer.operator.getBButton();
       //shooter conrol
-      boolean shooterFwd = robotContainer.operator.getXButton();
-      boolean shooterBwd = robotContainer.operator.getYButton();
+      boolean operatorX = robotContainer.operator.getXButton();
+      boolean operatorY = robotContainer.operator.getYButton();
 
       //arm control
-      boolean armFwd = robotContainer.operator.getLeftBumperPressed(); 
+      boolean leftBumper = robotContainer.operator.getLeftBumperPressed(); 
       
       //intake
-      if (intakeFwd){
+      if (operatorA){
         //spin intake motor foward
-        if (intakeFwd && shooterFwd){
-          robotContainer.intakeMotor.set(1);
+        if (operatorA && operatorX){
+          robotContainer.intakeMotor.set(Constants.kMaxIntake);
           //System.out.println("Intake set to 1");
         } else{
-          robotContainer.intakeMotor.set(0.25);
+          robotContainer.intakeMotor.set(Constants.kIntakeSpeed);
           //System.out.println("Intake set to 0.8");
         }
-      } else if (intakeBwd) {
+      } else if (operatorB) {
         //spin intake motor backwards (gets rid of jamed note)
         robotContainer.intakeMotor.set(-1 * Constants.kIntakeSpeed);
         //System.out.println("Intake set to -0.5");
@@ -126,11 +126,11 @@ public class Robot extends TimedRobot {
       }
       
       //shooter
-      if (shooterFwd){
+      if (operatorX){
         //spin shooter motor fowardss
         robotContainer.shooterMotor.set(Constants.kShooterSpeed);
         //System.out.println("Shooter set to 0.5");
-      } else if (shooterBwd) {
+      } else if (operatorY) {
         //spin shooter motor backwards (gets rid of jamed note)
         robotContainer.shooterMotor.set(-0.5 * Constants.kShooterSpeed);
         //System.out.println("Shooter set to -0.5");
@@ -143,9 +143,8 @@ public class Robot extends TimedRobot {
 
       //arm
       //gear box is 100-1
-      if (armFwd){
-        double start = robotContainer.armEncoder.getPosition();
-        double end = start +100;
+      if (leftBumper){ //Move arm forward
+        double end = robotContainer.armEncoder.getPosition() +100;
         SmartDashboard.putNumber("Encoder Position start", robotContainer.armEncoder.getPosition());
 
         robotContainer.rightArm.set(0/*robotContainer.operator.getLeftX()*/);
