@@ -5,18 +5,31 @@
 package frc.robot.Subsystems;
 
 import frc.robot.RobotContainer;
-
+import frc.robot.Constants;
 
 /** Add your docs here. */
 public class Arm {
-  RobotContainer RobotContainer;
+  RobotContainer robotContainer;
   public Arm(RobotContainer rc){
-    this.RobotContainer = rc;
-    RobotContainer.rightArm.restoreFactoryDefaults();
-    RobotContainer.leftArm.restoreFactoryDefaults();
+    this.robotContainer = rc;
+    robotContainer.rightArm.restoreFactoryDefaults();
+    robotContainer.leftArm.restoreFactoryDefaults();
 
-    RobotContainer.leftArm.follow(RobotContainer.rightArm, true);
+    robotContainer.leftArm.follow(robotContainer.rightArm, true);
 
+  }
+
+  public void accelerate(double totalRotations){
+    double encoderStartPosition = robotContainer.armEncoder.getPosition();
+    double encoderEndPosition = encoderStartPosition+totalRotations;
+
+    robotContainer.rightArm.set(0);
+    for (double encoderPostion = robotContainer.armEncoder.getPosition(); encoderPostion < encoderEndPosition; encoderPostion = robotContainer.armEncoder.getPosition()) {
+      double percentageRelativeToRotation = (encoderPostion-encoderStartPosition)/totalRotations;
+      robotContainer.rightArm.set(Constants.kArmSpeed);
+      System.out.println("arm motor should be set to 0.1"+ Constants.kArmSpeed * percentageRelativeToRotation);
+      //robotContainer.rightArm.set(topSpeed * percentageRelativeToRotation);
+    }
   }
 
 }

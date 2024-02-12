@@ -7,7 +7,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Commands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -147,7 +146,6 @@ public class Robot extends TimedRobot {
       if (armFwd){
         double start = robotContainer.armEncoder.getPosition();
         double end = start +100;
-        double desiredSpeed = 0.1; //10% of full speed for arm
         SmartDashboard.putNumber("Encoder Position start", robotContainer.armEncoder.getPosition());
 
         robotContainer.rightArm.set(0/*robotContainer.operator.getLeftX()*/);
@@ -157,7 +155,7 @@ public class Robot extends TimedRobot {
           SmartDashboard.putNumber("Encoder Position", robotContainer.armEncoder.getPosition());
         }*/
         System.out.println("Accelerate start------");
-        AccelerateArm.accelerateArm(robotContainer, desiredSpeed, (end/4));
+        robotContainer.arm.accelerate(end / 4);
         System.out.println("Accelerate end------");
 
         robotContainer.rightArm.set(0/*robotContainer.operator.getLeftX()*/);

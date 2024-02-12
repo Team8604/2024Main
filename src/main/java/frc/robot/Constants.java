@@ -14,6 +14,7 @@ public final class Constants {
     public static final double kIntakeSpeed = 0.25;
     public static final double kMaxIntake = 1;
     public static final double kDrivetrainSpeed = 0.1;
+    public static final double kArmSpeed = 0.1;
     
     //CAN IDs for devices
     public static final int kRightLeader = 1;
