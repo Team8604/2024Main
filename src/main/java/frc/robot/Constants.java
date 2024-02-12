@@ -17,5 +17,7 @@ public final class Constants {
     public static final int kShooterMotor = 6;
     public static final int kRightArm = 7;
     public static final int kLeftArm = 8;
+    //public static final int kRightClimber = 9;
+    //public static final int kRightClimber = 10;
 
 }
