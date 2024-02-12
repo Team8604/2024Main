@@ -35,11 +35,11 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     if (++printCount >= 10) {
       printCount = 0;
-      SmartDashboard.putNumber("Left out", robotContainer.leftLeader.getVelocity().getValueAsDouble());
-      SmartDashboard.putNumber("Right out", robotContainer.rightLeader.getVelocity().getValueAsDouble());
-      SmartDashboard.putNumber("Left Position", robotContainer.leftLeader.getPosition().getValueAsDouble());
-      SmartDashboard.putNumber("Right Position", robotContainer.rightLeader.getPosition().getValueAsDouble());
-      SmartDashboard.putNumber("Arm Position", robotContainer.m_ArmEncoder.getPosition());
+      SmartDashboard.putNumber("Left out", RobotContainer.leftLeader.getVelocity().getValueAsDouble());
+      SmartDashboard.putNumber("Right out", RobotContainer.rightLeader.getVelocity().getValueAsDouble());
+      SmartDashboard.putNumber("Left Position", RobotContainer.leftLeader.getPosition().getValueAsDouble());
+      SmartDashboard.putNumber("Right Position", RobotContainer.rightLeader.getPosition().getValueAsDouble());
+      SmartDashboard.putNumber("Arm Position", RobotContainer.armEncoder.getPosition());
     }
   }
 
@@ -145,22 +145,22 @@ public class Robot extends TimedRobot {
       //arm
       //gear box is 100-1
       if (armFwd){
-        double start = robotContainer.m_ArmEncoder.getPosition();//uses built in encoder
+        double start = RobotContainer.armEncoder.getPosition();
         double end = start +100;
-        double disiredSpeed = 0.1; //10% of full speed for arm
-        SmartDashboard.putNumber("Encoder Position start", robotContainer.m_ArmEncoder.getPosition());
+        double desiredSpeed = 0.1; //10% of full speed for arm
+        SmartDashboard.putNumber("Encoder Position start", RobotContainer.armEncoder.getPosition());
 
-        robotContainer.m_RightArmMotor.set(0/*RobotContainer.operator.getLeftX()*/);
-        /*while (robotContainer.m_ArmEncoder.getPosition() < end){
+        RobotContainer.rightArm.set(0/*RobotContainer.operator.getLeftX()*/);
+        /*while (robotContainer.armEncoder.getPosition() < end){
           
           System.out.println("motor should be set to 0.1----");
-          SmartDashboard.putNumber("Encoder Position", robotContainer.m_ArmEncoder.getPosition());
+          SmartDashboard.putNumber("Encoder Position", robotContainer.armEncoder.getPosition());
         }*/
         System.out.println("Accelerate start------");
-        AccelerateArm.accelerateArm(robotContainer, disiredSpeed, (end/4));
+        RobotContainer.arm.accelerate(desiredSpeed, (end/4));
         System.out.println("Accelerate end------");
 
-        robotContainer.m_RightArmMotor.set(0/*robotContainer.operator.getLeftX()*/);
+        RobotContainer.rightArm.set(0/*RobotContainer.operator.getLeftX()*/);
 
       }
   }
@@ -171,17 +171,17 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     /* Zero out controls so we aren't just relying on the enable frame */
-    //drivetrian
-    robotContainer.leftOut.Output = 0;
-    robotContainer.rightOut.Output = 0;
-    robotContainer.leftLeader.setControl(robotContainer.leftOut);
-    robotContainer.rightLeader.setControl(robotContainer.rightOut);
+    //drivetrain
+    RobotContainer.leftOut.Output = 0;
+    RobotContainer.rightOut.Output = 0;
+    RobotContainer.leftLeader.setControl(RobotContainer.leftOut);
+    RobotContainer.rightLeader.setControl(RobotContainer.rightOut);
     //intake
     robotContainer.intakeMotor.set(0);
     //shooter
-    robotContainer.shooterMotor.set(0);
+    RobotContainer.shooterMotor.set(0);
     //arm
-    robotContainer.m_RightArmMotor.set(0);
+    RobotContainer.rightArm.set(0);
 
   }
 
