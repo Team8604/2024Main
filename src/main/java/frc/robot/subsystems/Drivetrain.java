@@ -10,6 +10,7 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -57,13 +58,18 @@ public class Drivetrain extends SubsystemBase {
    * @return value of some boolean subsystem state, such as a digital sensor.
    */
   public void setSpeed(double left, double right) {
-    // Query some boolean state, such as a digital sensor.
-    
+    leftOut.Output = MathUtil.clamp(left, -1 * DriveConstants.kMaxSpeed, DriveConstants.kMaxSpeed);
+    rightOut.Output = MathUtil.clamp(right, -1 * DriveConstants.kMaxSpeed, DriveConstants.kMaxSpeed);    
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Left out", leftLeader.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Right out", rightLeader.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Left Position", leftLeader.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("Right Position", rightLeader.getPosition().getValueAsDouble());
+    leftLeader.setControl(leftOut);
+    rightLeader.setControl(rightOut);
   }
 }

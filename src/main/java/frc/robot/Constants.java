@@ -24,5 +24,7 @@ public final class Constants {
     public static final int kRightFollower = 2;
     public static final int kLeftLeader = 3;
     public static final int kLeftFollower = 4;
+
+    public static final double kMaxSpeed = .1;
   }
 }
