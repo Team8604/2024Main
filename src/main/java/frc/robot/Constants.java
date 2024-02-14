@@ -16,4 +16,13 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static class DriveConstants {
+    // Identification of motors
+    public static final String CANBUS_NAME = "rio";
+    public static final int kRightLeader = 1;
+    public static final int kRightFollower = 2;
+    public static final int kLeftLeader = 3;
+    public static final int kLeftFollower = 4;
+  }
 }
