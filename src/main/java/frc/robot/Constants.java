@@ -27,4 +27,26 @@ public final class Constants {
 
     public static final double kMaxSpeed = .1;
   }
+
+  public static class IntakeConstants {
+    public static final int kIntake = 5;
+
+    public static final double kMaxSpeed = 1;
+    public static final double kIntakeSpeed = 0.25;
+  }
+
+  public static class ShooterConstants {
+    public static final int kShooter = 6;
+
+    public static final double kMaxSpeed = 1;
+    public static final double kAmpSpeed = 0.1;
+  }
+
+  public static class ArmConstants {
+    public static final int kRightArm = 7;
+    public static final int kLeftArm = 8;
+  }
+
+  //public static final int kRightClimber = 9;
+  //public static final int kLeftClimber = 10;
 }
