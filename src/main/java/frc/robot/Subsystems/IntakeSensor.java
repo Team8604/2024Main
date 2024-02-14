@@ -4,20 +4,19 @@
 
 package frc.robot.Subsystems;
 
-//import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.IterativeRobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.*;
-//import com.revrobotics.Rev2mDistanceSensor.Port;
+import com.revrobotics.Rev2mDistanceSensor.*;
 
 /** Add your docs here. */
 public class IntakeSensor {
-    //private Rev2mDistanceSensor distOnboard; 
+    private static Rev2mDistanceSensor distOnboard;
 
     public static double getIntakeSensorDistance(){
-        //distOnboard.setAutomaticMode(true);
+        distOnboard.setAutomaticMode(true);
 
-        //return distOnboard.getRange();
-        return 0;
+        return distOnboard.getRange();
     }
 }
