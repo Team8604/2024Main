@@ -7,6 +7,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Subsystems.IntakeSensor;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -110,10 +111,8 @@ public class Robot extends TimedRobot {
         //spin intake motor foward
         if (intakeFwd && shooterFwd){
           robotContainer.intakeMotor.set(1);
-          //System.out.println("Intake set to 1");
-        } else{
+        } else if (IntakeSensor.getIntakeSensorDistance() > 20){//adjust number so that intake stops when object is blocking sensor the motor doesn't spin
           robotContainer.intakeMotor.set(0.25);
-          //System.out.println("Intake set to 0.8");
         }
       } else if (intakeBwd) {
         //spin intake motor backwards (gets rid of jamed note)
