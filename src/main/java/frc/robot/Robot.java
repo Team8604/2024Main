@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -39,6 +40,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Left Position", robotContainer.leftLeader.getPosition().getValueAsDouble());
       SmartDashboard.putNumber("Right Position", robotContainer.rightLeader.getPosition().getValueAsDouble());
       SmartDashboard.putNumber("Arm Position", robotContainer.armEncoder.getAbsolutePosition());
+      SmartDashboard.putNumber("Arm Speed", MathUtil.clamp(robotContainer.arm.pid.calculate(robotContainer.armEncoder.getAbsolutePosition(), 0.90), -1 * Constants.kArmMaxSpeed, Constants.kArmMaxSpeed));
     }
   }
 
@@ -143,23 +145,8 @@ public class Robot extends TimedRobot {
 
       //arm
       //gear box is 100-1
-      if (leftBumper){ //Move arm forward
-        double end = robotContainer.armEncoder.getAbsolutePosition() +100;
-        SmartDashboard.putNumber("Encoder Position start", robotContainer.armEncoder.getAbsolutePosition());
+      robotContainer.rightArm.set(MathUtil.clamp(robotContainer.arm.pid.calculate(robotContainer.armEncoder.getAbsolutePosition(), 0.90), -1 * Constants.kArmMaxSpeed, Constants.kArmMaxSpeed));
 
-        robotContainer.rightArm.set(0/*robotContainer.operator.getLeftX()*/);
-        /*while (robotContainer.armEncoder.getPosition() < end){
-          
-          System.out.println("motor should be set to 0.1----");
-          SmartDashboard.putNumber("Encoder Position", robotContainer.armEncoder.getPosition());
-        }*/
-        System.out.println("Accelerate start------");
-        robotContainer.arm.accelerate(end / 4);
-        System.out.println("Accelerate end------");
-
-        robotContainer.rightArm.set(0/*robotContainer.operator.getLeftX()*/);
-
-      }
   }
 
   @Override
