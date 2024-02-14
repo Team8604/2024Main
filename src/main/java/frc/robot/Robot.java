@@ -104,6 +104,7 @@ public class Robot extends TimedRobot {
       //shooter conrol
       boolean operatorX = robotContainer.operator.getXButton();
       boolean operatorY = robotContainer.operator.getYButton();
+      boolean righBumper = robotContainer.operator.getRightBumperPressed();
 
       //arm control
       boolean leftBumper = robotContainer.operator.getLeftBumperPressed(); 
@@ -111,23 +112,18 @@ public class Robot extends TimedRobot {
       //intake
       if (operatorA){
         //spin intake motor foward
-<<<<<<< HEAD
-        if (intakeFwd && shooterFwd){
-          robotContainer.intakeMotor.set(1);
-        } else if (IntakeSensor.getIntakeSensorDistance() > 20){//adjust number so that intake stops when object is blocking sensor the motor doesn't spin
-          robotContainer.intakeMotor.set(0.25);
-=======
         if (operatorA && operatorX){
-          robotContainer.intakeMotor.set(Constants.kMaxIntake);
-          //System.out.println("Intake set to 1");
-        } else{
+          robotContainer.intakeMotor.set(Constants.kMaxIntakeSpeed);
+        }
+        else if (IntakeSensor.getIntakeSensorDistance() < 20){//adjust number so that intake stops when object is blocking sensor the motor doesn't spin
+          robotContainer.intakeMotor.set(0);
+        }
+        else {
           robotContainer.intakeMotor.set(Constants.kIntakeSpeed);
-          //System.out.println("Intake set to 0.8");
->>>>>>> 75bd5fd8bf5d706fef4d1ce4c9757608be34070f
         }
       } else if (operatorB) {
         //spin intake motor backwards (gets rid of jamed note)
-        robotContainer.intakeMotor.set(-1 * Constants.kIntakeSpeed);
+        robotContainer.intakeMotor.set(Constants.kIntakeSpeed);
         //System.out.println("Intake set to -0.5");
       } else {
         //set intake motor to stop
@@ -137,17 +133,17 @@ public class Robot extends TimedRobot {
       
       //shooter
       if (operatorX){
-        //spin shooter motor fowardss
+        //spin shooter motor foward for shooting
         robotContainer.shooterMotor.set(Constants.kShooterSpeed);
-        //System.out.println("Shooter set to 0.5");
       } else if (operatorY) {
+        //spin shooter motor foward for scoring in amp
+        robotContainer.shooterMotor.set(Constants.kAmpShooterSpeed);
+      } else if (righBumper) {
         //spin shooter motor backwards (gets rid of jamed note)
-        robotContainer.shooterMotor.set(-0.5 * Constants.kShooterSpeed);
-        //System.out.println("Shooter set to -0.5");
+        robotContainer.shooterMotor.set(-Constants.kAmpShooterSpeed);
       } else {
         //set shooter motor to stop
         robotContainer.shooterMotor.set(0);
-        //System.out.println("Shooter set to 0");
       }
 
 

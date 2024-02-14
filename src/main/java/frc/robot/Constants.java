@@ -10,9 +10,9 @@ public final class Constants {
     
     //Motor speeds
     public static final double kShooterSpeed = 1;
-    public static final double kAmpShooter = 0.1;
+    public static final double kAmpShooterSpeed = 0.1;
     public static final double kIntakeSpeed = 0.25;
-    public static final double kMaxIntake = 1;
+    public static final double kMaxIntakeSpeed = 1;
     public static final double kDrivetrainSpeed = 0.1;
     public static final double kArmMaxSpeed = 0.1;
 
@@ -28,10 +28,11 @@ public final class Constants {
     public static final int kLeftFollower = 4;
     public static final int kIntakeMotor = 5;
     public static final int kShooterMotor = 6;
-    public static final int kArmEncoder = 0;
     public static final int kRightArm = 7;
     public static final int kLeftArm = 8;
     //public static final int kRightClimber = 9;
     //public static final int kRightClimber = 10;
+
+    public static final int kArmEncoder = 0;
 
 }
