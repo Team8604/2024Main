@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.IntakeSensor;
@@ -39,7 +40,8 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Right out", robotContainer.rightLeader.getVelocity().getValueAsDouble());
       SmartDashboard.putNumber("Left Position", robotContainer.leftLeader.getPosition().getValueAsDouble());
       SmartDashboard.putNumber("Right Position", robotContainer.rightLeader.getPosition().getValueAsDouble());
-      SmartDashboard.putNumber("Arm Position", robotContainer.armEncoder.getPosition());
+      SmartDashboard.putNumber("Arm Position", robotContainer.armEncoder.getAbsolutePosition());
+      SmartDashboard.putNumber("Arm Speed", MathUtil.clamp(robotContainer.arm.pid.calculate(robotContainer.armEncoder.getAbsolutePosition(), 0.90), -1 * Constants.kArmMaxSpeed, Constants.kArmMaxSpeed));
     }
   }
 
@@ -57,10 +59,10 @@ public class Robot extends TimedRobot {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystic for drivetrain
-    double fwd = -robotContainer.driverJoystick.getY();
+    double fwd = -1 * Math.pow(robotContainer.driverJoystick.getY(), 2.6);
     double rot;
-    double rot1 = robotContainer.driverJoystick.getX();
-    double rot2 = robotContainer.driverJoystick.getZ()*1.2;
+    double rot1 = Math.pow(robotContainer.driverJoystick.getX(), 2.6);
+    double rot2 = Math.pow(robotContainer.driverJoystick.getZ(), 2.6);
 
     if (rot2 > 1){
       rot2 = 1;
@@ -97,24 +99,33 @@ public class Robot extends TimedRobot {
     }
     
       //intake control
-      boolean intakeFwd = robotContainer.operator.getAButton();
-      boolean intakeBwd = robotContainer.operator.getBButton();
+      boolean operatorA = robotContainer.operator.getAButton();
+      boolean operatorB = robotContainer.operator.getBButton();
       //shooter conrol
-      boolean shooterFwd = robotContainer.operator.getXButton();
-      boolean shooterBwd = robotContainer.operator.getYButton();
+      boolean operatorX = robotContainer.operator.getXButton();
+      boolean operatorY = robotContainer.operator.getYButton();
 
       //arm control
-      boolean armFwd = robotContainer.operator.getLeftBumperPressed(); 
+      boolean leftBumper = robotContainer.operator.getLeftBumperPressed(); 
       
       //intake
-      if (intakeFwd){
+      if (operatorA){
         //spin intake motor foward
+<<<<<<< HEAD
         if (intakeFwd && shooterFwd){
           robotContainer.intakeMotor.set(1);
         } else if (IntakeSensor.getIntakeSensorDistance() > 20){//adjust number so that intake stops when object is blocking sensor the motor doesn't spin
           robotContainer.intakeMotor.set(0.25);
+=======
+        if (operatorA && operatorX){
+          robotContainer.intakeMotor.set(Constants.kMaxIntake);
+          //System.out.println("Intake set to 1");
+        } else{
+          robotContainer.intakeMotor.set(Constants.kIntakeSpeed);
+          //System.out.println("Intake set to 0.8");
+>>>>>>> 75bd5fd8bf5d706fef4d1ce4c9757608be34070f
         }
-      } else if (intakeBwd) {
+      } else if (operatorB) {
         //spin intake motor backwards (gets rid of jamed note)
         robotContainer.intakeMotor.set(-1 * Constants.kIntakeSpeed);
         //System.out.println("Intake set to -0.5");
@@ -125,11 +136,11 @@ public class Robot extends TimedRobot {
       }
       
       //shooter
-      if (shooterFwd){
+      if (operatorX){
         //spin shooter motor fowardss
         robotContainer.shooterMotor.set(Constants.kShooterSpeed);
         //System.out.println("Shooter set to 0.5");
-      } else if (shooterBwd) {
+      } else if (operatorY) {
         //spin shooter motor backwards (gets rid of jamed note)
         robotContainer.shooterMotor.set(-0.5 * Constants.kShooterSpeed);
         //System.out.println("Shooter set to -0.5");
@@ -142,24 +153,8 @@ public class Robot extends TimedRobot {
 
       //arm
       //gear box is 100-1
-      if (armFwd){
-        double start = robotContainer.armEncoder.getPosition();
-        double end = start +100;
-        SmartDashboard.putNumber("Encoder Position start", robotContainer.armEncoder.getPosition());
+      robotContainer.rightArm.set(MathUtil.clamp(robotContainer.arm.pid.calculate(robotContainer.armEncoder.getAbsolutePosition(), 0.90), -1 * Constants.kArmMaxSpeed, Constants.kArmMaxSpeed));
 
-        robotContainer.rightArm.set(0/*robotContainer.operator.getLeftX()*/);
-        /*while (robotContainer.armEncoder.getPosition() < end){
-          
-          System.out.println("motor should be set to 0.1----");
-          SmartDashboard.putNumber("Encoder Position", robotContainer.armEncoder.getPosition());
-        }*/
-        System.out.println("Accelerate start------");
-        robotContainer.arm.accelerate(end / 4);
-        System.out.println("Accelerate end------");
-
-        robotContainer.rightArm.set(0/*robotContainer.operator.getLeftX()*/);
-
-      }
   }
 
   @Override
