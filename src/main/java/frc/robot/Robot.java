@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Right out", robotContainer.rightLeader.getVelocity().getValueAsDouble());
       SmartDashboard.putNumber("Left Position", robotContainer.leftLeader.getPosition().getValueAsDouble());
       SmartDashboard.putNumber("Right Position", robotContainer.rightLeader.getPosition().getValueAsDouble());
-      SmartDashboard.putNumber("Arm Position", robotContainer.armEncoder.getPosition());
+      SmartDashboard.putNumber("Arm Position", robotContainer.armEncoder.getAbsolutePosition());
     }
   }
 
@@ -144,8 +144,8 @@ public class Robot extends TimedRobot {
       //arm
       //gear box is 100-1
       if (leftBumper){ //Move arm forward
-        double end = robotContainer.armEncoder.getPosition() +100;
-        SmartDashboard.putNumber("Encoder Position start", robotContainer.armEncoder.getPosition());
+        double end = robotContainer.armEncoder.getAbsolutePosition() +100;
+        SmartDashboard.putNumber("Encoder Position start", robotContainer.armEncoder.getAbsolutePosition());
 
         robotContainer.rightArm.set(0/*robotContainer.operator.getLeftX()*/);
         /*while (robotContainer.armEncoder.getPosition() < end){

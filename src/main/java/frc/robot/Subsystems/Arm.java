@@ -20,11 +20,11 @@ public class Arm {
   }
 
   public void accelerate(double totalRotations){
-    double encoderStartPosition = robotContainer.armEncoder.getPosition();
+    double encoderStartPosition = robotContainer.armEncoder.getAbsolutePosition();
     double encoderEndPosition = encoderStartPosition+totalRotations;
 
     robotContainer.rightArm.set(0);
-    for (double encoderPostion = robotContainer.armEncoder.getPosition(); encoderPostion < encoderEndPosition; encoderPostion = robotContainer.armEncoder.getPosition()) {
+    for (double encoderPostion = robotContainer.armEncoder.getAbsolutePosition(); encoderPostion < encoderEndPosition; encoderPostion = robotContainer.armEncoder.getAbsolutePosition()) {
       double percentageRelativeToRotation = (encoderPostion-encoderStartPosition)/totalRotations;
       robotContainer.rightArm.set(Constants.kArmSpeed);
       System.out.println("arm motor should be set to 0.1"+ Constants.kArmSpeed * percentageRelativeToRotation);

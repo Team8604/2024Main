@@ -8,8 +8,8 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -33,7 +33,7 @@ public class RobotContainer {
   //arm
   public final CANSparkMax rightArm = new CANSparkMax(Constants.kRightArm, MotorType.kBrushless);
   public final CANSparkMax leftArm = new CANSparkMax(Constants.kLeftArm, MotorType.kBrushless);
-  public final RelativeEncoder armEncoder = rightArm.getEncoder(); 
+  public final DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.kArmEncoder); 
 
   //intake and shooter
   public final CANSparkMax intakeMotor = new CANSparkMax(Constants.kIntakeMotor, MotorType.kBrushless);
