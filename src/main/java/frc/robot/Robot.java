@@ -4,10 +4,9 @@
 
 package frc.robot;
 
-
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -16,168 +15,89 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-  
-  private int printCount = 0;
+  private Command m_autonomousCommand;
+
+  private RobotContainer m_robotContainer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  private RobotContainer robotContainer;
-
   @Override
   public void robotInit() {
-    robotContainer = new RobotContainer();
-
+    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // autonomous chooser on the dashboard.
+    m_robotContainer = new RobotContainer();
   }
 
+  /**
+   * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
+   * that you want ran during disabled, autonomous, teleoperated and test.
+   *
+   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+   * SmartDashboard integrated updating.
+   */
   @Override
   public void robotPeriodic() {
-    if (++printCount >= 10) {
-      printCount = 0;
-      SmartDashboard.putNumber("Left out", robotContainer.leftLeader.getVelocity().getValueAsDouble());
-      SmartDashboard.putNumber("Right out", robotContainer.rightLeader.getVelocity().getValueAsDouble());
-      SmartDashboard.putNumber("Left Position", robotContainer.leftLeader.getPosition().getValueAsDouble());
-      SmartDashboard.putNumber("Right Position", robotContainer.rightLeader.getPosition().getValueAsDouble());
-      SmartDashboard.putNumber("Arm Position", robotContainer.armEncoder.getAbsolutePosition());
-      SmartDashboard.putNumber("Arm Speed", MathUtil.clamp(robotContainer.arm.pid.calculate(robotContainer.armEncoder.getAbsolutePosition(), 0.90), -1 * Constants.kArmMaxSpeed, Constants.kArmMaxSpeed));
-    }
+    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
+    // commands, running already-scheduled commands, removing finished or interrupted commands,
+    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // block in order for anything in the Command-based framework to work.
+    CommandScheduler.getInstance().run();
   }
 
-  @Override
-  public void autonomousInit() {}
-
-  @Override
-  public void autonomousPeriodic() {}
-
-  @Override
-  public void teleopInit() {}
-
-  @Override
-  public void teleopPeriodic() {
-    /* Get forward and rotational throttle from joystick */
-    /* invert the joystick Y because forward Y is negative */
-    //code from joystic for drivetrain
-    double fwd = -1 * Math.pow(robotContainer.driverJoystick.getY(), 2.6);
-    double rot;
-    double rot1 = Math.pow(robotContainer.driverJoystick.getX(), 2.6);
-    double rot2 = Math.pow(robotContainer.driverJoystick.getZ(), 2.6);
-
-    if (rot2 > 1){
-      rot2 = 1;
-    } else if (rot2 < -1){
-      rot2 = -1;
-    }
-    //gets either the bigger of twist or sideways
-    if (Math.abs(rot2) < 0.1){
-      rot2=0;
-    }
-    if (Math.abs(rot1) >= Math.abs(rot2)){
-      rot = rot1;
-    } else {
-      rot = rot2;
-    }
-    //dead zone
-    if (rot < 0.08 && rot > -0.08){
-      rot = 0;
-    }
-    if (fwd < 0.08 && fwd > -0.08){
-      fwd = 0;
-    }
-    //sets drivetrain motors to 25% speed
-    fwd *= Constants.kDrivetrainSpeed;
-    rot *= Constants.kDrivetrainSpeed;
-    
-    /* Set output to control frames */
-    robotContainer.leftOut.Output = fwd + rot;
-    robotContainer.rightOut.Output = fwd - rot;
-    /* And set them to the motors */
-    if (!robotContainer.driverJoystick.getRawButtonPressed(2)/*getAButton()*/) {
-      robotContainer.leftLeader.setControl(robotContainer.leftOut);
-      robotContainer.rightLeader.setControl(robotContainer.rightOut);
-    }
-    
-      //intake control
-      boolean operatorA = robotContainer.operator.getAButton();
-      boolean operatorB = robotContainer.operator.getBButton();
-      //shooter conrol
-      boolean operatorX = robotContainer.operator.getXButton();
-      boolean operatorY = robotContainer.operator.getYButton();
-
-      //arm control
-      boolean leftBumper = robotContainer.operator.getLeftBumperPressed(); 
-      
-      //intake
-      if (operatorA){
-        //spin intake motor foward
-        if (operatorA && operatorX){
-          robotContainer.intakeMotor.set(Constants.kMaxIntake);
-          //System.out.println("Intake set to 1");
-        } else{
-          robotContainer.intakeMotor.set(Constants.kIntakeSpeed);
-          //System.out.println("Intake set to 0.8");
-        }
-      } else if (operatorB) {
-        //spin intake motor backwards (gets rid of jamed note)
-        robotContainer.intakeMotor.set(-1 * Constants.kIntakeSpeed);
-        //System.out.println("Intake set to -0.5");
-      } else {
-        //set intake motor to stop
-        robotContainer.intakeMotor.set(0);
-        //System.out.println("Intake set to 0");
-      }
-      
-      //shooter
-      if (operatorX){
-        //spin shooter motor fowardss
-        robotContainer.shooterMotor.set(Constants.kShooterSpeed);
-        //System.out.println("Shooter set to 0.5");
-      } else if (operatorY) {
-        //spin shooter motor backwards (gets rid of jamed note)
-        robotContainer.shooterMotor.set(-0.5 * Constants.kShooterSpeed);
-        //System.out.println("Shooter set to -0.5");
-      } else {
-        //set shooter motor to stop
-        robotContainer.shooterMotor.set(0);
-        //System.out.println("Shooter set to 0");
-      }
-
-
-      //arm
-      //gear box is 100-1
-      robotContainer.rightArm.set(MathUtil.clamp(robotContainer.arm.pid.calculate(robotContainer.armEncoder.getAbsolutePosition(), 0.90), -1 * Constants.kArmMaxSpeed, Constants.kArmMaxSpeed));
-
-  }
-
+  /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {
-    /* Zero out controls so we aren't just relying on the enable frame */
-    //drivetrain
-    robotContainer.leftOut.Output = 0;
-    robotContainer.rightOut.Output = 0;
-    robotContainer.leftLeader.setControl(robotContainer.leftOut);
-    robotContainer.rightLeader.setControl(robotContainer.rightOut);
-    //intake
-    robotContainer.intakeMotor.set(0);
-    //shooter
-    robotContainer.shooterMotor.set(0);
-    //arm
-    robotContainer.rightArm.set(0);
+  public void disabledPeriodic() {}
 
+  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  @Override
+  public void autonomousInit() {
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    // schedule the autonomous command (example)
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
   }
 
+  /** This function is called periodically during autonomous. */
   @Override
-  public void testInit() {}
+  public void autonomousPeriodic() {}
 
+  @Override
+  public void teleopInit() {
+    // This makes sure that the autonomous stops running when
+    // teleop starts running. If you want the autonomous to
+    // continue until interrupted by another command, remove
+    // this line or comment it out.
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
+  }
+
+  /** This function is called periodically during operator control. */
+  @Override
+  public void teleopPeriodic() {}
+
+  @Override
+  public void testInit() {
+    // Cancels all running commands at the start of test mode.
+    CommandScheduler.getInstance().cancelAll();
+  }
+
+  /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {}
 
+  /** This function is called once when the robot is first started up. */
   @Override
   public void simulationInit() {}
 
+  /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
 }

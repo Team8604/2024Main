@@ -4,50 +4,60 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.CANSparkMax;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Autos;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-
-import frc.robot.Subsystems.Drivetrain;
-import frc.robot.Subsystems.Intake;
-import frc.robot.Subsystems.Shooter;
-import frc.robot.Subsystems.Arm;
-
+/**
+ * This class is where the bulk of the robot should be declared. Since Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * subsystems, commands, and trigger mappings) should be declared here.
+ */
 public class RobotContainer {
-  //drivetrain 
-  public final String CANBUS_NAME = "rio";
-  public final TalonFX leftLeader = new TalonFX(Constants.kLeftLeader, CANBUS_NAME);
-  public final TalonFX leftFollower = new TalonFX(Constants.kLeftFollower, CANBUS_NAME);
-  public final TalonFX rightLeader = new TalonFX(Constants.kRightLeader, CANBUS_NAME);
-  public final TalonFX rightFollower = new TalonFX(Constants.kRightFollower, CANBUS_NAME);
+  // The robot's subsystems and commands are defined here...
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  //drivetrain duty cycles
-  public final DutyCycleOut leftOut = new DutyCycleOut(0);
-  public final DutyCycleOut rightOut = new DutyCycleOut(0);
+  // Replace with CommandPS4Controller or CommandJoystick if needed
+  private final CommandXboxController m_driverController =
+      new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-  //arm
-  public final CANSparkMax rightArm = new CANSparkMax(Constants.kRightArm, MotorType.kBrushless);
-  public final CANSparkMax leftArm = new CANSparkMax(Constants.kLeftArm, MotorType.kBrushless);
-  public final DutyCycleEncoder armEncoder = new DutyCycleEncoder(Constants.kArmEncoder); 
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  public RobotContainer() {
+    // Configure the trigger bindings
+    configureBindings();
+  }
 
-  //intake and shooter
-  public final CANSparkMax intakeMotor = new CANSparkMax(Constants.kIntakeMotor, MotorType.kBrushless);
-  public final CANSparkMax shooterMotor = new CANSparkMax(Constants.kShooterMotor, MotorType.kBrushless);
+  /**
+   * Use this method to define your trigger->command mappings. Triggers can be created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+   * predicate, or via the named factories in {@link
+   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
+   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * joysticks}.
+   */
+  private void configureBindings() {
+    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    new Trigger(m_exampleSubsystem::exampleCondition)
+        .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-  //controllers
-  public final XboxController operator = new XboxController(1);
-  public final Joystick driverJoystick = new Joystick(0);
-  
-  //initialize subsystems
-  public Drivetrain drivetrain = new Drivetrain(this);
-  public Intake intake = new Intake();
-  public Shooter shooter = new Shooter();
-  public Arm arm = new Arm(this);
+    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+    // cancelling on release.
+    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+  }
 
-  public RobotContainer(){}
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
+  public Command getAutonomousCommand() {
+    // An example command will be run in autonomous
+    return Autos.exampleAuto(m_exampleSubsystem);
+  }
 }
