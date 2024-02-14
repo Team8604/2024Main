@@ -49,7 +49,6 @@ public class Drivetrain extends SubsystemBase {
     
     leftLeader.setSafetyEnabled(true);
     rightLeader.setSafetyEnabled(true);
-
   }
 
   /**
