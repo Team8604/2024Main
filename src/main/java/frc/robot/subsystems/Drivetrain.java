@@ -14,6 +14,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.Constants.DriveConstants;
 import frc.robot.RobotContainer;
 
@@ -49,7 +50,6 @@ public class Drivetrain extends SubsystemBase {
     
     leftLeader.setSafetyEnabled(true);
     rightLeader.setSafetyEnabled(true);
-
   }
 
   /**
