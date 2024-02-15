@@ -45,6 +45,10 @@ public final class Constants {
   public static class ArmConstants {
     public static final int kRightArm = 7;
     public static final int kLeftArm = 8;
+    public static final int kArmEncoder = 0;
+
+    public static final double kMaxSpeed = 0.5;
+
   }
 
   //public static final int kRightClimber = 9;
