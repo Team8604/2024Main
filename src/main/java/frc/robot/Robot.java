@@ -109,13 +109,14 @@ public class Robot extends TimedRobot {
       //arm control
       boolean leftBumper = robotContainer.operator.getLeftBumperPressed(); 
       
+      System.out.println("------called function result"+IntakeSensor.getIntakeSensorDistance());
       //intake
       if (operatorA){
         //spin intake motor foward
         if (operatorA && operatorX){
           robotContainer.intakeMotor.set(Constants.kMaxIntakeSpeed);
         }
-        else if (IntakeSensor.getIntakeSensorDistance() < 20){//adjust number so that intake stops when object is blocking sensor the motor doesn't spin
+        else if (/*IntakeSensor.getIntakeSensorDistance()*/0 < 20){//adjust number so that intake stops when object is blocking sensor the motor doesn't spin
           robotContainer.intakeMotor.set(0);
         }
         else {
