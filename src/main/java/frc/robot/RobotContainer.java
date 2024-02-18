@@ -6,7 +6,6 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.DriveRobot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -23,19 +22,33 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain drivetrain = new Drivetrain();
-  private final Intake intake = new Intake();
-  private final Shooter shooter = new Shooter();
+  public final Drivetrain drivetrain = new Drivetrain();
+  public final Intake intake = new Intake();
+  public final Shooter shooter = new Shooter();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
   private final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
+
+  
+    //driver
+    public final double driverGetX = m_driverController.getX();
+    public final double driverGetY = m_driverController.getY();
+    public final double driverGetZ = m_driverController.getZ();
+
+    //operator buttons
+    public final Trigger operatorA = m_operatorController.a();
+    public final Trigger operatorB = m_operatorController.b();
+    public final Trigger operatorX = m_operatorController.x();
+    public final Trigger operatorY = m_operatorController.y();
+    public final Trigger operatorRightBumper = m_operatorController.rightBumper();
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
+  public RobotContainer() { 
     // Configure the trigger bindings
     configureBindings();
+    
   }
 
   /**
@@ -55,18 +68,6 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(drivetrain.exampleMethodCommand());
-
-    //driver
-    final double driverGetX = m_driverController.getX();
-    final double driverGetY = m_driverController.getY();
-    final double driverGetZ = m_driverController.getZ();
-
-    //operator buttons
-    final Trigger operatorA = m_operatorController.a();
-    final Trigger operatorB = m_operatorController.b();
-    final Trigger operatorX = m_operatorController.x();
-    final Trigger operatorY = m_operatorController.y();
-    final Trigger operatorRightBumper = m_operatorController.rightBumper();
   }
 
   /**
