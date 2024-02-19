@@ -9,6 +9,7 @@ import frc.robot.commands.Autos;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Arm.Arm;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -22,28 +23,29 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public final Drivetrain drivetrain = new Drivetrain();
-  public final Intake intake = new Intake();
-  public final Shooter shooter = new Shooter();
+  public static final Drivetrain drivetrain = new Drivetrain();
+  public static final Intake intake = new Intake();
+  public static final Shooter shooter = new Shooter();
+  public static final Arm arm = new Arm();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
-  private final CommandXboxController m_operatorController =
+  public static final CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
+  public static final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
 
   
     //driver
-    public final double driverGetX = m_driverController.getX();
-    public final double driverGetY = m_driverController.getY();
-    public final double driverGetZ = m_driverController.getZ();
+    public static final double driverGetX = m_driverController.getX();
+    public static final double driverGetY = m_driverController.getY();
+    public static final double driverGetZ = m_driverController.getZ();
 
     //operator buttons
-    public final Trigger operatorA = m_operatorController.a();
-    public final Trigger operatorB = m_operatorController.b();
-    public final Trigger operatorX = m_operatorController.x();
-    public final Trigger operatorY = m_operatorController.y();
-    public final Trigger operatorRightBumper = m_operatorController.rightBumper();
+    public static final Trigger operatorA = m_operatorController.a();
+    public static final Trigger operatorB = m_operatorController.b();
+    public static final Trigger operatorX = m_operatorController.x();
+    public static final Trigger operatorY = m_operatorController.y();
+    public static final Trigger operatorRightBumper = m_operatorController.rightBumper();
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
     // Configure the trigger bindings
