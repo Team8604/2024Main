@@ -5,9 +5,18 @@
 package frc.robot;
 //https://github.com/REVrobotics/2m-Distance-Sensor/releases
 
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Subsystems.IntakeSensor;
 
 /**
@@ -16,7 +25,7 @@ import frc.robot.Subsystems.IntakeSensor;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
   
   private int printCount = 0;
 
@@ -28,8 +37,23 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    robotContainer = new RobotContainer();
+    Logger.recordMetadata("ProjectName", "MyProject"); // Set a metadata value
 
+    if (isReal()) {
+        // Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
+        Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+        // new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
+    } else {
+        setUseTiming(false); // Run as fast as possible
+        String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
+        Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
+        Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
+    }
+
+    // Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
+    Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+
+    robotContainer = new RobotContainer();
   }
 
   @Override
@@ -43,6 +67,7 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Arm Position", robotContainer.armEncoder.getAbsolutePosition());
       SmartDashboard.putNumber("Arm Speed", MathUtil.clamp(robotContainer.arm.pid.calculate(robotContainer.armEncoder.getAbsolutePosition(), 0.90), -1 * Constants.kArmMaxSpeed, Constants.kArmMaxSpeed));
     }
+    CommandScheduler.getInstance().run();
   }
 
   @Override

@@ -7,12 +7,18 @@ package frc.robot.Subsystems;
 import frc.robot.RobotContainer;
 import frc.robot.Constants;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Add your docs here. */
-public class Arm {
+public class Arm extends SubsystemBase {
   RobotContainer robotContainer;
   public PIDController pid;
+
+  private DutyCycleEncoder absoluteEncoder;
 
   public Arm(RobotContainer rc){
     this.robotContainer = rc;
@@ -24,6 +30,12 @@ public class Arm {
 
     pid = new PIDController(Constants.kArmP, Constants.kArmI, Constants.kArmD);
 
+    absoluteEncoder = new DutyCycleEncoder(9);
+  }
+
+  @Override
+  public void periodic() {
+      Logger.recordOutput("Absolute Encoder", absoluteEncoder.getAbsolutePosition());
   }
 
   public void accelerate(double totalRotations){
