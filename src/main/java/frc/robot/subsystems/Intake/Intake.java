@@ -24,6 +24,6 @@ public class Intake {
     public double getIntakeSensorDistance(){
         intakeSensor.setAutomaticMode(true);
 
-        return intakeSensor.getRange();
+        return getIntakeSensorDistance();
     }
 }

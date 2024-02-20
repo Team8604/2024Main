@@ -3,6 +3,7 @@ package frc.robot.subsystems.Intake;
 import com.revrobotics.Rev2mDistanceSensor;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.proto.System;
 import edu.wpi.first.wpilibj.IterativeRobotBase;
 
 import org.littletonrobotics.junction.Logger;
@@ -20,7 +21,7 @@ public class IntakeSensor {
         distOnboard.setAutomaticMode(true);
 
         Logger.recordOutput("Intake/Distance Distance", distOnboard.getRange());        
-
+        
         return distOnboard.getRange();
     }
 }
