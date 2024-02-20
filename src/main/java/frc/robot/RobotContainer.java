@@ -7,9 +7,10 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Arm.Arm;
+import frc.robot.subsystems.Intake.Intake;
+import frc.robot.subsystems.Intake.IntakeSensor;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -27,6 +28,7 @@ public class RobotContainer {
   public static final Intake intake = new Intake();
   public static final Shooter shooter = new Shooter();
   public static final Arm arm = new Arm();
+  public static final IntakeSensor sensor = new IntakeSensor();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   public static final CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
