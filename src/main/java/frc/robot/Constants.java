@@ -16,6 +16,7 @@ import com.revrobotics.SparkLimitSwitch;
  */
 public final class Constants {
   public static class OperatorConstants {
+    // Controller port numbers
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
   }
@@ -28,12 +29,15 @@ public final class Constants {
     public static final int kLeftLeader = 3;
     public static final int kLeftFollower = 4;
 
+    // Maximum speed setting
     public static final double kMaxSpeed = .1;
   }
 
   public static class IntakeConstants {
+    // Intake CAN ID
     public static final int kIntake = 5;
 
+    // Intake speed settings
     public static final double kMaxSpeed = 1;
     public static final double kIntakeSpeed = 0.25;
   }

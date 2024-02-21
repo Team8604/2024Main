@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.IterativeRobotBase;
 
 import org.littletonrobotics.junction.Logger;
 
-import com.revrobotics.*;
 import com.revrobotics.Rev2mDistanceSensor.Port;
 
 public class IntakeSensor {
