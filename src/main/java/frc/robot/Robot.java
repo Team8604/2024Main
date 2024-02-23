@@ -84,10 +84,13 @@ public class Robot extends LoggedRobot {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystic for drivetrain
-    double fwd = -1 * Math.pow(robotContainer.driverJoystick.getY(), 2.6);
+//    double fwd = -1 * Math.pow(robotContainer.driverJoystick.getY(), 2.6);
+    //double fwd =  robotContainer.operator.getLeftX();
+    double fwd = -1 * robotContainer.driverJoystick.getY();
+
     double rot;
-    double rot1 = Math.pow(robotContainer.driverJoystick.getX(), 2.6);
-    double rot2 = Math.pow(robotContainer.driverJoystick.getZ(), 2.6);
+    double rot1 = robotContainer.driverJoystick.getX();
+    double rot2 = robotContainer.driverJoystick.getZ();
 
     if (rot2 > 1){
       rot2 = 1;
@@ -118,10 +121,11 @@ public class Robot extends LoggedRobot {
     robotContainer.leftOut.Output = fwd + rot;
     robotContainer.rightOut.Output = fwd - rot;
     /* And set them to the motors */
-    if (!robotContainer.driverJoystick.getRawButtonPressed(2)/*getAButton()*/) {
-      robotContainer.leftLeader.setControl(robotContainer.leftOut);
-      robotContainer.rightLeader.setControl(robotContainer.rightOut);
-    }
+    //if (!robotContainer.driverJoystick.getRawButtonPressed(2)/*getAButton()*/) {
+    //robotContainer.leftLeader.setControl(robotContainer.leftOut);
+    robotContainer.leftLeader.setControl(robotContainer.leftOut);
+    robotContainer.rightLeader.setControl(robotContainer.rightOut);
+    //}
     
       //intake control
       boolean operatorA = robotContainer.operator.getAButton();
@@ -175,7 +179,7 @@ public class Robot extends LoggedRobot {
 
       //arm
       //gear box is 100-1
-      robotContainer.rightArm.set(MathUtil.clamp(robotContainer.arm.pid.calculate(robotContainer.armEncoder.getAbsolutePosition(), 0.90), -1 * Constants.kArmMaxSpeed, Constants.kArmMaxSpeed));
+      //robotContainer.rightArm.set(MathUtil.clamp(robotContainer.arm.pid.calculate(robotContainer.armEncoder.getAbsolutePosition(), 0.90), -1 * Constants.kArmMaxSpeed, Constants.kArmMaxSpeed));
 
   }
 
