@@ -8,8 +8,11 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Shooter.Shooter;
+
 import frc.robot.subsystems.Arm.Arm;
+import edu.wpi.first.hal.REVPHStickyFaults;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -32,7 +35,7 @@ public class RobotContainer {
   public static final CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
   public static final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
-
+  //public static final XboxController m_operatorController = new XboxController(OperatorConstants.kOperatorControllerPort);
 
   
     //driver
@@ -46,6 +49,12 @@ public class RobotContainer {
     public static final Trigger operatorX = m_operatorController.x();
     public static final Trigger operatorY = m_operatorController.y();
     public static final Trigger operatorRightBumper = m_operatorController.rightBumper();
+    /*public static final boolean operatorA = m_operatorController.getAButton();
+    public static final boolean operatorB = m_operatorController.getBButton();
+    public static final boolean operatorX = m_operatorController.getXButtonPressed();
+    public static final boolean operatorY = m_operatorController.getYButton();
+    public static final boolean operatorRightBumper = m_operatorController.getRightBumper();
+  */
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
     // Configure the trigger bindings

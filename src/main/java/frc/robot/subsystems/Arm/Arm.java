@@ -28,6 +28,6 @@ public class Arm extends SubsystemBase {
         io.updateInputs(inputs);
 
         Logger.processInputs("Pivot", inputs);
-        io.setVoltage(RobotContainer.m_operatorController.getLeftY() * 3);
+        //io.setVoltage(RobotContainer.m_operatorController.getLeftY() * 3);
     }
 }

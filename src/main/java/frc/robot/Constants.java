@@ -41,8 +41,8 @@ public final class Constants {
   public static class ShooterConstants {
     public static final int kShooter = 6;
 
-    public static final double kMaxSpeed = 1;
-    public static final double kAmpSpeed = 0.1;
+    public static final double kShooterSpeed = 1;
+    public static final double kAmpShooterSpeed = 0.1;
   }
 
   public static class ArmConstants {
