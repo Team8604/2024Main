@@ -44,10 +44,15 @@ public class ArmIONeos implements ArmIO {
         inputs.motorLeftAmpsOutput = leftArm.getOutputCurrent();
         inputs.motorRightAmpsOutput = rightArm.getOutputCurrent();
 
-        inputs.rightFowardArmLimitSwitch = rightFowardLimitSwitch.isLimitSwitchEnabled();
-        inputs.leftFowardArmLimitSwitch = leftFowardLimitSwitch.isLimitSwitchEnabled();
-        inputs.rightBackwardArmLimitSwitch = rightBackwardLimitSwitch.isLimitSwitchEnabled();
-        inputs.leftBackwardArmLimitSwitch = leftBackwardLimitSwitch.isLimitSwitchEnabled();
+        inputs.rightFowardArmLimitSwitchEnabled = rightFowardLimitSwitch.isLimitSwitchEnabled();
+        inputs.leftFowardArmLimitSwitchEnabled = leftFowardLimitSwitch.isLimitSwitchEnabled();
+        inputs.rightBackwardArmLimitSwitchEnabled = rightBackwardLimitSwitch.isLimitSwitchEnabled();
+        inputs.leftBackwardArmLimitSwitchEnabled = leftBackwardLimitSwitch.isLimitSwitchEnabled();
+
+        inputs.rightFowardArmLimitSwitchPressed = rightFowardLimitSwitch.isPressed();
+        inputs.leftFowardArmLimitSwitchPressed = leftFowardLimitSwitch.isPressed();
+        inputs.rightBackwardArmLimitSwitchPressed = rightBackwardLimitSwitch.isPressed();
+        inputs.leftBackwardArmLimitSwitchPressed = leftBackwardLimitSwitch.isPressed();
 
     }
 

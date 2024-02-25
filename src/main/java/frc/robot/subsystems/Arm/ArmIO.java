@@ -12,11 +12,15 @@ public interface ArmIO {
         public double motorRightAmpsOutput;
         public double motorLeftAmpsOutput;
 
-        public boolean rightFowardArmLimitSwitch;
-        public boolean leftFowardArmLimitSwitch;
-        public boolean rightBackwardArmLimitSwitch;
-        public boolean leftBackwardArmLimitSwitch;
-
+        public boolean rightFowardArmLimitSwitchEnabled;
+        public boolean leftFowardArmLimitSwitchEnabled;
+        public boolean rightBackwardArmLimitSwitchEnabled;
+        public boolean leftBackwardArmLimitSwitchEnabled;
+        
+        public boolean rightFowardArmLimitSwitchPressed;
+        public boolean leftFowardArmLimitSwitchPressed;
+        public boolean rightBackwardArmLimitSwitchPressed;
+        public boolean leftBackwardArmLimitSwitchPressed;
     }
 
     public void updateInputs(ArmInputs input);
