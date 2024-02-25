@@ -7,10 +7,10 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter.Shooter;
 
 import frc.robot.subsystems.Arm.Arm;
+import frc.robot.subsystems.Intake.Intake;
 import edu.wpi.first.hal.REVPHStickyFaults;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
