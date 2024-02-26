@@ -36,7 +36,7 @@ public class Shooter extends SubsystemBase  {
         Logger.processInputs("speed", inputs);
         
         //io.set(RobotContainer.m_operatorController.getLeftY() * 3);
-        io.set(1);
+        //io.set(1);
         //RobotContainer.operatorX.debounce(0.1, Debouncer.DebounceType.kBoth).whileTrue(Command setShooterSpeed());   
         //RobotContainer.operatorX.onTrue(Command set(ShooterConstants.kShooterSpeed));
         //System.out.println("---Shooter x b :"+RobotContainer.m_operatorController.a());
