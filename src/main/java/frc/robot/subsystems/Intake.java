@@ -5,9 +5,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.Rev2mDistanceSensor;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
-public class Intake {
+public class Intake extends SubsystemBase{
     //initialize motor
     private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.kIntake, MotorType.kBrushless);
     private final Rev2mDistanceSensor intakeSensor = new Rev2mDistanceSensor(null);
