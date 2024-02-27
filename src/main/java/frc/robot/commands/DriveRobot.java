@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 /** An example command that uses an example subsystem. */
 public class DriveRobot extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Drivetrain m_subsystem;
+  private final Drivetrain driveTrain;
 
   /**
    * Creates a new ExampleCommand.
@@ -20,9 +20,9 @@ public class DriveRobot extends Command {
    * @param subsystem The subsystem used by this command.
    */
   public DriveRobot(Drivetrain subsystem) {
-    m_subsystem = subsystem;
+    driveTrain = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_subsystem.drivetrain);
+    addRequirements(driveTrain);
   }
 
 
@@ -36,10 +36,10 @@ public class DriveRobot extends Command {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystic for drivetrain
-    double fwd = -1 * Math.pow(m_subsystem.driverGetY, 2.6);
+    double fwd = -1 * Math.pow(driveTrain.driverGetY, 2.6);
     double rot;
-    double rot1 = Math.pow(m_subsystem.driverGetX, 2.6);
-    double rot2 = Math.pow(m_subsystem.driverGetZ, 2.6);
+    double rot1 = Math.pow(driveTrain.driverGetX, 2.6);
+    double rot2 = Math.pow(driveTrain.driverGetZ, 2.6);
 
     if (rot2 > 1){
       rot2 = 1;
@@ -67,7 +67,7 @@ public class DriveRobot extends Command {
     rot *= Constants.DriveConstants.kMaxSpeed;
     
     /* Set output to control frames */
-    Drivetrain.setSpeed(fwd + rot , fwd - rot);
+    driveTrain.setSpeed(fwd + rot , fwd - rot);
   }
 
   // Called once the command ends or is interrupted.
