@@ -36,10 +36,10 @@ public class DriveRobot extends Command {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystic for drivetrain
-    double fwd = -1 * Math.pow(RobotContainer.driverGetY, 2.6);
+    double fwd = -1 * 1;//Math.pow(RobotContainer.driverJoystick.GetY, 2.6);
     double rot;
-    double rot1 = Math.pow(robotContainer.driverJoystick.getX(), 2.6);
-    double rot2 = Math.pow(robotContainer.driverJoystick.getZ(), 2.6);
+    double rot1 = 1;//Math.pow(RobotContainer.driverJoystick.getX(), 2.6);
+    double rot2 = 1;//Math.pow(RobotContainer.driverJoystick.getZ(), 2.6);
 
     if (rot2 > 1){
       rot2 = 1;
@@ -63,12 +63,11 @@ public class DriveRobot extends Command {
       fwd = 0;
     }
     //sets drivetrain motors to 25% speed
-    fwd *= Constants.kDrivetrainSpeed;
-    rot *= Constants.kDrivetrainSpeed;
+    fwd *= Constants.DriveConstants.kMaxSpeed;
+    rot *= Constants.DriveConstants.kMaxSpeed;
     
     /* Set output to control frames */
-    robotContainer.leftOut.Output = fwd + rot;
-    robotContainer.rightOut.Output = fwd - rot;
+    Drivetrain.setSpeed(fwd + rot , fwd - rot);
   }
 
   // Called once the command ends or is interrupted.
