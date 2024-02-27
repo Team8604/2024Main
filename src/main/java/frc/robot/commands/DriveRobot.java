@@ -22,7 +22,7 @@ public class DriveRobot extends Command {
   public DriveRobot(Drivetrain subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.drivetrain);
+    addRequirements(m_subsystem.drivetrain);
   }
 
 
@@ -36,10 +36,10 @@ public class DriveRobot extends Command {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystic for drivetrain
-    double fwd = -1 * 1;//Math.pow(RobotContainer.driverJoystick.GetY, 2.6);
+    double fwd = -1 * Math.pow(m_subsystem.driverGetY, 2.6);
     double rot;
-    double rot1 = 1;//Math.pow(RobotContainer.driverJoystick.getX(), 2.6);
-    double rot2 = 1;//Math.pow(RobotContainer.driverJoystick.getZ(), 2.6);
+    double rot1 = Math.pow(m_subsystem.driverGetX, 2.6);
+    double rot2 = Math.pow(m_subsystem.driverGetZ, 2.6);
 
     if (rot2 > 1){
       rot2 = 1;
