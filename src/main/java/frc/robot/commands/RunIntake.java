@@ -33,11 +33,10 @@ public class RunIntake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    /** --------------TO BE ADDED--------------
-     * if (!RobotContainer.operatorX.getAsBoolean() && RobotContainer.intake.isNote()) {
-     *  return true
-     * }
-     */
+     if (!RobotContainer.operatorX.getAsBoolean() && RobotContainer.intake.isNote()) {
+      return true;
+     }
+     
     return false;
   }
 }

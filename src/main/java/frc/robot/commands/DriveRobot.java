@@ -33,10 +33,10 @@ public class DriveRobot extends Command {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystick for drivetrain
-    double fwd = -1 * Math.pow(RobotContainer.m_driverController.getY(), 2.6);
+    double fwd = -1 * Math.pow(RobotContainer.m_driverController.getY(), 3);
     double rot;
-    double rot1 = Math.pow(RobotContainer.m_driverController.getX(), 2.6);
-    double rot2 = Math.pow(RobotContainer.m_driverController.getZ(), 2.6);
+    double rot1 = Math.pow(RobotContainer.m_driverController.getX(), 3);
+    double rot2 = Math.pow(RobotContainer.m_driverController.getZ(), 3);
 
     if (rot2 > 1){
       rot2 = 1;

@@ -28,7 +28,7 @@ public final class Constants {
     public static final int kLeftFollower = 4;
 
     // Speed modifier
-    public static final double kMaxSpeed = 0.1;
+    public static final double kMaxSpeed = 0.3;
   }
 
   public static class IntakeConstants {
@@ -40,6 +40,7 @@ public final class Constants {
     public static final double kIntakeSpeed = 0.25;
     public static final double kBackOut = -0.5;
 
+
     // Distance options
     public static final double kNoteDistance = 10; // TO BE DETERMINED
   }
@@ -49,7 +50,7 @@ public final class Constants {
     public static final int kShooter = 6;
 
     // Speed modifiers
-    public static final double kMaxSpeed = 1;
+    public static final double kMaxSpeed = 0.3;
     public static final double kAmpSpeed = 0.1;
     public static final double kBackOut = -0.1; // TO BE DETERMINED
   }
