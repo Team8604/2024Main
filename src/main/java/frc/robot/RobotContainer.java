@@ -45,7 +45,7 @@ public class RobotContainer {
 
     // Set default commands
     CommandScheduler.getInstance().setDefaultCommand(RobotContainer.drivetrain, new DriveRobot());
-    
+    CommandScheduler.getInstance().setDefaultCommand(RobotContainer.arm, new RunArm());
   }
 
   /**

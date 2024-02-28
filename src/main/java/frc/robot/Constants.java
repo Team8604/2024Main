@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.revrobotics.SparkLimitSwitch;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -60,6 +62,9 @@ public final class Constants {
     public static final int kRightArm = 7;
     public static final int kLeftArm = 8;
     public static final int kArmEncoder = 9; // TO BE DETERMINED
+
+    //limit switch type
+    public static final SparkLimitSwitch.Type kArmLimitSwitchType = SparkLimitSwitch.Type.kNormallyOpen;
 
     // Speed modifier
     public static final double kMaxSpeed = 0.5;

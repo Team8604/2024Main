@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkLimitSwitch;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -12,15 +13,21 @@ import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
     
-    //Initialize motors
+    //Initialize motors, encoder, and limit switches
     private final CANSparkMax rightArm = new CANSparkMax(ArmConstants.kRightArm, MotorType.kBrushless);
     private final CANSparkMax leftArm = new CANSparkMax(ArmConstants.kLeftArm, MotorType.kBrushless);
     private final DutyCycleEncoder armEncoder = new DutyCycleEncoder(ArmConstants.kArmEncoder); 
+    private final SparkLimitSwitch rightFowardLimitSwitch = rightArm.getForwardLimitSwitch(ArmConstants.kArmLimitSwitchType);
+    private final SparkLimitSwitch leftFowardLimitSwitch = leftArm.getForwardLimitSwitch(ArmConstants.kArmLimitSwitchType);
+    private final SparkLimitSwitch rightBackwardLimitSwitch = rightArm.getReverseLimitSwitch(ArmConstants.kArmLimitSwitchType);
+    private final SparkLimitSwitch leftBackwardLimitSwitch = leftArm.getReverseLimitSwitch(ArmConstants.kArmLimitSwitchType);
+    
+
 
     public Arm() {
         rightArm.restoreFactoryDefaults();
         leftArm.restoreFactoryDefaults();
-        leftArm.follow(rightArm, true);
+        rightArm.follow(leftArm, true);
 
     }
 
@@ -29,12 +36,22 @@ public class Arm extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-        rightArm.set(MathUtil.clamp(speed, -1 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
+        leftArm.set(MathUtil.clamp(speed, -1 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
     }
+
 
     @Override
     public void periodic() {
     // This method will be called once per scheduler run
+        rightFowardLimitSwitch.enableLimitSwitch(true);
+        leftFowardLimitSwitch.enableLimitSwitch(true);
+        rightBackwardLimitSwitch.enableLimitSwitch(true);
+        leftBackwardLimitSwitch.enableLimitSwitch(true);
+
+        SmartDashboard.putBoolean("Right Foward Arm Encoder", rightFowardLimitSwitch.isPressed());
+        SmartDashboard.putBoolean("Left Foward Arm Angle", leftFowardLimitSwitch.isPressed());
+        SmartDashboard.putBoolean("Right Backward Arm Angle", rightBackwardLimitSwitch.isPressed());
+        SmartDashboard.putBoolean("Left Backward Arm Angle", leftBackwardLimitSwitch.isPressed());
         SmartDashboard.putNumber("Arm Angle", armEncoder.getAbsolutePosition());
     }
 
