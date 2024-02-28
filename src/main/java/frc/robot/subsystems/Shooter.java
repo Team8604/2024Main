@@ -16,7 +16,10 @@ public class Shooter extends SubsystemBase{
     }
 
     @Override
-    public void periodic() {}
+    public void periodic() {
+        // This method will be called once per scheduler run
+
+    }
 
     public void setSpeed(double speed) {
         shooterMotor.set(ShooterConstants.kMaxSpeed * MathUtil.clamp(speed, -1, 1));

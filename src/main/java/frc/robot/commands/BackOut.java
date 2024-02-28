@@ -14,11 +14,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class BackOut extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-
   public BackOut() {
     addRequirements(RobotContainer.intake, RobotContainer.shooter);
   }
-
 
   // Called when the command is initially scheduled.
   @Override
