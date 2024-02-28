@@ -58,8 +58,8 @@ public class Drivetrain extends SubsystemBase {
    * @return value of some boolean subsystem state, such as a digital sensor.
    */
   public void setSpeed(double left, double right) {
-    leftOut.Output = MathUtil.clamp(left, -1 * DriveConstants.kMaxSpeed, DriveConstants.kMaxSpeed);
-    rightOut.Output = MathUtil.clamp(right, -1 * DriveConstants.kMaxSpeed, DriveConstants.kMaxSpeed);    
+    leftOut.Output = DriveConstants.kMaxSpeed * MathUtil.clamp(left, -1, 1);
+    rightOut.Output = DriveConstants.kMaxSpeed * MathUtil.clamp(right, -1, 1);    
   }
 
   @Override

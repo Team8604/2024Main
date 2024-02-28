@@ -32,6 +32,7 @@ public class Arm extends SubsystemBase {
         rightArm.set(MathUtil.clamp(speed, -1 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
     }
 
+    @Override
     public void periodic() {
         SmartDashboard.putNumber("Arm Angle", armEncoder.getAbsolutePosition());
     }

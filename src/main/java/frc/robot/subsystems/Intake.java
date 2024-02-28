@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.Rev2mDistanceSensor;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
@@ -17,8 +18,13 @@ public class Intake extends SubsystemBase{
         intakeMotor.restoreFactoryDefaults();
     }
 
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Distance Sensor", getIntakeSensorDistance());
+    }
+
     public void setSpeed(double speed) {
-        intakeMotor.set(MathUtil.clamp(speed, -1 * IntakeConstants.kMaxSpeed, IntakeConstants.kMaxSpeed));
+        intakeMotor.set(IntakeConstants.kMaxSpeed * MathUtil.clamp(speed, -1, 1));
     }
 
 

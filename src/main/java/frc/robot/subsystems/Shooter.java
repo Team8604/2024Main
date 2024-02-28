@@ -15,8 +15,11 @@ public class Shooter extends SubsystemBase{
         shooterMotor.restoreFactoryDefaults();
     }
 
+    @Override
+    public void periodic() {}
+
     public void setSpeed(double speed) {
-        shooterMotor.set(MathUtil.clamp(speed, -1 * ShooterConstants.kMaxSpeed, ShooterConstants.kMaxSpeed));
+        shooterMotor.set(ShooterConstants.kMaxSpeed * MathUtil.clamp(speed, -1, 1));
     }
 }
 

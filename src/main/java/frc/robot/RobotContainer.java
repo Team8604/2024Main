@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.RunIntake;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -23,32 +24,26 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public final Drivetrain drivetrain = new Drivetrain();
-  public final Intake intake = new Intake();
-  public final Shooter shooter = new Shooter();
+  public static Drivetrain drivetrain = new Drivetrain();
+  public static Intake intake = new Intake();
+  public static Shooter shooter = new Shooter();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
-  private final CommandXboxController m_operatorController =
-      new CommandXboxController(OperatorConstants.kOperatorControllerPort);
-
-
-  
-    //driver
-    public final double driverGetX = m_driverController.getX();
-    public final double driverGetY = m_driverController.getY();
-    public final double driverGetZ = m_driverController.getZ();
+  public static CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
+  public static CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
     //operator buttons
-    public final Trigger operatorA = m_operatorController.a();
-    public final Trigger operatorB = m_operatorController.b();
-    public final Trigger operatorX = m_operatorController.x();
-    public final Trigger operatorY = m_operatorController.y();
-    public final Trigger operatorRightBumper = m_operatorController.rightBumper();
+    public static Trigger operatorA = m_operatorController.a();
+    public static Trigger operatorB = m_operatorController.b();
+    public static Trigger operatorX = m_operatorController.x();
+    public static Trigger operatorY = m_operatorController.y();
+    public static Trigger operatorRightBumper = m_operatorController.rightBumper();
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
     // Configure the trigger bindings
-    configureBindings();
+    configureButtonBindings();
     
   }
 
@@ -61,7 +56,7 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
-  private void configureBindings() {
+  private void configureButtonBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     //new Trigger(drivetrain::exampleCondition)
         //.onTrue(new DriveRobot(drivetrain));
@@ -69,7 +64,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     //m_driverController.b().whileTrue(drivetrain.exampleMethodCommand());
-
+    operatorA.whileTrue(new RunIntake());
   }
 
   /**

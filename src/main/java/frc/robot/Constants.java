@@ -14,6 +14,7 @@ package frc.robot;
  */
 public final class Constants {
   public static class OperatorConstants {
+    // IDs of controllers
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
   }
@@ -26,29 +27,38 @@ public final class Constants {
     public static final int kLeftLeader = 3;
     public static final int kLeftFollower = 4;
 
-    public static final double kMaxSpeed = .1;
+    // Speed modifier
+    public static final double kMaxSpeed = 0.1;
   }
 
   public static class IntakeConstants {
+    // CAN ID
     public static final int kIntake = 5;
 
+    // Speed modifiers
     public static final double kMaxSpeed = 1;
     public static final double kIntakeSpeed = 0.25;
   }
 
   public static class ShooterConstants {
+    // CAN ID
     public static final int kShooter = 6;
 
+    // Speed modifiers
     public static final double kMaxSpeed = 1;
     public static final double kAmpSpeed = 0.1;
   }
 
   public static class ArmConstants {
+    // CAN IDs
     public static final int kRightArm = 7;
     public static final int kLeftArm = 8;
     public static final int kArmEncoder = 0;
 
+    // Speed modifier
     public static final double kMaxSpeed = 0.5;
+
+    
 
   }
 
