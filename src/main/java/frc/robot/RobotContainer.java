@@ -31,9 +31,9 @@ public class RobotContainer {
   public static CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
     //operator buttons
-    public static Trigger operatorA = m_operatorController.a();
-    public static Trigger operatorB = m_operatorController.b();
-    public static Trigger operatorX = m_operatorController.x();
+    public static Trigger operatorA = m_operatorController.b();
+    public static Trigger operatorB = m_operatorController.x();
+    public static Trigger operatorX = m_operatorController.a();
     public static Trigger operatorY = m_operatorController.y();
     public static Trigger operatorRightBumper = m_operatorController.rightBumper();
 
