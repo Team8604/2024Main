@@ -41,7 +41,7 @@ public final class Constants {
     public static final double kBackOut = -0.5;
 
     // Distance options
-    public static final double kNoteDistance = 5; // TO BE DETERMINED
+    public static final double kNoteDistance = 10; // TO BE DETERMINED
   }
 
   public static class ShooterConstants {

@@ -13,7 +13,8 @@ import frc.robot.Constants.IntakeConstants;
 public class Intake extends SubsystemBase{
     //initialize motor
     private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.kIntake, MotorType.kBrushless);
-    private final Rev2mDistanceSensor intakeSensor = new Rev2mDistanceSensor(Port.kOnboard);
+    private final Rev2mDistanceSensor intakeSensorOnBoard = new Rev2mDistanceSensor(Port.kOnboard);
+    private final Rev2mDistanceSensor intakeSensorMXP = new Rev2mDistanceSensor(Port.kMXP);
 
     public Intake() {
         intakeMotor.restoreFactoryDefaults();
@@ -22,22 +23,30 @@ public class Intake extends SubsystemBase{
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        
         SmartDashboard.putNumber("Distance Sensor", getIntakeSensorDistance());
+        //RobotContainer.operatorA.onTrue(new RunIntake());
     }
 
     public void setSpeed(double speed) {
+        /*if (isNote()){
+            intakeMotor.set(0);
+        } 
+        if (!isNote()){
+            intakeMotor.set(IntakeConstants.kMaxSpeed * MathUtil.clamp(speed, -1, 1));
+        } */
         intakeMotor.set(IntakeConstants.kMaxSpeed * MathUtil.clamp(speed, -1, 1));
     }
 
 
     public double getIntakeSensorDistance(){
-        intakeSensor.setAutomaticMode(true);
+        intakeSensorOnBoard.setAutomaticMode(true);
 
-        return intakeSensor.getRange();
+        return intakeSensorMXP.getRange();
     }
 
     public boolean isNote() {
-        if (intakeSensor.GetRange() < IntakeConstants.kNoteDistance) {
+        if (getIntakeSensorDistance() <= IntakeConstants.kNoteDistance) {
             return true;
         }
 
