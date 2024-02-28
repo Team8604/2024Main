@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.Rev2mDistanceSensor;
+import com.revrobotics.Rev2mDistanceSensor.Port;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,7 +13,7 @@ import frc.robot.Constants.IntakeConstants;
 public class Intake extends SubsystemBase{
     //initialize motor
     private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.kIntake, MotorType.kBrushless);
-    private final Rev2mDistanceSensor intakeSensor = new Rev2mDistanceSensor(null);
+    private final Rev2mDistanceSensor intakeSensor = new Rev2mDistanceSensor(Port.kOnboard);
 
     public Intake() {
         intakeMotor.restoreFactoryDefaults();
@@ -32,5 +33,13 @@ public class Intake extends SubsystemBase{
         intakeSensor.setAutomaticMode(true);
 
         return intakeSensor.getRange();
+    }
+
+    public boolean isNote() {
+        if (intakeSensor.GetRange() < IntakeConstants.kNoteDistance) {
+            return true;
+        }
+
+        return false;
     }
 }

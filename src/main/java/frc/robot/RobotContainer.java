@@ -5,11 +5,10 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.RunIntake;
-import frc.robot.commands.RunShooter;
+import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -43,6 +42,9 @@ public class RobotContainer {
   public RobotContainer() { 
     // Configure the trigger bindings
     configureButtonBindings();
+
+    // Set default commands
+    CommandScheduler.getInstance().setDefaultCommand(RobotContainer.drivetrain, new DriveRobot());
     
   }
 
@@ -65,6 +67,7 @@ public class RobotContainer {
     //m_driverController.b().whileTrue(drivetrain.exampleMethodCommand());
     operatorA.whileTrue(new RunIntake());
     operatorX.whileTrue(new RunShooter(arm.getAngle()));
+    operatorB.whileTrue(new BackOut());
   }
 
   /**

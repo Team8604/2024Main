@@ -38,6 +38,10 @@ public final class Constants {
     // Speed modifiers
     public static final double kMaxSpeed = 1;
     public static final double kIntakeSpeed = 0.25;
+    public static final double kBackOut = -0.5;
+
+    // Distance options
+    public static final double kNoteDistance = 0.05; // TO BE DETERMINED
   }
 
   public static class ShooterConstants {
@@ -47,22 +51,23 @@ public final class Constants {
     // Speed modifiers
     public static final double kMaxSpeed = 1;
     public static final double kAmpSpeed = 0.1;
+    public static final double kBackOut = -0.1; // TO BE DETERMINED
   }
 
   public static class ArmConstants {
     // CAN IDs
     public static final int kRightArm = 7;
     public static final int kLeftArm = 8;
-    public static final int kArmEncoder = 0;
+    public static final int kArmEncoder = 9; // TO BE DETERMINED
 
     // Speed modifier
     public static final double kMaxSpeed = 0.5;
 
     // Possible arm error
-    public static final double kMaxError = 0.02;
+    public static final double kMaxError = 0.02; // TO BE DETERMINED
 
     // Arm positions
-    public static final double kAmpAngle = 0.25;
+    public static final double kAmpAngle = 0.25; // TO BE DETERMINED
 
   }
 
