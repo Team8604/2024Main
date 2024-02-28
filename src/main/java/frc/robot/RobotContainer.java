@@ -7,12 +7,10 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.RunIntake;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
+import frc.robot.commands.RunShooter;
+import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -27,6 +25,7 @@ public class RobotContainer {
   public static Drivetrain drivetrain = new Drivetrain();
   public static Intake intake = new Intake();
   public static Shooter shooter = new Shooter();
+  public static Arm arm = new Arm();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   public static CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
@@ -65,6 +64,7 @@ public class RobotContainer {
     // cancelling on release.
     //m_driverController.b().whileTrue(drivetrain.exampleMethodCommand());
     operatorA.whileTrue(new RunIntake());
+    operatorX.whileTrue(new RunShooter(arm.getAngle()));
   }
 
   /**

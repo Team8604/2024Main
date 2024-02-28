@@ -58,10 +58,17 @@ public final class Constants {
     // Speed modifier
     public static final double kMaxSpeed = 0.5;
 
-    
+    // Possible arm error
+    public static final double kMaxError = 0.02;
+
+    // Arm positions
+    public static final double kAmpAngle = 0.25;
 
   }
 
-  //public static final int kRightClimber = 9;
-  //public static final int kLeftClimber = 10;
-}
+  public static class ClimberConstants {
+    // CAN IDs
+    //public static final int kRightClimber = 9;
+    //public static final int kLeftClimber = 10;
+
+  }}
