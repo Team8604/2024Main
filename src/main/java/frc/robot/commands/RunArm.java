@@ -11,7 +11,7 @@ public class RunArm extends Command {
         addRequirements(RobotContainer.arm);
     }
 
-    
+
     // Called when the command is initially scheduled
     @Override
     public void initialize() {
@@ -23,7 +23,12 @@ public class RunArm extends Command {
     public void execute() {
         double adjustArm = Math.pow(RobotContainer.m_operatorController.getLeftY(), 3);
 
-        RobotContainer.arm.setSpeed(-1*adjustArm);
+        if(RobotContainer.arm.rightFowardLimitSwitch.isPressed() != RobotContainer.arm.leftFowardLimitSwitch.isPressed() && adjustArm<0){
+            RobotContainer.arm.setSpeed(0);
+        } else if(RobotContainer.arm.rightBackwardLimitSwitch.isPressed() != RobotContainer.arm.leftBackwardLimitSwitch.isPressed() && adjustArm>0){
+            RobotContainer.arm.setSpeed(0);
+        } else {
+            RobotContainer.arm.setSpeed(-1*adjustArm);
+        }
     }
-    
 }

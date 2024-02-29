@@ -8,7 +8,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
@@ -17,10 +16,10 @@ public class Arm extends SubsystemBase {
     private final CANSparkMax rightArm = new CANSparkMax(ArmConstants.kRightArm, MotorType.kBrushless);
     private final CANSparkMax leftArm = new CANSparkMax(ArmConstants.kLeftArm, MotorType.kBrushless);
     private final DutyCycleEncoder armEncoder = new DutyCycleEncoder(ArmConstants.kArmEncoder); 
-    private final SparkLimitSwitch rightFowardLimitSwitch = rightArm.getForwardLimitSwitch(ArmConstants.kArmLimitSwitchType);
-    private final SparkLimitSwitch leftFowardLimitSwitch = leftArm.getForwardLimitSwitch(ArmConstants.kArmLimitSwitchType);
-    private final SparkLimitSwitch rightBackwardLimitSwitch = rightArm.getReverseLimitSwitch(ArmConstants.kArmLimitSwitchType);
-    private final SparkLimitSwitch leftBackwardLimitSwitch = leftArm.getReverseLimitSwitch(ArmConstants.kArmLimitSwitchType);
+    public final SparkLimitSwitch rightFowardLimitSwitch = rightArm.getForwardLimitSwitch(ArmConstants.kArmLimitSwitchType);
+    public final SparkLimitSwitch leftFowardLimitSwitch = leftArm.getForwardLimitSwitch(ArmConstants.kArmLimitSwitchType);
+    public final SparkLimitSwitch rightBackwardLimitSwitch = rightArm.getReverseLimitSwitch(ArmConstants.kArmLimitSwitchType);
+    public final SparkLimitSwitch leftBackwardLimitSwitch = leftArm.getReverseLimitSwitch(ArmConstants.kArmLimitSwitchType);
     
 
 
@@ -53,6 +52,8 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putBoolean("Right Backward Arm Angle", rightBackwardLimitSwitch.isPressed());
         SmartDashboard.putBoolean("Left Backward Arm Angle", leftBackwardLimitSwitch.isPressed());
         SmartDashboard.putNumber("Arm Angle", armEncoder.getAbsolutePosition());
+
+        
     }
 
 }
