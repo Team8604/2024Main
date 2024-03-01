@@ -63,7 +63,7 @@ public final class Constants {
     public static final int kLeftArm = 8;
     public static final int kArmEncoder = 9; // TO BE DETERMINED
 
-    //limit switch type
+    // limit switch type
     public static final SparkLimitSwitch.Type kArmLimitSwitchType = SparkLimitSwitch.Type.kNormallyOpen;
 
     // Speed modifier
@@ -73,8 +73,10 @@ public final class Constants {
     public static final double kMaxError = 0.02; // TO BE DETERMINED
 
     // Arm positions
-    public static final double kAmpAngle = 0.2; // TO BE DETERMINED
-    public static final double kIntakePosition = 0; // TO BE DETERMINED
+    // Note - arm range on encoder is about 0.224-0.467
+    public static final double kAmpAngle = 0.4; // TO BE DETERMINED
+    public static final double kIntakePosition = 0.2; // TO BE DETERMINED
+    public static final double kShootPosition = 0.25; // TO BE DETERMINED
 
     // PID constants
     public static final double kP = 0.1;
