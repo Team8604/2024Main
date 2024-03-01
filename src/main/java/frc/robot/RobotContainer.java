@@ -68,6 +68,7 @@ public class RobotContainer {
     operatorA.whileTrue(new RunIntake());
     operatorX.whileTrue(new RunShooter(arm.getAngle()));
     operatorB.whileTrue(new BackOut());
+    operatorY.onTrue(new SetArmToAngle(0.2));
   }
 
   /**

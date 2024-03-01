@@ -52,7 +52,7 @@ public final class Constants {
     public static final int kShooter = 6;
 
     // Speed modifiers
-    public static final double kMaxSpeed = 0.3;
+    public static final double kMaxSpeed = 1;
     public static final double kAmpSpeed = 0.1;
     public static final double kBackOut = -0.1; // TO BE DETERMINED
   }
@@ -75,6 +75,13 @@ public final class Constants {
     // Arm positions
     public static final double kAmpAngle = 0.25; // TO BE DETERMINED
     public static final double kIntakePosition = 0; // TO BE DETERMINED
+
+    // PID constants
+    public static final double kP = 0.1;
+    public static final double kI = 0.1;
+    public static final double kD = 0.1;
+    public static final double kPosTolerance = 0.05;
+    public static final double kSpeedTolerance = 0.001;
   }
 
   public static class ClimberConstants {
