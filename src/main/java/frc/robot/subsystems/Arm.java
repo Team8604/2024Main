@@ -27,6 +27,11 @@ public class Arm extends SubsystemBase {
         rightArm.restoreFactoryDefaults();
         leftArm.restoreFactoryDefaults();
         rightArm.follow(leftArm, true);
+        
+        rightFowardLimitSwitch.enableLimitSwitch(true);
+        leftFowardLimitSwitch.enableLimitSwitch(true);
+        rightBackwardLimitSwitch.enableLimitSwitch(true);
+        leftBackwardLimitSwitch.enableLimitSwitch(true);
 
     }
 
@@ -42,10 +47,6 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
     // This method will be called once per scheduler run
-        rightFowardLimitSwitch.enableLimitSwitch(true);
-        leftFowardLimitSwitch.enableLimitSwitch(true);
-        rightBackwardLimitSwitch.enableLimitSwitch(true);
-        leftBackwardLimitSwitch.enableLimitSwitch(true);
 
         SmartDashboard.putBoolean("Right Foward Arm Encoder", rightFowardLimitSwitch.isPressed());
         SmartDashboard.putBoolean("Left Foward Arm Angle", leftFowardLimitSwitch.isPressed());
