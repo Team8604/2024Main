@@ -1,17 +1,28 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+package frc.robot.subsystems;
 
-package frc.robot.Subsystems;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
 
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ShooterConstants;
 
+public class Shooter extends SubsystemBase{
+    //initialize motor
+    private final CANSparkMax shooterMotor = new CANSparkMax(ShooterConstants.kShooter, MotorType.kBrushless);
 
-/** Add your docs here. */
-public class Shooter {
+    public Shooter() {
+        shooterMotor.restoreFactoryDefaults();
+    }
 
-  public Shooter(){
-        
-  }
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+
+    }
+
+    public void setSpeed(double speed) {
+        shooterMotor.set(ShooterConstants.kMaxSpeed * MathUtil.clamp(speed, -1, 1));
+    }
 }
+

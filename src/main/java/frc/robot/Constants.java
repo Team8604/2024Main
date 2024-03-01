@@ -4,35 +4,91 @@
 
 package frc.robot;
 
+import com.revrobotics.SparkLimitSwitch;
 
-/** Add your docs here. */
+/**
+ * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants should be declared
+ * globally (i.e. public static). Do not put anything functional in this class.
+ *
+ * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * constants are needed, to reduce verbosity.
+ */
 public final class Constants {
-    
-    //Motor speeds
-    public static final double kShooterSpeed = 1;
-    public static final double kAmpShooterSpeed = 0.1;
-    public static final double kIntakeSpeed = 0.25;
-    public static final double kMaxIntakeSpeed = 1;
-    public static final double kDrivetrainSpeed = 0.25;
-    public static final double kArmMaxSpeed = 0.1;
+  public static class OperatorConstants {
+    // IDs of controllers
+    public static final int kDriverControllerPort = 0;
+    public static final int kOperatorControllerPort = 1;
+  }
 
-    //Arm PID coefficients
-    public static final double kArmP = 0.5;
-    public static final double kArmI = 0.05;
-    public static final double kArmD = 0.05;
-    
-    //CAN IDs for devices
+  public static class DriveConstants {
+    // Identification of motors
+    public static final String CANBUS_NAME = "rio";
     public static final int kRightLeader = 1;
     public static final int kRightFollower = 2;
     public static final int kLeftLeader = 3;
     public static final int kLeftFollower = 4;
-    public static final int kIntakeMotor = 5;
-    public static final int kShooterMotor = 6;
+
+    // Speed modifier
+    public static final double kMaxSpeed = 0.3;
+  }
+
+  public static class IntakeConstants {
+    // CAN ID
+    public static final int kIntake = 5;
+
+    // Speed modifiers
+    public static final double kMaxSpeed = 1;
+    public static final double kIntakeSpeed = 0.25;
+    public static final double kBackOut = -0.5;
+
+
+    // Distance options
+    public static final double kNoteDistance = 10; // TO BE DETERMINED
+  }
+
+  public static class ShooterConstants {
+    // CAN ID
+    public static final int kShooter = 6;
+
+    // Speed modifiers
+    public static final double kMaxSpeed = 1;
+    public static final double kAmpSpeed = 0.1;
+    public static final double kBackOut = -0.1; // TO BE DETERMINED
+  }
+
+  public static class ArmConstants {
+    // CAN IDs
     public static final int kRightArm = 7;
     public static final int kLeftArm = 8;
+    public static final int kArmEncoder = 9; // TO BE DETERMINED
+
+    // limit switch type
+    public static final SparkLimitSwitch.Type kArmLimitSwitchType = SparkLimitSwitch.Type.kNormallyOpen;
+
+    // Speed modifier
+    public static final double kMaxSpeed = 0.5;
+
+    // Possible arm error
+    public static final double kMaxError = 0.02; // TO BE DETERMINED
+
+    // Arm positions
+    // Note - arm range on encoder is about 0.224-0.467
+    public static final double kAmpAngle = 0.4; // TO BE DETERMINED
+    public static final double kIntakePosition = 0.2; // TO BE DETERMINED
+    public static final double kShootPosition = 0.25; // TO BE DETERMINED
+
+    // PID constants
+    public static final double kP = 0.1;
+    public static final double kI = 0.1;
+    public static final double kD = 0.1;
+    public static final double kPosTolerance = 0.05;
+    public static final double kSpeedTolerance = 0.001;
+  }
+
+  public static class ClimberConstants {
+    // CAN IDs
     //public static final int kRightClimber = 9;
-    //public static final int kRightClimber = 10;
+    //public static final int kLeftClimber = 10;
 
-    public static final int kArmEncoder = 0;
-
-}
+  }}

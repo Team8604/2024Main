@@ -1,18 +1,55 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+package frc.robot.subsystems;  
 
-package frc.robot.Subsystems;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.Rev2mDistanceSensor;
+import com.revrobotics.Rev2mDistanceSensor.Port;
 
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 
+public class Intake extends SubsystemBase{
+    //initialize motor
+    private final CANSparkMax intakeMotor = new CANSparkMax(IntakeConstants.kIntake, MotorType.kBrushless);
+    private final Rev2mDistanceSensor intakeSensorOnBoard = new Rev2mDistanceSensor(Port.kOnboard);
+    private final Rev2mDistanceSensor intakeSensorMXP = new Rev2mDistanceSensor(Port.kMXP);
 
+    public Intake() {
+        intakeMotor.restoreFactoryDefaults();
+    }
 
-/** Add your docs here. */
-public class Intake {
-  
-  public Intake(){
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
         
-  }
+        SmartDashboard.putNumber("Distance Sensor", getIntakeSensorDistance());
+        //RobotContainer.operatorA.onTrue(new RunIntake());
+    }
+
+    public void setSpeed(double speed) {
+        /*if (isNote()){
+            intakeMotor.set(0);
+        } 
+        if (!isNote()){
+            intakeMotor.set(IntakeConstants.kMaxSpeed * MathUtil.clamp(speed, -1, 1));
+        } */
+        intakeMotor.set(IntakeConstants.kMaxSpeed * MathUtil.clamp(speed, -1, 1));
+    }
+
+
+    public double getIntakeSensorDistance(){
+        intakeSensorOnBoard.setAutomaticMode(true);
+
+        return intakeSensorMXP.getRange();
+    }
+
+    public boolean isNote() {
+        if (getIntakeSensorDistance() <= IntakeConstants.kNoteDistance) {
+            return true;
+        }
+
+        return false;
+    }
 }
