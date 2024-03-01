@@ -5,8 +5,10 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -64,11 +66,10 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    //m_driverController.b().whileTrue(drivetrain.exampleMethodCommand());
     operatorA.whileTrue(new RunIntake());
     operatorX.whileTrue(new RunShooter(arm.getAngle()));
     operatorB.whileTrue(new BackOut());
-    operatorY.onTrue(new SetArmToAngle(0.2));
+    operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle));
   }
 
   /**

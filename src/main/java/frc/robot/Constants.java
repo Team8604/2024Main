@@ -73,7 +73,7 @@ public final class Constants {
     public static final double kMaxError = 0.02; // TO BE DETERMINED
 
     // Arm positions
-    public static final double kAmpAngle = 0.25; // TO BE DETERMINED
+    public static final double kAmpAngle = 0.2; // TO BE DETERMINED
     public static final double kIntakePosition = 0; // TO BE DETERMINED
 
     // PID constants
