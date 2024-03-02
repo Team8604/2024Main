@@ -42,7 +42,9 @@ public class Arm extends SubsystemBase {
     public void setSpeed(double speed) {
         leftArm.set(MathUtil.clamp(speed, -1 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
     }
-
+    public void setSpeedZero() {
+        leftArm.set(0);
+    }
 
     @Override
     public void periodic() {
@@ -53,8 +55,11 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putBoolean("Right Backward Arm Angle", rightBackwardLimitSwitch.isPressed());
         SmartDashboard.putBoolean("Left Backward Arm Angle", leftBackwardLimitSwitch.isPressed());
         SmartDashboard.putNumber("Arm Angle", armEncoder.getAbsolutePosition());
+        //SmartDashboard.putNumber("Arm speed from controller", RunArm.adjustArm);
+        SmartDashboard.putNumber("Left Arm speed", leftArm.get());
+        SmartDashboard.putNumber("Right Arm speed", rightArm.get());
 
-        
+
     }
 
 }
