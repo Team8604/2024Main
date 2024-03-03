@@ -19,6 +19,7 @@ public final class Constants {
     // IDs of controllers
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
+    public static final int kOperatorButtonBoardPort = 2;
   }
 
   public static class DriveConstants {
@@ -77,6 +78,10 @@ public final class Constants {
     public static final double kAmpAngle = 0.4; // TO BE DETERMINED
     public static final double kIntakePosition = 0.2; // TO BE DETERMINED
     public static final double kShootPosition = 0.25; // TO BE DETERMINED
+    public static final double kSpeakerPosition = 0.25; // TO BE DETERMINED
+    public static final double kTrapPosition = 0.25; // TO BE DETERMINED
+    public static final double kClimbPosition = 0.25; // TO BE DETERMINED
+    public static final double kStartPosition = 0.25; // TO BE DETERMINED
 
     // PID constants
     public static final double kP = 0.1;
