@@ -21,7 +21,14 @@ public class RunArm extends Command {
     // Called every time the scheduler runs while the command is scheduled
     @Override
     public void execute() {
-        adjustArm = Math.pow(RobotContainer.m_operatorController.getLeftY(), 3);
+        //xbox controller
+        //adjustArm = Math.pow(RobotContainer.m_operatorController.getLeftY(), 3);
+        //button board
+        adjustArm = 0.3 * RobotContainer.m_operatorButtonBoard.getLeftY();
+        if (RobotContainer.arm.getAngle() <= 0.243 || RobotContainer.arm.getAngle() >= 4.5){
+            adjustArm /= 2;
+        }
+
 
         //sets speed to be at 0 if either limit switch is pressed and if arm is told to move in that direction
         if(RobotContainer.arm.rightFowardLimitSwitch.isPressed() != RobotContainer.arm.leftFowardLimitSwitch.isPressed() && adjustArm<0){
@@ -31,7 +38,7 @@ public class RunArm extends Command {
         } else if (Math.abs(adjustArm)<0.1){
             RobotContainer.arm.setSpeed(0);
         }else {
-            RobotContainer.arm.setSpeed(-1*adjustArm);
+            RobotContainer.arm.setSpeed(-0.7*adjustArm);
         }
     }
 }

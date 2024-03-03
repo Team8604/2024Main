@@ -75,20 +75,19 @@ public final class Constants {
 
     // Arm positions
     // Note - arm range on encoder is about 0.224-0.467
-    public static final double kAmpAngle = 0.4; // TO BE DETERMINED
-    public static final double kIntakePosition = 0.2; // TO BE DETERMINED
-    public static final double kShootPosition = 0.25; // TO BE DETERMINED
-    public static final double kSpeakerPosition = 0.25; // TO BE DETERMINED
+    public static final double kAmpAngle = 0.21;
+    public static final double kIntakePosition = 0.47;
+    public static final double kShootPosition = 0.44; // TO BE DETERMINED
     public static final double kTrapPosition = 0.25; // TO BE DETERMINED
     public static final double kClimbPosition = 0.25; // TO BE DETERMINED
-    public static final double kStartPosition = 0.25; // TO BE DETERMINED
+    public static final double kStartPosition = 0.305; 
 
     // PID constants
-    public static final double kP = 0.1;
+    public static final double kP = 0.9;
     public static final double kI = 0.1;
-    public static final double kD = 0.1;
-    public static final double kPosTolerance = 0.05;
-    public static final double kSpeedTolerance = 0.001;
+    public static final double kD = 0.2;
+    public static final double kPosTolerance = 0.004;
+    public static final double kSpeedTolerance = 0.08;
   }
 
   public static class ClimberConstants {
