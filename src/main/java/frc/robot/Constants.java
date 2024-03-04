@@ -31,7 +31,7 @@ public final class Constants {
     public static final int kLeftFollower = 4;
 
     // Speed modifier
-    public static final double kMaxSpeed = 0.3;
+    public static final double kMaxSpeed = 0.5;
   }
 
   public static class IntakeConstants {
