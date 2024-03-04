@@ -9,6 +9,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.RobotContainer;
 
 public class Intake extends SubsystemBase{
     //initialize motor
@@ -29,12 +30,6 @@ public class Intake extends SubsystemBase{
     }
 
     public void setSpeed(double speed) {
-        /*if (isNote()){
-            intakeMotor.set(0);
-        } 
-        if (!isNote()){
-            intakeMotor.set(IntakeConstants.kMaxSpeed * MathUtil.clamp(speed, -1, 1));
-        } */
         intakeMotor.set(IntakeConstants.kMaxSpeed * MathUtil.clamp(speed, -1, 1));
     }
 
@@ -50,6 +45,13 @@ public class Intake extends SubsystemBase{
             return true;
         }
 
+        return false;
+    }
+
+    public boolean isShoot(){
+        if (RobotContainer.buttonBoardTwo.getAsBoolean() || RobotContainer.buttonBoardFour.getAsBoolean()){
+            return true;
+        } 
         return false;
     }
 }
