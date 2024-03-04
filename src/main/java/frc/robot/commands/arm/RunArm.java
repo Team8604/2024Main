@@ -6,6 +6,7 @@ import frc.robot.RobotContainer;
 public class RunArm extends Command {
 
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    public static double adjustArm = 0;
 
     public RunArm() {
         // Use addRequirements() here
@@ -16,13 +17,19 @@ public class RunArm extends Command {
     // Called when the command is initially scheduled
     @Override
     public void initialize() {
-
     }
 
     // Called every time the scheduler runs while the command is scheduled
     @Override
     public void execute() {
-        double adjustArm = Math.pow(RobotContainer.m_operatorController.getLeftY(), 3);
+        //xbox controller
+        //adjustArm = Math.pow(RobotContainer.m_operatorController.getLeftY(), 3);
+        //button board
+        adjustArm = 0.3 * RobotContainer.m_operatorButtonBoard.getLeftY();
+        if (RobotContainer.arm.getAngle() <= 0.243 || RobotContainer.arm.getAngle() >= 4.5){
+            adjustArm /= 2;
+        }
+
 
         //deadband
         if (Math.abs(adjustArm) >= 0.1) {
@@ -37,8 +44,10 @@ public class RunArm extends Command {
             RobotContainer.arm.setSpeed(0);
         } else if(RobotContainer.arm.rightBackwardLimitSwitch.isPressed() != RobotContainer.arm.leftBackwardLimitSwitch.isPressed() && adjustArm>0){
             RobotContainer.arm.setSpeed(0);
-        } else {
-            RobotContainer.arm.setSpeed(-1*adjustArm);
+        } else if (Math.abs(adjustArm)<0.1){
+            RobotContainer.arm.setSpeed(0);
+        }else {
+            RobotContainer.arm.setSpeed(-0.7*adjustArm);
         }
         //}
         

@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.commands.arm.*;
+
 
 public class Arm extends SubsystemBase {
     
@@ -55,9 +57,7 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putBoolean("Right Backward Arm Angle", rightBackwardLimitSwitch.isPressed());
         SmartDashboard.putBoolean("Left Backward Arm Angle", leftBackwardLimitSwitch.isPressed());
         SmartDashboard.putNumber("Arm Angle", armEncoder.getAbsolutePosition());
-        //SmartDashboard.putNumber("Arm speed from controller", RunArm.adjustArm);
-        SmartDashboard.putNumber("Left Arm speed", leftArm.get());
-        SmartDashboard.putNumber("Right Arm speed", rightArm.get());
+        SmartDashboard.putNumber("Arm speed", RunArm.adjustArm);
 
 
     }
