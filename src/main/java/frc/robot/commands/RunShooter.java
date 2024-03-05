@@ -20,6 +20,7 @@ public class RunShooter extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.shooter);
     angle = armAngle;
+
   }
 
 

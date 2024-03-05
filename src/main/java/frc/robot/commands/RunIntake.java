@@ -16,12 +16,20 @@ public class RunIntake extends Command {
   public RunIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.intake);
-  }
+    }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.intake.setSpeed(IntakeConstants.kIntakeSpeed);
+  }
+
+  @Override
+  public void execute(){
+    if (RobotContainer.buttonBoardOne.getAsBoolean() && RobotContainer.buttonBoardTwo.getAsBoolean() || RobotContainer.buttonBoardOne.getAsBoolean() && RobotContainer.buttonBoardFour.getAsBoolean()){
+      RobotContainer.intake.setSpeed(IntakeConstants.kMaxSpeed);
+    } else if (RobotContainer.buttonBoardOne.getAsBoolean()){
+      RobotContainer.intake.setSpeed(IntakeConstants.kIntakeSpeed);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -33,7 +41,7 @@ public class RunIntake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-     if (!RobotContainer.operatorX.getAsBoolean() && RobotContainer.intake.isNote()) {
+     if (!RobotContainer.intake.isShoot() && RobotContainer.intake.isNote()) {
       return true;
      }
      

@@ -31,7 +31,7 @@ public final class Constants {
     public static final int kLeftFollower = 4;
 
     // Speed modifier
-    public static final double kMaxSpeed = 0.3;
+    public static final double kMaxSpeed = 0.5;
   }
 
   public static class IntakeConstants {
@@ -53,7 +53,7 @@ public final class Constants {
     public static final int kShooter = 6;
 
     // Speed modifiers
-    public static final double kMaxSpeed = 1;
+    public static final double kMaxSpeed = 0.75;
     public static final double kAmpSpeed = 0.1;
     public static final double kBackOut = -0.1; // TO BE DETERMINED
   }
