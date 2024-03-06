@@ -91,7 +91,7 @@ public class RobotContainer {
     operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle));
 
     buttonBoardOne.whileTrue(new RunIntake());
-    buttonBoardTwo.whileTrue(new RunShooter(ShooterConstants.kMaxSpeed));
+    buttonBoardTwo.whileTrue(new RunShooter(arm.getAngle()));
     buttonBoardThree.whileTrue(new BackOut());
     buttonBoardFour.whileTrue(new RunShooter(ShooterConstants.kAmpSpeed));
 
