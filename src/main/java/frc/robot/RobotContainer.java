@@ -46,10 +46,10 @@ public class RobotContainer {
     public static Trigger operatorRightBumper = m_operatorController.rightBumper();
 
     //operator buttonboard buttons
-    public static Trigger buttonBoardOne = m_operatorButtonBoard.button(1);
-    public static Trigger buttonBoardTwo = m_operatorButtonBoard.button(2);
+    private static Trigger buttonBoardOne = m_operatorButtonBoard.button(1);
+    private static Trigger buttonBoardTwo = m_operatorButtonBoard.button(2);
     private static Trigger buttonBoardThree = m_operatorButtonBoard.button(3);
-    public static Trigger buttonBoardFour = m_operatorButtonBoard.button(4);
+    private static Trigger buttonBoardFour = m_operatorButtonBoard.button(4);
     private static Trigger buttonBoardFive = m_operatorButtonBoard.button(5);
     private static Trigger buttonBoardSix = m_operatorButtonBoard.button(6);
     private static Trigger buttonBoardSeven = m_operatorButtonBoard.button(7);

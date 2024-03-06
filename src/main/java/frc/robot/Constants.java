@@ -73,7 +73,7 @@ public final class Constants {
     public static final double kMaxSpeed = 0.5;
 
     // Possible arm error
-    public static final double kMaxError = 0.02; // TO BE DETERMINED
+    public static final double kMaxError = 0.12; // TO BE DETERMINED
 
     // Arm positions
     // Note - arm range on encoder is about 0.224-0.467

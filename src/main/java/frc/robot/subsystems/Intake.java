@@ -48,10 +48,4 @@ public class Intake extends SubsystemBase{
         return false;
     }
 
-    public boolean isShoot(){
-        if (RobotContainer.buttonBoardTwo.getAsBoolean() || RobotContainer.buttonBoardFour.getAsBoolean()){
-            return true;
-        } 
-        return false;
-    }
 }

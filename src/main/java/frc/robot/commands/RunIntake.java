@@ -21,15 +21,15 @@ public class RunIntake extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    if (RobotContainer.shooter.running){
+      RobotContainer.intake.setSpeed(IntakeConstants.kMaxSpeed);
+    } else {
+      RobotContainer.intake.setSpeed(IntakeConstants.kIntakeSpeed);
+    }
   }
 
   @Override
   public void execute(){
-    if (RobotContainer.buttonBoardOne.getAsBoolean() && RobotContainer.buttonBoardTwo.getAsBoolean() || RobotContainer.buttonBoardOne.getAsBoolean() && RobotContainer.buttonBoardFour.getAsBoolean()){
-      RobotContainer.intake.setSpeed(IntakeConstants.kMaxSpeed);
-    } else if (RobotContainer.buttonBoardOne.getAsBoolean()){
-      RobotContainer.intake.setSpeed(IntakeConstants.kIntakeSpeed);
-    }
   }
 
   // Called once the command ends or is interrupted.
@@ -41,7 +41,7 @@ public class RunIntake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-     if (!RobotContainer.intake.isShoot() && RobotContainer.intake.isNote()) {
+     if (!RobotContainer.shooter.running && RobotContainer.intake.isNote()) {
       return true;
      }
      

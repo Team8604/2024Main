@@ -33,11 +33,13 @@ public class RunShooter extends Command {
     } else {
         RobotContainer.shooter.setSpeed(ShooterConstants.kMaxSpeed);
     }
+    RobotContainer.shooter.running = true;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.shooter.setSpeed(0);
+    RobotContainer.shooter.running = false;
   }
 }
