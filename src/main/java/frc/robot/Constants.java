@@ -31,7 +31,9 @@ public final class Constants {
     public static final int kLeftFollower = 4;
 
     // Speed modifier
-    public static final double kMaxSpeed = 0.5;
+    public static final double kMaxSpeed = 0.7;
+    public static final double kSpeedIncrease = 0.3;
+    public static final double kSpeedDecrease = -0.3;
   }
 
   public static class IntakeConstants {
@@ -85,7 +87,7 @@ public final class Constants {
     // PID constants
     public static final double kP = 1.7;
     public static final double kI = 0.5;
-    public static final double kD = 1;
+    public static final double kD = 0.9;
     public static final double kPosTolerance = 0.004;
     public static final double kSpeedTolerance = 0.08;
   }

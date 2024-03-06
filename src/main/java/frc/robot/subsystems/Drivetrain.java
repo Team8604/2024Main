@@ -13,10 +13,11 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 
 public class Drivetrain extends SubsystemBase {
+  private double multiplier;
 
   //initialize motors
   private final TalonFX leftLeader = new TalonFX(DriveConstants.kLeftLeader, DriveConstants.CANBUS_NAME);
@@ -51,8 +52,9 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setSpeed(double left, double right) {
-    leftOut.Output = DriveConstants.kMaxSpeed * MathUtil.clamp(left, -1, 1);
-    rightOut.Output = DriveConstants.kMaxSpeed * MathUtil.clamp(right, -1, 1);    
+    multiplier = DriveConstants.kMaxSpeed + DriveConstants.kSpeedIncrease * RobotContainer.fastButton+ DriveConstants.kSpeedDecrease * RobotContainer.slowButton;
+    leftOut.Output = multiplier * MathUtil.clamp(left, -1, 1);
+    rightOut.Output = multiplier * MathUtil.clamp(right, -1, 1);    
   }
 
   @Override
