@@ -13,7 +13,7 @@ public class SetArmToAngle extends PIDCommand{
             new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD),
             () -> { return RobotContainer.arm.getAngle(); },
             targetAngle,
-            (double speed) -> { RobotContainer.arm.setSpeed(speed*2); },
+            (double speed) -> { RobotContainer.arm.setSpeed(speed); },
             RobotContainer.arm
         );
 

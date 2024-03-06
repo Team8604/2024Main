@@ -42,7 +42,12 @@ public class Arm extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-        leftArm.set(MathUtil.clamp(speed, -1 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
+        if (getAngle() > .3){
+            leftArm.set(MathUtil.clamp(speed, -1 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
+        } else {
+            leftArm.set(MathUtil.clamp(speed, -0.8 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
+
+        }
     }
     public void setSpeedZero() {
         leftArm.set(0);

@@ -83,16 +83,16 @@ public final class Constants {
     public static final double kStartPosition = 0.305; 
 
     // PID constants
-    public static final double kP = 0.9;
-    public static final double kI = 0.1;
-    public static final double kD = 0.2;
+    public static final double kP = 1.7;
+    public static final double kI = 0.5;
+    public static final double kD = 1;
     public static final double kPosTolerance = 0.004;
     public static final double kSpeedTolerance = 0.08;
   }
-
   public static class ClimberConstants {
     // CAN IDs
     //public static final int kRightClimber = 9;
     //public static final int kLeftClimber = 10;
 
-  }}
+  }
+}
