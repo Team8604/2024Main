@@ -11,6 +11,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.MathUtil;
+import com.kauailabs.navx.frc.AHRS.SerialDataType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -85,7 +86,8 @@ public class Drivetrain extends SubsystemBase {
         xAxis = ahrs.getPitch();
         yAxis = ahrs.getRoll();
         zAxis = ahrs.getYaw();
-
+        SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
+        SmartDashboard.putBoolean(  "IMU_IsCalibrating",    ahrs.isCalibrating());
         SmartDashboard.putNumber("X axis", xAxis);
         SmartDashboard.putNumber("Y axis", yAxis);
         SmartDashboard.putNumber("Z axis", zAxis);
