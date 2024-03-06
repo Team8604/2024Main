@@ -32,9 +32,9 @@ public class Drivetrain extends SubsystemBase {
     private final DutyCycleOut rightOut = new DutyCycleOut(0);
 
     //navx values
-    public static double xAxis; //Pitch 
-    public static double yAxis; //Roll 
-    public static double zAxis; //Yaw
+    public double xAxis; //Pitch 
+    public double yAxis; //Roll 
+    public double zAxis; //Yaw
     public AHRS ahrs;
 
     public Drivetrain() {
@@ -89,6 +89,5 @@ public class Drivetrain extends SubsystemBase {
         SmartDashboard.putNumber("X axis", xAxis);
         SmartDashboard.putNumber("Y axis", yAxis);
         SmartDashboard.putNumber("Z axis", zAxis);
-
     }
 }
