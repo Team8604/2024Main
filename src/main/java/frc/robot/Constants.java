@@ -77,7 +77,7 @@ public final class Constants {
 
     // Arm positions
     // Note - arm range on encoder is about 0.224-0.467
-    public static final double kAmpAngle = 0.21;
+    public static final double kAmpAngle = 0.22;
     public static final double kIntakePosition = 0.47;
     public static final double kShootPosition = 0.44; // TO BE DETERMINED
     public static final double kTrapPosition = 0.25; // TO BE DETERMINED

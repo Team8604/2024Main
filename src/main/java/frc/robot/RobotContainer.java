@@ -93,7 +93,6 @@ public class RobotContainer {
     buttonBoardOne.whileTrue(new RunIntake());
     buttonBoardTwo.whileTrue(new RunShooter(arm.getAngle()));
     buttonBoardThree.whileTrue(new BackOut());
-    buttonBoardFour.whileTrue(new RunShooter(ShooterConstants.kAmpSpeed));
 
     buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition));
     buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition));
