@@ -106,6 +106,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(drivetrain);//add intake,shooter,arm to this later
+    return Autos.exampleAuto(drivetrain); //add intake,shooter,arm to this later
   }
 }

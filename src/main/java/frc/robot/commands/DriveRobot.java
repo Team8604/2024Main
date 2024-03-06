@@ -7,6 +7,7 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** An example command that uses an example subsystem. */
 public class DriveRobot extends Command {
@@ -33,7 +34,7 @@ public class DriveRobot extends Command {
     /* Get forward and rotational throttle from joystick */
     /* invert the joystick Y because forward Y is negative */
     //code from joystick for drivetrain
-    double fwd = -1 * Math.pow(RobotContainer.m_driverController.getY(), 3);
+    double fwd = Math.pow(RobotContainer.m_driverController.getY(), 3);
     double rot;
     double rot1 = Math.pow(RobotContainer.m_driverController.getX(), 3);
     double rot2 = Math.pow(RobotContainer.m_driverController.getZ(), 3);
@@ -63,11 +64,18 @@ public class DriveRobot extends Command {
     fwd *= Constants.DriveConstants.kMaxSpeed;
     rot *= Constants.DriveConstants.kMaxSpeed;
     
+    if (RobotContainer.m_driverController.getRawAxis(4) < 0 ){
+      fwd *=- 1;
+    }
+
     /* Set output to control frames */
     RobotContainer.drivetrain.setSpeed(fwd + rot , fwd - rot);
+    SmartDashboard.putNumber("Joystick z", RobotContainer.m_driverController.getZ());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.drivetrain.setSpeed(0,0);
+  }
 }
