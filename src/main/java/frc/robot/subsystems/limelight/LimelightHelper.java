@@ -1,6 +1,6 @@
 //LimelightHelpers v1.3.0 (Feb 24, 2024)
 
-package frc.robot;
+package frc.robot.subsystems.limelight;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class LimelightHelpers {
 
-    public static class LimelightTarget_Retro {
+    static class LimelightTarget_Retro {
 
         @JsonProperty("t6c_ts")
         private double[] cameraPose_TargetSpace;
@@ -115,7 +115,7 @@ public class LimelightHelpers {
 
     }
 
-    public static class LimelightTarget_Fiducial {
+    static class LimelightTarget_Fiducial {
 
         @JsonProperty("fID")
         public double fiducialID;
@@ -207,11 +207,11 @@ public class LimelightHelpers {
         }
     }
 
-    public static class LimelightTarget_Barcode {
+    static class LimelightTarget_Barcode {
 
     }
 
-    public static class LimelightTarget_Classifier {
+    static class LimelightTarget_Classifier {
 
         @JsonProperty("class")
         public String className;
@@ -241,7 +241,7 @@ public class LimelightHelpers {
         }
     }
 
-    public static class LimelightTarget_Detector {
+    static class LimelightTarget_Detector {
 
         @JsonProperty("class")
         public String className;
@@ -271,7 +271,7 @@ public class LimelightHelpers {
         }
     }
 
-    public static class Results {
+    static class Results {
 
         @JsonProperty("pID")
         public double pipelineID;
@@ -371,7 +371,7 @@ public class LimelightHelpers {
         }
     }
 
-    public static class LimelightResults {
+    static class LimelightResults {
         @JsonProperty("Results")
         public Results targetingResults;
         
@@ -385,7 +385,7 @@ public class LimelightHelpers {
 
     }
 
-    public static class PoseEstimate {
+    static class PoseEstimate {
         public Pose2d pose;
         public double timestampSeconds;
         public double latency;
