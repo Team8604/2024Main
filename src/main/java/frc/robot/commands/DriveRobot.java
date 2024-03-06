@@ -64,6 +64,10 @@ public class DriveRobot extends Command {
     fwd *= Constants.DriveConstants.kMaxSpeed;
     rot *= Constants.DriveConstants.kMaxSpeed;
     
+    if (RobotContainer.m_driverController.getRawAxis(4) < 0 ){
+      fwd *=- 1;
+    }
+
     /* Set output to control frames */
     RobotContainer.drivetrain.setSpeed(fwd + rot , fwd - rot);
     SmartDashboard.putNumber("Joystick z", RobotContainer.m_driverController.getZ());
