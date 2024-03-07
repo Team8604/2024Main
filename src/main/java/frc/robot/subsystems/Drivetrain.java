@@ -61,8 +61,9 @@ public class Drivetrain extends SubsystemBase {
 
         //set navx
         try {
-            ahrs = new AHRS(SerialPort.Port.kMXP);
+            ahrs = new AHRS();
             ahrs.enableLogging(true);
+            
         } catch (RuntimeException ex ) {
             DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
         }
