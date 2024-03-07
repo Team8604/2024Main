@@ -48,6 +48,11 @@ public class Arm extends SubsystemBase {
             leftArm.set(MathUtil.clamp(speed, -0.8 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
         }
     }
+
+    public void setVoltage(double voltage){
+        leftArm.setVoltage(voltage);
+    }
+
     public void setSpeedZero() {
         leftArm.set(0);
     }

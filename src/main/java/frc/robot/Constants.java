@@ -31,7 +31,7 @@ public final class Constants {
     public static final int kLeftFollower = 4;
 
     // Speed modifier
-    public static final double kMaxSpeed = 0.5;
+    public static final double kMaxSpeed = 0.7;
     public static final double kSpeedIncrease = 0.3;
     public static final double kSpeedDecrease = -0.3;
   }
@@ -42,12 +42,12 @@ public final class Constants {
 
     // Speed modifiers
     public static final double kMaxSpeed = 1;
-    public static final double kIntakeSpeed = 0.25;
+    public static final double kIntakeSpeed = 0.3;
     public static final double kBackOut = -0.5;
 
 
     // Distance options
-    public static final double kNoteDistance = 10; // TO BE DETERMINED
+    public static final double kNoteDistance = 7; // TO BE DETERMINED
   }
 
   public static class ShooterConstants {
@@ -83,6 +83,7 @@ public final class Constants {
     public static final double kTrapPosition = 0.25; // TO BE DETERMINED
     public static final double kClimbPosition = 0.25; // TO BE DETERMINED
     public static final double kStartPosition = 0.305; 
+    public static final double kdriveTemp = 0.44;
 
     // PID constants
     public static final double kP = 1.7;

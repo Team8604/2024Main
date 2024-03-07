@@ -61,8 +61,8 @@ public class DriveRobot extends Command {
       fwd = 0;
     }
     //sets drivetrain motors to 25% speed
-    fwd *= Constants.DriveConstants.kMaxSpeed;
-    rot *= Constants.DriveConstants.kMaxSpeed;
+    fwd *= Constants.DriveConstants.kMaxSpeed ;
+    rot *= 0.5;
     
     if (RobotContainer.m_driverController.getRawAxis(4) < 0 ){
       fwd *=- 1;
