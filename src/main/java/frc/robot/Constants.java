@@ -31,7 +31,7 @@ public final class Constants {
     public static final int kLeftFollower = 4;
 
     // Speed modifier
-    public static final double kMaxSpeed = 0.7;
+    public static final double kMaxSpeed = 0.5;
     public static final double kSpeedIncrease = 0.3;
     public static final double kSpeedDecrease = -0.3;
   }
@@ -55,8 +55,8 @@ public final class Constants {
     public static final int kShooter = 6;
 
     // Speed modifiers
-    public static final double kMaxSpeed = 0.75;
-    public static final double kAmpSpeed = 0.1;
+    public static final double kMaxSpeed = 1;
+    public static final double kAmpSpeed = 0.15;
     public static final double kBackOut = -0.1; // TO BE DETERMINED
   }
 
@@ -79,7 +79,7 @@ public final class Constants {
     // Note - arm range on encoder is about 0.224-0.467
     public static final double kAmpAngle = 0.22;
     public static final double kIntakePosition = 0.47;
-    public static final double kShootPosition = 0.44; // TO BE DETERMINED
+    public static final double kShootPosition = 0.447; // TO BE DETERMINED
     public static final double kTrapPosition = 0.25; // TO BE DETERMINED
     public static final double kClimbPosition = 0.25; // TO BE DETERMINED
     public static final double kStartPosition = 0.305; 

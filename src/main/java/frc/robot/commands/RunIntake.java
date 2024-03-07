@@ -20,16 +20,12 @@ public class RunIntake extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void execute() {
     if (RobotContainer.shooter.running){
       RobotContainer.intake.setSpeed(IntakeConstants.kMaxSpeed);
     } else {
       RobotContainer.intake.setSpeed(IntakeConstants.kIntakeSpeed);
     }
-  }
-
-  @Override
-  public void execute(){
   }
 
   // Called once the command ends or is interrupted.

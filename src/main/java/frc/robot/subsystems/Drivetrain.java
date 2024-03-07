@@ -52,7 +52,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setSpeed(double left, double right) {
-    multiplier = DriveConstants.kMaxSpeed + DriveConstants.kSpeedIncrease * RobotContainer.fastButton+ DriveConstants.kSpeedDecrease * RobotContainer.slowButton;
+    multiplier = DriveConstants.kMaxSpeed + (RobotContainer.fastButton.getAsBoolean() ? DriveConstants.kSpeedIncrease : 0) + (RobotContainer.slowButton.getAsBoolean() ? DriveConstants.kSpeedDecrease : 0);
     leftOut.Output = multiplier * MathUtil.clamp(left, -1, 1);
     rightOut.Output = multiplier * MathUtil.clamp(right, -1, 1);    
   }
