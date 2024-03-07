@@ -19,7 +19,7 @@ public class RunShooter extends Command {
   public RunShooter(double armAngle) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.shooter);
-    angle = armAngle;
+    angle = RobotContainer.arm.getAngle();
 
   }
 
@@ -27,17 +27,20 @@ public class RunShooter extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    angle = RobotContainer.arm.getAngle();
     double error = angle - ArmConstants.kAmpAngle;
     if (Math.abs(error) < ArmConstants.kMaxError) {
         RobotContainer.shooter.setSpeed(ShooterConstants.kAmpSpeed);
     } else {
         RobotContainer.shooter.setSpeed(ShooterConstants.kMaxSpeed);
     }
+    RobotContainer.shooter.running = true;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.shooter.setSpeed(0);
+    RobotContainer.shooter.running = false;
   }
 }

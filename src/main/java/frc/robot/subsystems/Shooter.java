@@ -10,6 +10,7 @@ import frc.robot.Constants.ShooterConstants;
 public class Shooter extends SubsystemBase{
     //initialize motor
     private final CANSparkMax shooterMotor = new CANSparkMax(ShooterConstants.kShooter, MotorType.kBrushless);
+    public boolean running = false;
 
     public Shooter() {
         shooterMotor.restoreFactoryDefaults();
