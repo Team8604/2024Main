@@ -8,7 +8,7 @@ import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.arm.*;
 import frc.robot.subsystems.*;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -58,7 +58,6 @@ public class RobotContainer {
   private static Trigger buttonBoardEleven = m_operatorButtonBoard.button(11);
   private static Trigger buttonBoardTwelve = m_operatorButtonBoard.button(12);
 
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
     // Configure the trigger bindings
@@ -88,16 +87,17 @@ public class RobotContainer {
     operatorA.whileTrue(new RunIntake());
     operatorX.whileTrue(new RunShooter(arm.getAngle()));
     operatorB.whileTrue(new BackOut());
-    operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle));
+    operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
 
     buttonBoardOne.whileTrue(new RunIntake());
     buttonBoardTwo.whileTrue(new RunShooter(arm.getAngle()));
     buttonBoardThree.whileTrue(new BackOut());
 
-    buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition));
-    buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition));
-    buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle));
-    buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition));
+    buttonBoardSeven.whileTrue(new SetArmToAngle(ArmConstants.kdriveTemp, arm));
+    buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition, arm));
+    buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition, arm));
+    buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
+    buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition, arm));
   }
 
   /**

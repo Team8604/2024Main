@@ -70,8 +70,9 @@ public final class Constants {
     public static final SparkLimitSwitch.Type kArmLimitSwitchType = SparkLimitSwitch.Type.kNormallyOpen;
 
     // Speed modifier
-    public static final double kMaxSpeed = 0.5;
+    public static final double kMaxSpeed = 500;
 
+    public static final double kMaxAcceleration = 200; 
     // Possible arm error
     public static final double kMaxError = 0.12; // TO BE DETERMINED
 
@@ -86,8 +87,8 @@ public final class Constants {
     public static final double kdriveTemp = 0.44;
 
     // PID constants
-    public static final double kP = 1.7;
-    public static final double kI = 0.5;
+    public static final double kP = 50;
+    public static final double kI = 3;
     public static final double kD = 0.9;
     public static final double kPosTolerance = 0.004;
     public static final double kSpeedTolerance = 0.08;

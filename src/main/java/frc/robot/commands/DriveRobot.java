@@ -64,7 +64,7 @@ public class DriveRobot extends Command {
     fwd *= Constants.DriveConstants.kMaxSpeed ;
     rot *= 0.5;
     
-    if (RobotContainer.m_driverController.getRawAxis(4) < 0 ){
+    if (RobotContainer.m_driverController.getRawAxis(3) < 0 ){
       fwd *=- 1;
     }
 
