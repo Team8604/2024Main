@@ -1,16 +1,12 @@
 package frc.robot.commands.arm;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.subsystems.Arm;
 
 public class SetArmToAngle extends Command{
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
