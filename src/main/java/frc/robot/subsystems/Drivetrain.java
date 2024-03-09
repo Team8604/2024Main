@@ -24,46 +24,46 @@ import frc.robot.Constants.DriveConstants;
 
 public class Drivetrain extends SubsystemBase {
 
-    //initialize motors
-    private final TalonFX leftLeader = new TalonFX(DriveConstants.kLeftLeader, DriveConstants.CANBUS_NAME);
-    private final TalonFX leftFollower = new TalonFX(DriveConstants.kLeftFollower, DriveConstants.CANBUS_NAME);
-    private final TalonFX rightLeader = new TalonFX(DriveConstants.kRightLeader, DriveConstants.CANBUS_NAME);
-    private final TalonFX rightFollower = new TalonFX(DriveConstants.kRightFollower, DriveConstants.CANBUS_NAME);
+  //initialize motors
+  private final TalonFX leftLeader = new TalonFX(DriveConstants.kLeftLeader, DriveConstants.CANBUS_NAME);
+  private final TalonFX leftFollower = new TalonFX(DriveConstants.kLeftFollower, DriveConstants.CANBUS_NAME);
+  private final TalonFX rightLeader = new TalonFX(DriveConstants.kRightLeader, DriveConstants.CANBUS_NAME);
+  private final TalonFX rightFollower = new TalonFX(DriveConstants.kRightFollower, DriveConstants.CANBUS_NAME);
 
-    //navx values
-    public double xAxis; //Pitch 
-    public double yAxis; //Roll 
-    public double zAxis; //Yaw
-    public AHRS ahrs;
+  //navx values
+  public double xAxis; //Pitch 
+  public double yAxis; //Roll 
+  public double zAxis; //Yaw
+  public AHRS ahrs;
 
-    public Drivetrain() {
-        /* Set up followers to follow leaders */
-        leftFollower.setControl(new Follower(leftLeader.getDeviceID(), false));
-        rightFollower.setControl(new Follower(rightLeader.getDeviceID(), false));
+  public Drivetrain() {
+    /* Set up followers to follow leaders */
+    leftFollower.setControl(new Follower(leftLeader.getDeviceID(), false));
+    rightFollower.setControl(new Follower(rightLeader.getDeviceID(), false));
         
-        leftLeader.setSafetyEnabled(true);
-        rightLeader.setSafetyEnabled(true);
+    leftLeader.setSafetyEnabled(true);
+    rightLeader.setSafetyEnabled(true);
 
-        //set navx
-        ahrs = new AHRS();
-        ahrs.enableLogging(true);
-    }
+    //set navx
+    ahrs = new AHRS();
+    ahrs.enableLogging(true);
+  }
 
-    public void setSpeed(double left, double right) {  
-    }
+  public void setSpeed(double left, double right) {  
+  }
 
-    @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
-        SmartDashboard.putNumber("Left out", leftLeader.getVelocity().getValueAsDouble());
-        SmartDashboard.putNumber("Right out", rightLeader.getVelocity().getValueAsDouble());
-        SmartDashboard.putNumber("Left Position", leftLeader.getPosition().getValueAsDouble());
-        SmartDashboard.putNumber("Right Position", rightLeader.getPosition().getValueAsDouble());
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Left out", leftLeader.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Right out", rightLeader.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Left Position", leftLeader.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("Right Position", rightLeader.getPosition().getValueAsDouble());
 
-        SmartDashboard.putBoolean("IMU_Connected", ahrs.isConnected());
-        SmartDashboard.putBoolean("IMU_IsCalibrating", ahrs.isCalibrating());
-        SmartDashboard.putNumber("X axis", ahrs.getPitch());
-        SmartDashboard.putNumber("Y axis", ahrs.getRoll());
-        SmartDashboard.putNumber("Z axis", ahrs.getYaw());
-    }
+    SmartDashboard.putBoolean("IMU_Connected", ahrs.isConnected());
+    SmartDashboard.putBoolean("IMU_IsCalibrating", ahrs.isCalibrating());
+    SmartDashboard.putNumber("X axis", ahrs.getPitch());
+    SmartDashboard.putNumber("Y axis", ahrs.getRoll());
+    SmartDashboard.putNumber("Z axis", ahrs.getYaw());
+  }
 }
