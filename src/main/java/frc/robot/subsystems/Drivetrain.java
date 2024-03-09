@@ -60,13 +60,8 @@ public class Drivetrain extends SubsystemBase {
         rightLeader.setSafetyEnabled(true);
 
         //set navx
-        try {
-            ahrs = new AHRS();
-            ahrs.enableLogging(true);
-            
-        } catch (RuntimeException ex ) {
-            DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-        }
+        ahrs = new AHRS();
+        ahrs.enableLogging(true);
     }
 
     public void setSpeed(double left, double right) {
