@@ -42,16 +42,21 @@ public class Arm extends SubsystemBase {
         return armEncoder.getAbsolutePosition();
     }
 
-    public void setSpeed(double speed) {
-        if (getAngle() > .3){
-            leftArm.set(MathUtil.clamp(speed, -1 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
-        } else {
-            leftArm.set(MathUtil.clamp(speed, -0.8 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
-        }
+    public void setSpeed(double s) {
+        if(getAngle()>0.4 && Math.abs(s) > 0.3) {
+            s = 0.15;
+        } 
+        
+        leftArm.set(MathUtil.clamp(s, -0.8 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
+        
     }
 
-    public void setVoltage(double voltage){
-        leftArm.setVoltage(MathUtil.clamp(voltage, -12, 12));
+    public void setVoltage(double v){
+        double voltage = MathUtil.clamp(v, -12, 12);
+        if (getAngle() < .4 && voltage>2){
+            voltage*=0.55;
+        }
+        leftArm.setVoltage(voltage);
     }
 
     public void setSpeedZero() {
