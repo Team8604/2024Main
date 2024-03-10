@@ -64,7 +64,7 @@ public class DriveRobot extends Command {
       rot *= Constants.DriveConstants.kMaxSpeed;
       
       /* Set output to control frames */
-      RobotContainer.drivetrain.setSpeed(fwd + rot , fwd - rot);
+      RobotContainer.drivetrain.drive(fwd + rot , fwd - rot);
     }
 
     // Called once the command ends or is interrupted.

@@ -9,9 +9,12 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,9 +33,14 @@ public class Drivetrain extends SubsystemBase {
   private final TalonFX rightLeader = new TalonFX(DriveConstants.kRightLeader, DriveConstants.CANBUS_NAME);
   private final TalonFX rightFollower = new TalonFX(DriveConstants.kRightFollower, DriveConstants.CANBUS_NAME);
 
+  private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(DriveConstants.kWidth);
+  private final PIDController m_leftPIDController = new PIDController(DriveConstants.kp, DriveConstants.ki, DriveConstants.kd);
+  private final PIDController m_rightPIDController = new PIDController(DriveConstants.kp, DriveConstants.ki, DriveConstants.kd);
+
+  
   //navx values
-  public double xAxis; //Pitch 
-  public double yAxis; //Roll 
+  public double xAxis; //Roll
+  public double yAxis; //Pitch 
   public double zAxis; //Yaw
   public AHRS ahrs;
 
@@ -48,8 +56,20 @@ public class Drivetrain extends SubsystemBase {
     ahrs = new AHRS();
     ahrs.enableLogging(true);
   }
+  public void setSpeed(DifferentialDriveWheelSpeeds speed){
+    double leftFoward = m_leftPIDController.calculate(speed.leftMetersPerSecond);
+    double rightFoward = m_rightPIDController.calculate(speed.rightMetersPerSecond);
 
-  public void setSpeed(double left, double right) {  
+    double leftOut = m_leftPIDController.calculate(zAxis, speed.leftMetersPerSecond); 
+    double rightOut = m_leftPIDController.calculate(zAxis, speed.rightMetersPerSecond);  
+
+    leftLeader.setVoltage(leftOut + leftFoward);
+    rightLeader.setVoltage(rightOut + rightFoward);
+  }
+
+  public void drive(double left, double right) {  
+    var speed = m_kinematics.toWheelSpeeds(new ChassisSpeeds(left+right, 0.0, right));
+    setSpeed(speed);
   }
 
   @Override
@@ -60,10 +80,14 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Left Position", leftLeader.getPosition().getValueAsDouble());
     SmartDashboard.putNumber("Right Position", rightLeader.getPosition().getValueAsDouble());
 
+
+    xAxis = ahrs.getRoll();
+    yAxis = ahrs.getPitch(); 
+    zAxis = ahrs.getYaw();
     SmartDashboard.putBoolean("IMU_Connected", ahrs.isConnected());
     SmartDashboard.putBoolean("IMU_IsCalibrating", ahrs.isCalibrating());
-    SmartDashboard.putNumber("X axis", ahrs.getPitch());
-    SmartDashboard.putNumber("Y axis", ahrs.getRoll());
-    SmartDashboard.putNumber("Z axis", ahrs.getYaw());
+    SmartDashboard.putNumber("X axis", xAxis);
+    SmartDashboard.putNumber("Y axis", yAxis);
+    SmartDashboard.putNumber("Z axis", zAxis);
   }
 }

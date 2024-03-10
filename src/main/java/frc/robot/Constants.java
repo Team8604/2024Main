@@ -30,8 +30,17 @@ public final class Constants {
     public static final int kLeftLeader = 3;
     public static final int kLeftFollower = 4;
 
+    // Track width
+    public static final int kWidth = 55;
+
     // Speed modifier
     public static final double kMaxSpeed = 0.5;
+
+    // PID
+    public static final double kp = 1; //to be determined
+    public static final double ki = 0; //to be determined
+    public static final double kd = 0; //to be determined
+
   }
 
   public static class IntakeConstants {
