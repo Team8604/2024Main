@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.arm.*;
@@ -34,6 +33,9 @@ public class RobotContainer {
   public static CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
   public static CommandXboxController m_operatorButtonBoard = new CommandXboxController(OperatorConstants.kOperatorButtonBoardPort);
 
+    //driver buttons
+    public static Trigger slowButton = m_driverController.button(2);
+    public static Trigger fastButton = m_driverController.button(1);
 
     //operator buttons
     public static Trigger operatorA = m_operatorController.b();

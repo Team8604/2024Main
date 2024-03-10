@@ -5,7 +5,9 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.RobotContainer;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
@@ -38,15 +40,7 @@ public class DriveRobot extends Command {
       double rot1 = Math.pow(RobotContainer.m_driverController.getX(), 3);
       double rot2 = Math.pow(RobotContainer.m_driverController.getZ(), 3);
 
-      if (rot2 > 1){
-        rot2 = 1;
-      } else if (rot2 < -1){
-        rot2 = -1;
-      }
       //gets either the bigger of twist or sideways
-      if (Math.abs(rot2) < 0.1){
-        rot2=0;
-      }
       if (Math.abs(rot1) >= Math.abs(rot2)){
         rot = rot1;
       } else {
@@ -59,10 +53,11 @@ public class DriveRobot extends Command {
       if (fwd < 0.08 && fwd > -0.08){
         fwd = 0;
       }
-      //sets drivetrain motors to 25% speed
-      fwd *= Constants.DriveConstants.kMaxSpeed;
-      rot *= Constants.DriveConstants.kMaxSpeed;
-      
+
+      double multiplier = DriveConstants.kMaxSpeed + (RobotContainer.fastButton.getAsBoolean() ? DriveConstants.kSpeedIncrease : 0) + (RobotContainer.slowButton.getAsBoolean() ? DriveConstants.kSpeedDecrease : 0);
+      fwd *= multiplier;
+      rot *= multiplier;
+
       /* Set output to control frames */
       RobotContainer.drivetrain.drive(fwd + rot , fwd - rot);
     }
