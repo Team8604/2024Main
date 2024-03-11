@@ -60,8 +60,8 @@ public class Drivetrain extends SubsystemBase {
     double leftFoward = m_leftPIDController.calculate(speed.leftMetersPerSecond);
     double rightFoward = m_rightPIDController.calculate(speed.rightMetersPerSecond);
 
-    double leftOut = m_leftPIDController.calculate(zAxis, speed.leftMetersPerSecond); 
-    double rightOut = m_leftPIDController.calculate(zAxis, speed.rightMetersPerSecond);  
+    double leftOut = m_leftPIDController.calculate(, speed.leftMetersPerSecond); //add encoder value
+    double rightOut = m_leftPIDController.calculate(, speed.rightMetersPerSecond);  //add encoder value 
 
     leftLeader.setVoltage(leftOut + leftFoward);
     rightLeader.setVoltage(rightOut + rightFoward);
