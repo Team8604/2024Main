@@ -1,3 +1,4 @@
+
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -21,7 +22,7 @@ public class Climber extends SubsystemBase{
     }
     
     public void setRightVoltage(double right){
-        leftClimber.setVoltage(right);
+        rightClimber.setVoltage(right);
     }
     @Override
     public void periodic(){
