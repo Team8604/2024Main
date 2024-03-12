@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.arm.*;
+import frc.robot.commands.climber.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -26,6 +27,7 @@ public class RobotContainer {
   public static Intake intake = new Intake();
   public static Shooter shooter = new Shooter();
   public static Arm arm = new Arm();
+  public static Climber climber = new Climber();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   public static CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
@@ -35,6 +37,10 @@ public class RobotContainer {
   //driver buttons
   public static Trigger slowButton = m_driverController.button(2);
   public static Trigger fastButton = m_driverController.button(1);
+  public static Trigger climbButton7 = m_driverController.button(7);
+  public static Trigger climbButton8 = m_driverController.button(8);
+  public static Trigger climbButton9 = m_driverController.button(9);
+  public static Trigger climbButton10 = m_driverController.button(10);
 
   //operator buttons
   public static Trigger operatorA = m_operatorController.b();
@@ -97,6 +103,11 @@ public class RobotContainer {
     buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition, arm));
     buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
     buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition, arm));
+
+    climbButton7.whileTrue(new RunLeftClimber(ClimberConstants.voltage));
+    climbButton8.whileTrue(new RunRightClimber(ClimberConstants.voltage));
+    climbButton9.whileTrue(new RunLeftClimber(ClimberConstants.voltage * -1));
+    climbButton10.whileTrue(new RunRightClimber(ClimberConstants.voltage * -1));
   }
 
   /**
