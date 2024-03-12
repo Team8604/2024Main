@@ -37,12 +37,12 @@ public class Drivetrain extends SubsystemBase {
   private final PIDController m_leftPIDController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
   private final PIDController m_rightPIDController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
 
+  double leftFoward, rightFoward, leftOut, rightOut;
+
   
   //navx values
-  public double xAxis; //Roll
-  public double yAxis; //Pitch 
-  public double zAxis; //Yaw
-  public AHRS ahrs;
+  private double xAxis, yAxis, zAxis; //Roll, Pitch, Yaw
+  private AHRS ahrs;
 
   public Drivetrain() {
     /* Set up followers to follow leaders */
@@ -58,11 +58,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setSpeeds(DifferentialDriveWheelSpeeds speed){
-    double leftFoward = m_leftPIDController.calculate(speed.leftMetersPerSecond);
-    double rightFoward = m_rightPIDController.calculate(speed.rightMetersPerSecond);
+    leftFoward = m_leftPIDController.calculate(speed.leftMetersPerSecond);
+    rightFoward = m_rightPIDController.calculate(speed.rightMetersPerSecond);
 
-    double leftOut = m_leftPIDController.calculate(leftLeader.getVelocity().getValueAsDouble(), speed.leftMetersPerSecond); //add encoder value
-    double rightOut = m_rightPIDController.calculate(rightLeader.getVelocity().getValueAsDouble(), speed.rightMetersPerSecond);  //add encoder value 
+    leftOut = m_leftPIDController.calculate(leftLeader.getVelocity().getValueAsDouble(), speed.leftMetersPerSecond); //add encoder value
+    rightOut = m_rightPIDController.calculate(rightLeader.getVelocity().getValueAsDouble(), speed.rightMetersPerSecond);  //add encoder value 
 
     leftLeader.setVoltage(MathUtil.clamp(leftOut + leftFoward, -12, 12));
     rightLeader.setVoltage(MathUtil.clamp(rightOut + rightFoward, -12, 12));
