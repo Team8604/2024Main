@@ -13,8 +13,10 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.subsystems.LimelightHelpers;
 
 public class Drivetrain extends SubsystemBase {
   private double multiplier;
@@ -64,6 +66,9 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Right out", rightLeader.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Left Position", leftLeader.getPosition().getValueAsDouble());
     SmartDashboard.putNumber("Right Position", rightLeader.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("Robot X", LimelightHelpers.getBotPose2d("").getX());
+    SmartDashboard.putNumber("Robot Y", LimelightHelpers.getBotPose2d("").getY());
+    SmartDashboard.putNumber("Robot Deg", LimelightHelpers.getBotPose2d("").getRotation().getDegrees());
     leftLeader.setControl(leftOut);
     rightLeader.setControl(rightOut);
   }
