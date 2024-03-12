@@ -40,7 +40,8 @@ public class Drivetrain extends SubsystemBase {
   private final PIDController m_leftPIDController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
   private final PIDController m_rightPIDController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
 
-  double leftFoward, rightFoward, leftOut, rightOut;
+  double leftForward, rightForward, leftOut, rightOut;
+  double leftPos, leftVelocity, rightPos, rightVelocity;
 
   
   //navx values
@@ -58,7 +59,7 @@ public class Drivetrain extends SubsystemBase {
     rightLeader.setSafetyEnabled(true);
 
     //add limelight generated default pose later
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromRotations(yAxis), leftLeader.getPosition().getValueAsDouble(), rightLeader.getPosition().getValueAsDouble());
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromRotations(yAxis), leftPos, rightPos);
 
     //set navx
     ahrs = new AHRS();
@@ -66,14 +67,14 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setSpeeds(DifferentialDriveWheelSpeeds speed){
-    leftFoward = m_leftPIDController.calculate(speed.leftMetersPerSecond);
-    rightFoward = m_rightPIDController.calculate(speed.rightMetersPerSecond);
+    leftForward = m_leftPIDController.calculate(speed.leftMetersPerSecond);
+    rightForward = m_rightPIDController.calculate(speed.rightMetersPerSecond);
 
-    leftOut = m_leftPIDController.calculate(leftLeader.getVelocity().getValueAsDouble(), speed.leftMetersPerSecond); //add encoder value
-    rightOut = m_rightPIDController.calculate(rightLeader.getVelocity().getValueAsDouble(), speed.rightMetersPerSecond);  //add encoder value 
+    leftOut = m_leftPIDController.calculate(leftVelocity, speed.leftMetersPerSecond); //add encoder value
+    rightOut = m_rightPIDController.calculate(rightVelocity, speed.rightMetersPerSecond);  //add encoder value 
 
-    leftLeader.setVoltage(MathUtil.clamp(leftOut + leftFoward, -12, 12));
-    rightLeader.setVoltage(MathUtil.clamp(rightOut + rightFoward, -12, 12));
+    leftLeader.setVoltage(MathUtil.clamp(leftOut + leftForward, -12, 12));
+    rightLeader.setVoltage(MathUtil.clamp(rightOut + rightForward, -12, 12));
   }
 
   /**
@@ -83,26 +84,34 @@ public class Drivetrain extends SubsystemBase {
   * @param rot Angular velocity in rad/s.
   */
   public void drive(double xSpeed, double rot) {  
+    xSpeed *= DriveConstants.kMaxSpeedMetric;
+    rot *= DriveConstants.kMaxSpeedMetric;
     var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
     setSpeeds(wheelSpeeds);
   }
 
   public void updateOdometry(Pose2d pose) {
-    m_odometry.update(Rotation2d.fromRotations(yAxis), leftLeader.getPosition().getValueAsDouble(), rightLeader.getPosition().getValueAsDouble());
+    m_odometry.update(Rotation2d.fromRotations(yAxis), leftPos, rightPos);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left out", leftLeader.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("Right out", rightLeader.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("Left Position", leftLeader.getPosition().getValueAsDouble());
-    SmartDashboard.putNumber("Right Position", rightLeader.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("Left out", leftOut);
+    SmartDashboard.putNumber("Right out", rightVelocity);
+    SmartDashboard.putNumber("Left Position", leftForward);
+    SmartDashboard.putNumber("Right Position", rightPos);
 
 
     xAxis = ahrs.getRoll();
     yAxis = ahrs.getPitch(); 
     zAxis = ahrs.getYaw();
+
+    leftPos = leftLeader.getPosition().getValueAsDouble() * DriveConstants.kMotorMultiplier;
+    rightPos = rightLeader.getPosition().getValueAsDouble() * DriveConstants.kMotorMultiplier;
+    leftVelocity = leftLeader.getVelocity().getValueAsDouble() * DriveConstants.kMotorMultiplier;
+    rightVelocity = rightLeader.getVelocity().getValueAsDouble() * DriveConstants.kMotorMultiplier;
+
     SmartDashboard.putBoolean("IMU_Connected", ahrs.isConnected());
     SmartDashboard.putBoolean("IMU_IsCalibrating", ahrs.isCalibrating());
     SmartDashboard.putNumber("X axis", xAxis);

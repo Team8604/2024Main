@@ -32,6 +32,8 @@ public final class Constants {
 
     // Track width
     public static final double kTrackWidth = .555;
+    public static final double kMotorMultiplier = 0.0565932293625;
+    public static final double kMaxSpeedMetric = 5;
     
     // Speed modifier
     public static final double kMaxSpeed = 0.7;
