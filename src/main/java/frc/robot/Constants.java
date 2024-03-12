@@ -31,17 +31,17 @@ public final class Constants {
     public static final int kLeftFollower = 4;
 
     // Track width
-    public static final int kWidth = 55; //cm -- check may not be correct
-
+    public static final double kTrackWidth = .555;
+    
     // Speed modifier
     public static final double kMaxSpeed = 0.7;
     public static final double kSpeedIncrease = 0.3;
     public static final double kSpeedDecrease = -0.3;
 
     // PID
-    public static final double kp = 1; //to be determined
-    public static final double ki = 0; //to be determined
-    public static final double kd = 0; //to be determined
+    public static final double kP = 1; //to be determined
+    public static final double kI = 0; //to be determined
+    public static final double kD = 0; //to be determined
 
   }
 

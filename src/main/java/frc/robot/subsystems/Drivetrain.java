@@ -12,9 +12,9 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,9 +33,9 @@ public class Drivetrain extends SubsystemBase {
   private final TalonFX rightLeader = new TalonFX(DriveConstants.kRightLeader, DriveConstants.CANBUS_NAME);
   private final TalonFX rightFollower = new TalonFX(DriveConstants.kRightFollower, DriveConstants.CANBUS_NAME);
 
-  private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(DriveConstants.kWidth);
-  private final PIDController m_leftPIDController = new PIDController(DriveConstants.kp, DriveConstants.ki, DriveConstants.kd);
-  private final PIDController m_rightPIDController = new PIDController(DriveConstants.kp, DriveConstants.ki, DriveConstants.kd);
+  private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(DriveConstants.kTrackWidth);
+  private final PIDController m_leftPIDController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
+  private final PIDController m_rightPIDController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
 
   
   //navx values
@@ -56,20 +56,27 @@ public class Drivetrain extends SubsystemBase {
     ahrs = new AHRS();
     ahrs.enableLogging(true);
   }
-  public void setSpeed(DifferentialDriveWheelSpeeds speed){
+
+  public void setSpeeds(DifferentialDriveWheelSpeeds speed){
     double leftFoward = m_leftPIDController.calculate(speed.leftMetersPerSecond);
     double rightFoward = m_rightPIDController.calculate(speed.rightMetersPerSecond);
 
-    double leftOut = m_leftPIDController.calculate(, speed.leftMetersPerSecond); //add encoder value
-    double rightOut = m_leftPIDController.calculate(, speed.rightMetersPerSecond);  //add encoder value 
+    double leftOut = m_leftPIDController.calculate(leftLeader.getVelocity().getValueAsDouble(), speed.leftMetersPerSecond); //add encoder value
+    double rightOut = m_rightPIDController.calculate(rightLeader.getVelocity().getValueAsDouble(), speed.rightMetersPerSecond);  //add encoder value 
 
-    leftLeader.setVoltage(leftOut + leftFoward);
-    rightLeader.setVoltage(rightOut + rightFoward);
+    leftLeader.setVoltage(MathUtil.clamp(leftOut + leftFoward, -12, 12));
+    rightLeader.setVoltage(MathUtil.clamp(rightOut + rightFoward, -12, 12));
   }
 
-  public void drive(double left, double right) {  
-    var speed = m_kinematics.toWheelSpeeds(new ChassisSpeeds(left+right, 0.0, right));
-    setSpeed(speed);
+  /**
+  * Drives the robot with the given linear velocity and angular velocity.
+  *
+  * @param xSpeed Linear velocity in m/s.
+  * @param rot Angular velocity in rad/s.
+  */
+  public void drive(double xSpeed, double rot) {  
+    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
+    setSpeeds(wheelSpeeds);
   }
 
   @Override

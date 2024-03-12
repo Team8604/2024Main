@@ -6,7 +6,9 @@ package frc.robot.commands;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.RobotContainer;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.math.MathUtil;
 
 /** An example command that uses an example subsystem. */
 public class DriveRobot extends Command {
@@ -17,6 +19,9 @@ public class DriveRobot extends Command {
      *
      * @param subsystem The subsystem used by this command.
      */
+
+    double multiplier, fwd, rot, rot1, rot2;
+
     public DriveRobot() {
       // Use addRequirements() here to declare subsystem dependencies.
       addRequirements(RobotContainer.drivetrain);
@@ -33,31 +38,19 @@ public class DriveRobot extends Command {
       /* Get forward and rotational throttle from joystick */
       /* invert the joystick Y because forward Y is negative */
       //code from joystick for drivetrain
-      double fwd = -1 * Math.pow(RobotContainer.m_driverController.getY(), 3);
-      double rot;
-      double rot1 = Math.pow(RobotContainer.m_driverController.getX(), 3);
-      double rot2 = Math.pow(RobotContainer.m_driverController.getZ(), 3);
+      fwd = -1 * MathUtil.applyDeadband(RobotContainer.m_driverController.getY(), 0.08);
+      rot1 = MathUtil.applyDeadband(RobotContainer.m_driverController.getX(), 0.08);
+      rot2 = MathUtil.applyDeadband(RobotContainer.m_driverController.getZ(), 0.08);
 
       //gets either the bigger of twist or sideways
-      if (Math.abs(rot1) >= Math.abs(rot2)){
-        rot = rot1;
-      } else {
-        rot = rot2;
-      }
-      //dead zone
-      if (rot < 0.08 && rot > -0.08){
-        rot = 0;
-      }
-      if (fwd < 0.08 && fwd > -0.08){
-        fwd = 0;
-      }
+      rot = Math.abs(rot1) >= Math.abs(rot2) ? rot1 : rot2;
 
-      double multiplier = DriveConstants.kMaxSpeed + (RobotContainer.fastButton.getAsBoolean() ? DriveConstants.kSpeedIncrease : 0) + (RobotContainer.slowButton.getAsBoolean() ? DriveConstants.kSpeedDecrease : 0);
-      fwd *= multiplier;
-      rot *= multiplier;
+      multiplier = DriveConstants.kMaxSpeed + (RobotContainer.fastButton.getAsBoolean() ? DriveConstants.kSpeedIncrease : 0) + (RobotContainer.slowButton.getAsBoolean() ? DriveConstants.kSpeedDecrease : 0);
+      fwd = Math.pow(fwd, 3) * multiplier;
+      rot = Math.pow(rot, 3) * multiplier;
 
       /* Set output to control frames */
-      RobotContainer.drivetrain.drive(fwd + rot , fwd - rot);
+      RobotContainer.drivetrain.drive(fwd, rot);
     }
 
     // Called once the command ends or is interrupted.
