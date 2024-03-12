@@ -6,9 +6,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
@@ -34,6 +35,8 @@ public class Drivetrain extends SubsystemBase {
   private final TalonFX rightFollower = new TalonFX(DriveConstants.kRightFollower, DriveConstants.CANBUS_NAME);
 
   private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(DriveConstants.kTrackWidth);
+  private final DifferentialDriveOdometry m_odometry;
+
   private final PIDController m_leftPIDController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
   private final PIDController m_rightPIDController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
 
@@ -45,12 +48,17 @@ public class Drivetrain extends SubsystemBase {
   private AHRS ahrs;
 
   public Drivetrain() {
+    rightLeader.setInverted(true);
+
     /* Set up followers to follow leaders */
     leftFollower.setControl(new Follower(leftLeader.getDeviceID(), false));
     rightFollower.setControl(new Follower(rightLeader.getDeviceID(), false));
         
     leftLeader.setSafetyEnabled(true);
     rightLeader.setSafetyEnabled(true);
+
+    //add limelight generated default pose later
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromRotations(yAxis), leftLeader.getPosition().getValueAsDouble(), rightLeader.getPosition().getValueAsDouble());
 
     //set navx
     ahrs = new AHRS();
@@ -77,6 +85,10 @@ public class Drivetrain extends SubsystemBase {
   public void drive(double xSpeed, double rot) {  
     var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
     setSpeeds(wheelSpeeds);
+  }
+
+  public void updateOdometry(Pose2d pose) {
+    m_odometry.update(Rotation2d.fromRotations(yAxis), leftLeader.getPosition().getValueAsDouble(), rightLeader.getPosition().getValueAsDouble());
   }
 
   @Override
