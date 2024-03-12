@@ -55,8 +55,8 @@ public class Drivetrain extends SubsystemBase {
     leftFollower.setControl(new Follower(leftLeader.getDeviceID(), false));
     rightFollower.setControl(new Follower(rightLeader.getDeviceID(), false));
         
-    leftLeader.setSafetyEnabled(true);
-    rightLeader.setSafetyEnabled(true);
+    leftLeader.setSafetyEnabled(false);
+    rightLeader.setSafetyEnabled(false);
 
     //add limelight generated default pose later
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromRotations(yAxis), leftPos, rightPos);
