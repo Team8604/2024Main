@@ -31,6 +31,8 @@ public class Drivetrain extends SubsystemBase {
   private final DutyCycleOut leftOut = new DutyCycleOut(0);
   private final DutyCycleOut rightOut = new DutyCycleOut(0);
 
+  public double distanceFromAprilTag;
+
   public Drivetrain() {
     /* Configure the devices */
     var leftConfiguration = new TalonFXConfiguration();
@@ -66,8 +68,10 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Right out", rightLeader.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("Left Position", leftLeader.getPosition().getValueAsDouble());
     SmartDashboard.putNumber("Right Position", rightLeader.getPosition().getValueAsDouble());
+    
+    distanceFromAprilTag = LimelightHelpers.getBotPose2d("").getY();
     SmartDashboard.putNumber("Robot X", LimelightHelpers.getBotPose2d("").getX());
-    SmartDashboard.putNumber("Robot Y", LimelightHelpers.getBotPose2d("").getY());
+    SmartDashboard.putNumber("Robot Y", distanceFromAprilTag);
     SmartDashboard.putNumber("Robot Deg", LimelightHelpers.getBotPose2d("").getRotation().getDegrees());
     leftLeader.setControl(leftOut);
     rightLeader.setControl(rightOut);
