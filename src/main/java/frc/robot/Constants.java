@@ -121,7 +121,10 @@ public final class Constants {
 
   public static class ClimberConstants {
     // CAN IDs
-    //public static final int kRightClimber = 9;
-    //public static final int kLeftClimber = 10;
+    public static final String CANBUS_NAME = "rio";
+    public static final int kRightClimber = 9;
+    public static final int kLeftClimber = 10;
 
-  }}
+    public static final double kManualVolts = 2.5;
+  }
+}
