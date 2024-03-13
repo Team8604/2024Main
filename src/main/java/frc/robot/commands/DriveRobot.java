@@ -4,78 +4,56 @@
 
 package frc.robot.commands;
 
-import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.RobotContainer;
+
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.MathUtil;
 
 /** An example command that uses an example subsystem. */
 public class DriveRobot extends Command {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public DriveRobot() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.drivetrain);
-  }
+    /**
+     * Creates a new ExampleCommand.
+     *
+     * @param subsystem The subsystem used by this command.
+     */
 
+    double multiplier, fwd, rot, rot1, rot2;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    /* Get forward and rotational throttle from joystick */
-    /* invert the joystick Y because forward Y is negative */
-    //code from joystick for drivetrain
-    double fwd = Math.pow(RobotContainer.m_driverController.getY(), 3);
-    double rot;
-    double rot1 = Math.pow(RobotContainer.m_driverController.getX(), 3);
-    double rot2 = Math.pow(RobotContainer.m_driverController.getZ(), 3);
-
-    if (rot2 > 1){
-      rot2 = 1;
-    } else if (rot2 < -1){
-      rot2 = -1;
-    }
-    //gets either the bigger of twist or sideways
-    if (Math.abs(rot2) < 0.1){
-      rot2=0;
-    }
-    if (Math.abs(rot1) >= Math.abs(rot2)){
-      rot = rot1;
-    } else {
-      rot = rot2;
-    }
-    //dead zone
-    if (rot < 0.08 && rot > -0.08){
-      rot = 0;
-    }
-    if (fwd < 0.08 && fwd > -0.08){
-      fwd = 0;
-    }
-    //sets drivetrain motors to 25% speed
-    fwd *= Constants.DriveConstants.kMaxSpeed ;
-    rot *= 0.5;
-    
-    if (RobotContainer.m_driverController.getRawAxis(3) < 0 ){
-      fwd *=- 1;
+    public DriveRobot() {
+      // Use addRequirements() here to declare subsystem dependencies.
+      addRequirements(RobotContainer.drivetrain);
     }
 
-    /* Set output to control frames */
-    RobotContainer.drivetrain.setSpeed(fwd + rot , fwd - rot);
-    SmartDashboard.putNumber("Joystick z", RobotContainer.m_driverController.getZ());
-  }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    RobotContainer.drivetrain.setSpeed(0,0);
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {}
+
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+      /* Get forward and rotational throttle from joystick */
+      /* invert the joystick Y because forward Y is negative */
+      //code from joystick for drivetrain
+      fwd = -1 * MathUtil.applyDeadband(RobotContainer.m_driverController.getY(), 0.02);
+      rot1 = -1 * MathUtil.applyDeadband(RobotContainer.m_driverController.getX(), 0.02);
+      rot2 = -1 * MathUtil.applyDeadband(RobotContainer.m_driverController.getZ(), 0.07);
+
+      //gets either the bigger of twist or sideways
+      rot = Math.abs(rot1) >= Math.abs(rot2) ? rot1 : rot2;
+
+      multiplier = DriveConstants.kMaxSpeed + (RobotContainer.fastButton.getAsBoolean() ? DriveConstants.kSpeedIncrease : 0) + (RobotContainer.slowButton.getAsBoolean() ? DriveConstants.kSpeedDecrease : 0);
+      fwd = Math.pow(fwd, 3) * multiplier;
+      rot = Math.pow(rot, 3) * multiplier;
+
+      /* Set output to control frames */
+      RobotContainer.drivetrain.drive(fwd, rot);
+    }
+
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {}
 }

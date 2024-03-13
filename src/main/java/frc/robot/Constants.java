@@ -30,10 +30,21 @@ public final class Constants {
     public static final int kLeftLeader = 3;
     public static final int kLeftFollower = 4;
 
+    // Track width
+    public static final double kTrackWidth = .555;
+    public static final double kMotorMultiplier = 0.0565932293625;
+    public static final double kMaxSpeedMetric = 25;
+    
     // Speed modifier
     public static final double kMaxSpeed = 0.7;
     public static final double kSpeedIncrease = 0.3;
     public static final double kSpeedDecrease = -0.3;
+
+    // PID
+    public static final double kP = 1; //to be determined
+    public static final double kI = 0; //to be determined
+    public static final double kD = 0; //to be determined
+
   }
 
   public static class IntakeConstants {
@@ -42,12 +53,12 @@ public final class Constants {
 
     // Speed modifiers
     public static final double kMaxSpeed = 1;
-    public static final double kIntakeSpeed = 0.3;
+    public static final double kIntakeSpeed = 0.25;
     public static final double kBackOut = -0.5;
 
 
     // Distance options
-    public static final double kNoteDistance = 7; // TO BE DETERMINED
+    public static final double kNoteDistance = 10; // TO BE DETERMINED
   }
 
   public static class ShooterConstants {
@@ -56,7 +67,7 @@ public final class Constants {
 
     // Speed modifiers
     public static final double kMaxSpeed = 1;
-    public static final double kAmpSpeed = 0.15;
+    public static final double kAmpSpeed = 0.1;
     public static final double kBackOut = -0.1; // TO BE DETERMINED
   }
 
@@ -70,33 +81,43 @@ public final class Constants {
     public static final SparkLimitSwitch.Type kArmLimitSwitchType = SparkLimitSwitch.Type.kNormallyOpen;
 
     // Speed modifier
-    public static final double kMaxSpeed = 500;
+    public static final double kMaxSpeed = 0.5;
 
-    public static final double kMaxAcceleration = 200; 
     // Possible arm error
-    public static final double kMaxError = 0.12; // TO BE DETERMINED
+    public static final double kMaxError = 0.02; // TO BE DETERMINED
 
     // Arm positions
     // Note - arm range on encoder is about 0.224-0.467
-    public static final double kAmpAngle = 0.22;
+    public static final double kAmpAngle = 0.21;
     public static final double kIntakePosition = 0.47;
-    public static final double kShootPosition = 0.447; // TO BE DETERMINED
+    public static final double kShootPosition = 0.44; // TO BE DETERMINED
     public static final double kTrapPosition = 0.25; // TO BE DETERMINED
     public static final double kClimbPosition = 0.25; // TO BE DETERMINED
     public static final double kStartPosition = 0.305; 
-    public static final double kdriveTemp = 0.44;
 
     // PID constants
-    public static final double kP = 50;
-    public static final double kI = 3;
-    public static final double kD = 0.9;
+    public static final double kP = 0.9;
+    public static final double kI = 0.1;
+    public static final double kD = 0.2;
     public static final double kPosTolerance = 0.004;
     public static final double kSpeedTolerance = 0.08;
   }
+
+  public static class NavXConstants {
+    //PID constants
+    public static final double kP = 0.1;
+    public static final double kI = 0.1;
+    public static final double kD = 0.1;
+    public static final double kF = 0.1;
+
+    public static final double kToleranceDegrees = 0.1;    
+    
+    public static final double kSpeedTolerance = 0.1;
+  }
+
   public static class ClimberConstants {
     // CAN IDs
     //public static final int kRightClimber = 9;
     //public static final int kLeftClimber = 10;
 
-  }
-}
+  }}

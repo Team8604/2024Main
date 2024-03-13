@@ -8,6 +8,7 @@ import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.arm.*;
 import frc.robot.subsystems.*;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -32,30 +33,31 @@ public class RobotContainer {
   public static CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
   public static CommandXboxController m_operatorButtonBoard = new CommandXboxController(OperatorConstants.kOperatorButtonBoardPort);
 
-  //driver buttons
-  public static Trigger slowButton = m_driverController.button(2);
-  public static Trigger fastButton = m_driverController.button(1);
+    //driver buttons
+    public static Trigger slowButton = m_driverController.button(2);
+    public static Trigger fastButton = m_driverController.button(1);
 
-  //operator buttons
-  public static Trigger operatorA = m_operatorController.b();
-  public static Trigger operatorB = m_operatorController.x();
-  public static Trigger operatorX = m_operatorController.a();
-  public static Trigger operatorY = m_operatorController.y();
-  public static Trigger operatorRightBumper = m_operatorController.rightBumper();
+    //operator buttons
+    public static Trigger operatorA = m_operatorController.b();
+    public static Trigger operatorB = m_operatorController.x();
+    public static Trigger operatorX = m_operatorController.a();
+    public static Trigger operatorY = m_operatorController.y();
+    public static Trigger operatorRightBumper = m_operatorController.rightBumper();
 
-  //operator buttonboard buttons
-  private static Trigger buttonBoardOne = m_operatorButtonBoard.button(1);
-  private static Trigger buttonBoardTwo = m_operatorButtonBoard.button(2);
-  private static Trigger buttonBoardThree = m_operatorButtonBoard.button(3);
-  private static Trigger buttonBoardFour = m_operatorButtonBoard.button(4);
-  private static Trigger buttonBoardFive = m_operatorButtonBoard.button(5);
-  private static Trigger buttonBoardSix = m_operatorButtonBoard.button(6);
-  private static Trigger buttonBoardSeven = m_operatorButtonBoard.button(7);
-  private static Trigger buttonBoardEight = m_operatorButtonBoard.button(8);
-  private static Trigger buttonBoardNine = m_operatorButtonBoard.button(9);
-  private static Trigger buttonBoardTen = m_operatorButtonBoard.button(10);
-  private static Trigger buttonBoardEleven = m_operatorButtonBoard.button(11);
-  private static Trigger buttonBoardTwelve = m_operatorButtonBoard.button(12);
+    //operator buttonboard buttons
+    public static Trigger buttonBoardOne = m_operatorButtonBoard.button(1);
+    public static Trigger buttonBoardTwo = m_operatorButtonBoard.button(2);
+    public static Trigger buttonBoardThree = m_operatorButtonBoard.button(3);
+    public static Trigger buttonBoardFour = m_operatorButtonBoard.button(4);
+    public static Trigger buttonBoardFive = m_operatorButtonBoard.button(5);
+    public static Trigger buttonBoardSix = m_operatorButtonBoard.button(6);
+    public static Trigger buttonBoardSeven = m_operatorButtonBoard.button(7);
+    public static Trigger buttonBoardEight = m_operatorButtonBoard.button(8);
+    public static Trigger buttonBoardNine = m_operatorButtonBoard.button(9);
+    public static Trigger buttonBoardTen = m_operatorButtonBoard.button(10);
+    public static Trigger buttonBoardEleven = m_operatorButtonBoard.button(11);
+    public static Trigger buttonBoardTwelve = m_operatorButtonBoard.button(12);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
@@ -86,17 +88,17 @@ public class RobotContainer {
     operatorA.whileTrue(new RunIntake());
     operatorX.whileTrue(new RunShooter(arm.getAngle()));
     operatorB.whileTrue(new BackOut());
-    operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
+    operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle));
 
     buttonBoardOne.whileTrue(new RunIntake());
-    buttonBoardTwo.whileTrue(new RunShooter(arm.getAngle()));
+    buttonBoardTwo.whileTrue(new RunShooter(ShooterConstants.kMaxSpeed));
     buttonBoardThree.whileTrue(new BackOut());
+    buttonBoardFour.whileTrue(new RunShooter(ShooterConstants.kAmpSpeed));
 
-    buttonBoardSeven.whileTrue(new SetArmToAngle(ArmConstants.kdriveTemp, arm));
-    buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition, arm));
-    buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition, arm));
-    buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
-    buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition, arm));
+    buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition));
+    buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition));
+    buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle));
+    buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition));
   }
 
   /**
@@ -106,6 +108,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(drivetrain); //add intake,shooter,arm to this later
+    return Autos.exampleAuto(drivetrain);//add intake,shooter,arm to this later
   }
 }
