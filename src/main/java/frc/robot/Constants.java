@@ -80,27 +80,31 @@ public final class Constants {
     // limit switch type
     public static final SparkLimitSwitch.Type kArmLimitSwitchType = SparkLimitSwitch.Type.kNormallyOpen;
 
-    // Speed modifier
-    public static final double kMaxSpeed = 0.5;
-
     // Possible arm error
-    public static final double kMaxError = 0.02; // TO BE DETERMINED
+    public static final double kMaxError = 0.12; 
 
     // Arm positions
     // Note - arm range on encoder is about 0.224-0.467
-    public static final double kAmpAngle = 0.21;
-    public static final double kIntakePosition = 0.47;
-    public static final double kShootPosition = 0.44; // TO BE DETERMINED
+    public static final double kAmpAngle = 0.22;
+    public static final double kIntakePosition = 0.467;
+    public static final double kShootPosition = 0.447; 
     public static final double kTrapPosition = 0.25; // TO BE DETERMINED
     public static final double kClimbPosition = 0.25; // TO BE DETERMINED
     public static final double kStartPosition = 0.305; 
+    //used highest spot to still go under chain. Might combine with current shooting position
+    public static final double kdriveTemp = 0.44; 
 
     // PID constants
-    public static final double kP = 0.9;
-    public static final double kI = 0.1;
-    public static final double kD = 0.2;
+    // Speed modifier
+    public static final double kMaxSpeed = 500;
+
+    public static final double kMaxAcceleration = 200; 
+
+    public static final double kP = 50;
+    public static final double kI = 3;
+    public static final double kD = 0.9;
     public static final double kPosTolerance = 0.004;
-    public static final double kSpeedTolerance = 0.08;
+    public static final double kSpeedTolerance = 0.08;  
   }
 
   public static class NavXConstants {
