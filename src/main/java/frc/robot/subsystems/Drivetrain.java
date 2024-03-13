@@ -4,29 +4,22 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.kauailabs.navx.frc.AHRS.SerialDataType;
-import com.kauailabs.navx.frc.AHRS;
-
+import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.subsystems.LimelightHelpers;
 
 public class Drivetrain extends SubsystemBase {
+  private double multiplier;
 
   //initialize motors
   private final TalonFX leftLeader = new TalonFX(DriveConstants.kLeftLeader, DriveConstants.CANBUS_NAME);
@@ -34,88 +27,53 @@ public class Drivetrain extends SubsystemBase {
   private final TalonFX rightLeader = new TalonFX(DriveConstants.kRightLeader, DriveConstants.CANBUS_NAME);
   private final TalonFX rightFollower = new TalonFX(DriveConstants.kRightFollower, DriveConstants.CANBUS_NAME);
 
-  private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(DriveConstants.kTrackWidth);
-  private final DifferentialDriveOdometry m_odometry;
+  //drivetrain duty cycles
+  private final DutyCycleOut leftOut = new DutyCycleOut(0);
+  private final DutyCycleOut rightOut = new DutyCycleOut(0);
 
-  private final PIDController m_leftPIDController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
-  private final PIDController m_rightPIDController = new PIDController(DriveConstants.kP, DriveConstants.kI, DriveConstants.kD);
-
-  double leftForward, rightForward, leftOut, rightOut;
-  double leftPos, leftVelocity, rightPos, rightVelocity;
-
-  
-  //navx values
-  private double xAxis, yAxis, zAxis; //Roll, Pitch, Yaw
-  private AHRS ahrs;
+  public double distanceFromAprilTag;
 
   public Drivetrain() {
-    rightLeader.setInverted(true);
+    /* Configure the devices */
+    var leftConfiguration = new TalonFXConfiguration();
+    var rightConfiguration = new TalonFXConfiguration();
+
+    /* User can optionally change the configs or leave it alone to perform a factory default */
+    leftConfiguration.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+    rightConfiguration.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
+    leftLeader.getConfigurator().apply(leftConfiguration);
+    leftFollower.getConfigurator().apply(leftConfiguration);
+    rightLeader.getConfigurator().apply(rightConfiguration);
+    rightFollower.getConfigurator().apply(rightConfiguration);
 
     /* Set up followers to follow leaders */
     leftFollower.setControl(new Follower(leftLeader.getDeviceID(), false));
     rightFollower.setControl(new Follower(rightLeader.getDeviceID(), false));
-        
-    leftLeader.setSafetyEnabled(false);
-    rightLeader.setSafetyEnabled(false);
-
-    //add limelight generated default pose later
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
-
-    //set navx
-    ahrs = new AHRS();
-    ahrs.enableLogging(true);
+    
+    leftLeader.setSafetyEnabled(true);
+    rightLeader.setSafetyEnabled(true);
   }
 
-  public void setSpeeds(DifferentialDriveWheelSpeeds speed){
-    leftForward = m_leftPIDController.calculate(speed.leftMetersPerSecond);
-    rightForward = m_rightPIDController.calculate(speed.rightMetersPerSecond);
-
-    leftOut = m_leftPIDController.calculate(leftVelocity, speed.leftMetersPerSecond); //add encoder value
-    rightOut = m_rightPIDController.calculate(rightVelocity, speed.rightMetersPerSecond);  //add encoder value 
-
-    leftLeader.setVoltage(MathUtil.clamp(leftOut + leftForward, -12, 12));
-    rightLeader.setVoltage(MathUtil.clamp(rightOut + rightForward, -12, 12));
-  }
-
-  /**
-  * Drives the robot with the given linear velocity and angular velocity.
-  *
-  * @param xSpeed Linear velocity in m/s.
-  * @param rot Angular velocity in rad/s.
-  */
-  public void drive(double xSpeed, double rot) {  
-    xSpeed *= DriveConstants.kMaxSpeedMetric;
-    rot *= DriveConstants.kMaxSpeedMetric;
-    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
-    setSpeeds(wheelSpeeds);
-  }
-
-  public void updateOdometry(Pose2d pose) {
-    m_odometry.update(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
+  public void setSpeed(double left, double right) {
+    multiplier = DriveConstants.kMaxSpeed + (RobotContainer.fastButton.getAsBoolean() ? DriveConstants.kSpeedIncrease : 0) + (RobotContainer.slowButton.getAsBoolean() ? DriveConstants.kSpeedDecrease : 0);
+    leftOut.Output = multiplier * MathUtil.clamp(left, -1, 1);
+    rightOut.Output = multiplier * MathUtil.clamp(right, -1, 1);    
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left out", leftOut);
-    SmartDashboard.putNumber("Right out", rightVelocity);
-    SmartDashboard.putNumber("Left Position", leftForward);
-    SmartDashboard.putNumber("Right Position", rightPos);
-
-
-    xAxis = ahrs.getRoll();
-    yAxis = ahrs.getPitch(); 
-    zAxis = ahrs.getYaw();
-
-    leftPos = leftLeader.getPosition().getValueAsDouble() * DriveConstants.kMotorMultiplier;
-    rightPos = rightLeader.getPosition().getValueAsDouble() * DriveConstants.kMotorMultiplier;
-    leftVelocity = leftLeader.getVelocity().getValueAsDouble() * DriveConstants.kMotorMultiplier;
-    rightVelocity = rightLeader.getVelocity().getValueAsDouble() * DriveConstants.kMotorMultiplier;
-
-    SmartDashboard.putBoolean("IMU_Connected", ahrs.isConnected());
-    SmartDashboard.putBoolean("IMU_IsCalibrating", ahrs.isCalibrating());
-    SmartDashboard.putNumber("X axis", xAxis);
-    SmartDashboard.putNumber("Y axis", yAxis);
-    SmartDashboard.putNumber("Z axis", zAxis);
+    SmartDashboard.putNumber("Left out", leftLeader.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Right out", rightLeader.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("Left Position", leftLeader.getPosition().getValueAsDouble());
+    SmartDashboard.putNumber("Right Position", rightLeader.getPosition().getValueAsDouble());
+    
+    distanceFromAprilTag = LimelightHelpers.getBotPose2d("").getY();
+    SmartDashboard.putNumber("Robot X", LimelightHelpers.getBotPose2d("").getX());
+    SmartDashboard.putNumber("Robot Y", distanceFromAprilTag);
+    SmartDashboard.putNumber("Robot Deg", LimelightHelpers.getBotPose2d("").getRotation().getDegrees());
+    leftLeader.setControl(leftOut);
+    rightLeader.setControl(rightOut);
   }
 }
