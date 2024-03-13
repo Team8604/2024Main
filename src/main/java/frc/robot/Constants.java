@@ -99,6 +99,6 @@ public final class Constants {
     public static final int kRightClimber = 9;
     public static final int kLeftClimber = 10;
 
-    public static final double voltage = 2.5;
+    public static final double kManualVolts = 2.5;
   }
 }

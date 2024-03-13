@@ -7,7 +7,6 @@ package frc.robot;
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.arm.*;
-import frc.robot.commands.climber.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -37,10 +36,10 @@ public class RobotContainer {
   //driver buttons
   public static Trigger slowButton = m_driverController.button(2);
   public static Trigger fastButton = m_driverController.button(1);
-  public static Trigger climbButton7 = m_driverController.button(7);
-  public static Trigger climbButton8 = m_driverController.button(8);
-  public static Trigger climbButton9 = m_driverController.button(9);
-  public static Trigger climbButton10 = m_driverController.button(10);
+  public static Trigger joystickButton7 = m_driverController.button(7);
+  public static Trigger joystickButton8 = m_driverController.button(8);
+  public static Trigger joystickButton9 = m_driverController.button(9);
+  public static Trigger joystickButton10 = m_driverController.button(10);
 
   //operator buttons
   public static Trigger operatorA = m_operatorController.b();
@@ -71,6 +70,7 @@ public class RobotContainer {
     // Set default commands
     CommandScheduler.getInstance().setDefaultCommand(RobotContainer.drivetrain, new DriveRobot());
     CommandScheduler.getInstance().setDefaultCommand(RobotContainer.arm, new RunArm());
+    CommandScheduler.getInstance().setDefaultCommand(RobotContainer.climber, new Climb(joystickButton9, joystickButton7, joystickButton10, joystickButton8));
   }
 
   /**
@@ -103,11 +103,6 @@ public class RobotContainer {
     buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition, arm));
     buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
     buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition, arm));
-
-    climbButton7.whileTrue(new RunLeftClimber(ClimberConstants.voltage));
-    climbButton8.whileTrue(new RunRightClimber(ClimberConstants.voltage));
-    climbButton9.whileTrue(new RunLeftClimber(ClimberConstants.voltage * -1));
-    climbButton10.whileTrue(new RunRightClimber(ClimberConstants.voltage * -1));
   }
 
   /**
