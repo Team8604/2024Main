@@ -24,6 +24,7 @@ public class Climber extends SubsystemBase{
     public void setRightVoltage(double right){
         rightClimber.setVoltage(right);
     }
+    
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Left Climber Motor", leftClimber.get());
