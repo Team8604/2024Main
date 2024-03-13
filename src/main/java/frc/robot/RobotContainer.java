@@ -27,15 +27,20 @@ public class RobotContainer {
   public static Intake intake = new Intake();
   public static Shooter shooter = new Shooter();
   public static Arm arm = new Arm();
+  public static Climber climber = new Climber();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   public static CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
   public static CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
   public static CommandXboxController m_operatorButtonBoard = new CommandXboxController(OperatorConstants.kOperatorButtonBoardPort);
 
-    //driver buttons
-    public static Trigger slowButton = m_driverController.button(2);
-    public static Trigger fastButton = m_driverController.button(1);
+  //driver buttons
+  public static Trigger slowButton = m_driverController.button(2);
+  public static Trigger fastButton = m_driverController.button(1);
+  public static Trigger joystickButton7 = m_driverController.button(7);
+  public static Trigger joystickButton8 = m_driverController.button(8);
+  public static Trigger joystickButton9 = m_driverController.button(9);
+  public static Trigger joystickButton10 = m_driverController.button(10);
 
     //operator buttons
     public static Trigger operatorA = m_operatorController.b();
@@ -67,6 +72,7 @@ public class RobotContainer {
     // Set default commands
     CommandScheduler.getInstance().setDefaultCommand(RobotContainer.drivetrain, new DriveRobot());
     CommandScheduler.getInstance().setDefaultCommand(RobotContainer.arm, new RunArm());
+    CommandScheduler.getInstance().setDefaultCommand(RobotContainer.climber, new Climb(joystickButton9, joystickButton7, joystickButton10, joystickButton8));
   }
 
   /**
