@@ -59,7 +59,7 @@ public class Drivetrain extends SubsystemBase {
     rightLeader.setSafetyEnabled(false);
 
     //add limelight generated default pose later
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromRotations(yAxis), leftPos, rightPos);
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
 
     //set navx
     ahrs = new AHRS();
@@ -91,7 +91,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void updateOdometry(Pose2d pose) {
-    m_odometry.update(Rotation2d.fromRotations(yAxis), leftPos, rightPos);
+    m_odometry.update(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
   }
 
   @Override
