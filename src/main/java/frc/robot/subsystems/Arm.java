@@ -6,6 +6,7 @@ import com.revrobotics.SparkLimitSwitch;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
@@ -41,9 +42,23 @@ public class Arm extends SubsystemBase {
         return armEncoder.getAbsolutePosition();
     }
 
-    public void setSpeed(double speed) {
-        leftArm.set(MathUtil.clamp(speed, -1 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
+    public void setSpeed(double s) {
+        if(getAngle()>0.4 && Math.abs(s) > 0.3) {
+            s = 0.15;
+        } 
+        
+        leftArm.set(MathUtil.clamp(s, -0.8 * ArmConstants.kMaxSpeed, ArmConstants.kMaxSpeed));
+        
     }
+
+    public void setVoltage(double v){
+        double voltage = MathUtil.clamp(v, -12, 12);
+        if (getAngle() < .4 && voltage>2){
+            voltage*=0.55;
+        }
+        leftArm.setVoltage(voltage);
+    }
+
     public void setSpeedZero() {
         leftArm.set(0);
     }
@@ -58,7 +73,7 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putBoolean("Left Backward Arm Angle", leftBackwardLimitSwitch.isPressed());
         SmartDashboard.putNumber("Arm Angle", armEncoder.getAbsolutePosition());
         SmartDashboard.putNumber("Arm speed", RunArm.adjustArm);
-
+        SmartDashboard.putNumber("Arm voltage", leftArm.get()*RobotController.getBatteryVoltage());
 
     }
 
