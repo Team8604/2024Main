@@ -49,6 +49,12 @@ public class DriveRobot extends Command {
       fwd = Math.pow(fwd, 3) * multiplier;
       rot = Math.pow(rot, 3) * multiplier;
 
+      // slider on flight stick for direction change
+      if (RobotContainer.m_driverController.getRawAxis(3)>0){
+        fwd *= -1;
+        rot *= -1;
+      }
+
       /* Set output to control frames */
       RobotContainer.drivetrain.drive(fwd, rot);
     }
