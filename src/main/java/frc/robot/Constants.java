@@ -130,6 +130,15 @@ public final class Constants {
     public static final int kRightClimber = 9;
     public static final int kLeftClimber = 10;
 
-    public static final double kManualVolts = 2.5;
+    public static final double kManualVolts = 3;
+
+    //positions
+    public static final double downPosition = -3; // to be determined
+    public static final double upPosition = -358; // to be determined
+
+    public static final double toleranceToStartSlow = 20;
+
+    public static final double slowModeSpeed = 0.5; // 50 percentage of normal
   }
 }
+
