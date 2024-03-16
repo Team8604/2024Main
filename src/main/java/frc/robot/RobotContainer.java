@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.arm.*;
+import frc.robot.commands.climber.Climb;
 import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,8 +36,9 @@ public class RobotContainer {
   public static CommandXboxController m_operatorButtonBoard = new CommandXboxController(OperatorConstants.kOperatorButtonBoardPort);
 
   //driver buttons
-  public static Trigger slowButton = m_driverController.button(2);
   public static Trigger fastButton = m_driverController.button(1);
+  public static Trigger slowButton = m_driverController.button(2);
+  public static Trigger climbOverideButton = m_driverController.button(3); // determine overide button #
   public static Trigger joystickButton7 = m_driverController.button(7);
   public static Trigger joystickButton8 = m_driverController.button(8);
   public static Trigger joystickButton9 = m_driverController.button(9);

@@ -126,5 +126,9 @@ public final class Constants {
     public static final int kLeftClimber = 10;
 
     public static final double kManualVolts = 2.5;
+
+    //positions
+    public static final double downPosition = 0; // to be determined
+    public static final double upPosition = 500; // to be determined
   }
 }
