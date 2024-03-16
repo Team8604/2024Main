@@ -20,14 +20,14 @@ public class Climb extends Command {
 
   public Climb(Trigger leftUp, Trigger leftDown, Trigger rightUp, Trigger rightDown) {
     addRequirements(RobotContainer.climber);
-    rightVolts = () -> { return ((rightUp.getAsBoolean() ? ClimberConstants.kManualVolts : 0) - (rightDown.getAsBoolean() ? ClimberConstants.kManualVolts : 0)); };
+    //rightVolts = () -> { return ((rightUp.getAsBoolean() ? ClimberConstants.kManualVolts : 0) - (rightDown.getAsBoolean() ? ClimberConstants.kManualVolts : 0)); };
     leftVolts = () -> { return ((leftUp.getAsBoolean() ? ClimberConstants.kManualVolts : 0) - (leftDown.getAsBoolean() ? ClimberConstants.kManualVolts : 0)); };
 }
 
   // Called when the command is initially scheduled.
   @Override
   public void execute() {
-    RobotContainer.climber.setRightVoltage(rightVolts.getAsDouble());
+    //RobotContainer.climber.setRightVoltage(rightVolts.getAsDouble());
     RobotContainer.climber.setLeftVoltage(leftVolts.getAsDouble());
   }
 

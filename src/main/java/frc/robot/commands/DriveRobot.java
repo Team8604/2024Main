@@ -50,7 +50,7 @@ public class DriveRobot extends Command {
       rot = Math.pow(rot, 3) * multiplier;
 
       /* Set output to control frames */
-      RobotContainer.drivetrain.drive(fwd, rot);
+      //RobotContainer.drivetrain.drive(fwd, rot);
     }
 
     // Called once the command ends or is interrupted.
