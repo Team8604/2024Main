@@ -133,7 +133,7 @@ public final class Constants {
     public static final double kManualVolts = 3;
 
     //positions
-    public static final double downPosition = -3; // to be determined
+    public static final double downPosition = -1; // to be determined
     public static final double upPosition = -358; // to be determined
 
     public static final double toleranceToStartSlow = 20;
