@@ -10,17 +10,23 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
+import frc.robot.Constants.ArmConstants;
+import frc.robot.commands.arm.SetArmToAngle;
+
 
 public class Autos {
 
   private static SendableChooser<Command> m_chooser = new SendableChooser<Command>();
 
-  private static Command shootNote = new ParallelDeadlineGroup(
-    new WaitCommand(3),
-    new RunShooter(),
-    new SequentialCommandGroup(
-      new WaitCommand(1),
-      new RunIntake()
+  private static Command shootNote = new SequentialCommandGroup(
+    new SetArmToAngle(ArmConstants.kShootPosition),
+    new ParallelDeadlineGroup(
+      new WaitCommand(3),
+      new RunShooter(),
+      new SequentialCommandGroup(
+        new WaitCommand(1),
+        new RunIntake()
+      )
     )
   );
 

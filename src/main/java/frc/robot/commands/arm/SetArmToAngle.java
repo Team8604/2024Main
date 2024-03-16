@@ -15,7 +15,8 @@ public class SetArmToAngle extends Command{
     
     double err;
     double targetAngle;
-    public SetArmToAngle(double targetAngle, Subsystem Arm) {
+
+    public SetArmToAngle(double targetAngle) {
         controller = new ProfiledPIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD, new Constraints(ArmConstants.kMaxSpeed, ArmConstants.kMaxAcceleration));
         
         this.targetAngle= targetAngle;

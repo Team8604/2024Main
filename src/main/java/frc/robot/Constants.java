@@ -91,8 +91,8 @@ public final class Constants {
     public static final double kTrapPosition = 0.25; // TO BE DETERMINED
     public static final double kClimbPosition = 0.25; // TO BE DETERMINED
     public static final double kStartPosition = 0.305; 
-    public static final double kDistaneShootPosition = 0.4206; // about 1 robot distance away
-    public static final double kDistancedddd = 0.405; //distance is about 1.5-2 robots
+    public static final double kDistanceShoot = 0.4206; // about 1 robot distance away
+    public static final double kLongDistance = 0.405; //distance is about 1.5-2 robots
 
     //at 16 ft away and full speed 0.3708
 

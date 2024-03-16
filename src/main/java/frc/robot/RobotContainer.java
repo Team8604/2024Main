@@ -95,17 +95,17 @@ public class RobotContainer {
     operatorA.whileTrue(new RunIntake());
     operatorX.whileTrue(new RunShooter());
     operatorB.whileTrue(new BackOut());
-    operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
+    operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle));
 
     buttonBoardOne.whileTrue(new RunIntake());
     buttonBoardTwo.whileTrue(new RunShooter());
     buttonBoardThree.whileTrue(new BackOut());
     buttonBoardFour.whileTrue(new RunShooter());
 
-    buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition, arm));
-    buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition, arm));
-    buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
-    buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition, arm));
+    buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition));
+    buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition));
+    buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle));
+    buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition));
   }
 
   /**
