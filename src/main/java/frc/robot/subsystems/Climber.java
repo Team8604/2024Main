@@ -1,9 +1,6 @@
-
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.hardware.TalonFX;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -86,8 +83,6 @@ public class Climber extends SubsystemBase{
         leftClimberPosition = leftClimber.getPosition().getValueAsDouble();
         rightClimberPosition = rightClimber.getPosition().getValueAsDouble();
 
-        SmartDashboard.putNumber("Left Climber Motor", leftClimber.get());
-        SmartDashboard.putNumber("Right Climber Motor", rightClimber.get());
         SmartDashboard.putNumber("Left Climber Motor Position", leftClimberPosition);
         SmartDashboard.putNumber("Right Climber Motor Position", rightClimberPosition);
         SmartDashboard.putNumber("Left Climber Motor Voltage", leftClimber.getMotorVoltage().getValueAsDouble());
