@@ -14,7 +14,7 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.arm.SetArmToAngle;
 
 
-public class Autos {
+public class SetupAuto {
 
   private static SendableChooser<Command> m_chooser = new SendableChooser<Command>();
 
@@ -39,7 +39,7 @@ public class Autos {
     return m_chooser.getSelected();
   }
   
-  private Autos() {
+  private SetupAuto() {
     throw new UnsupportedOperationException("This is a utility class!");
   }
 }

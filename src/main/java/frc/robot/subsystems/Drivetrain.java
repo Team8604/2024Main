@@ -89,6 +89,11 @@ public class Drivetrain extends SubsystemBase {
     setSpeeds(wheelSpeeds);
   }
 
+  public void drive(ChassisSpeeds speeds) {
+    var wheelSpeeds = m_kinematics.toWheelSpeeds(speeds);
+    setSpeeds(wheelSpeeds);
+  }
+
   public void updateOdometry(Pose2d pose) {
     m_odometry.update(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
   }

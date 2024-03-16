@@ -9,6 +9,8 @@ import frc.robot.commands.*;
 import frc.robot.commands.arm.*;
 import frc.robot.subsystems.*;
 
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -22,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  // The robot's subsystems are defined here...
   public static Drivetrain drivetrain = new Drivetrain();
   public static Intake intake = new Intake();
   public static Shooter shooter = new Shooter();
@@ -66,9 +68,13 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
+    // Configure command names for PathPlanner
+    NamedCommands.registerCommand("Shoot Note", SetupAuto.shootNote);
+    NamedCommands.registerCommand("Set Shoot Angle", new SetArmToAngle(ArmConstants.kShootPosition));
+
     // Configure the trigger bindings and auto options
     configureButtonBindings();
-    Autos.configureAutos();
+    SetupAuto.configureAutos();
 
     // Set default commands
     CommandScheduler.getInstance().setDefaultCommand(RobotContainer.drivetrain, new DriveRobot());
@@ -115,6 +121,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.getAuto();//add intake,shooter,arm to this later
+    return SetupAuto.getAuto();//add intake,shooter,arm to this later
   }
 }
