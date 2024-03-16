@@ -27,7 +27,7 @@ public class Climb extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void execute() {
-    //RobotContainer.climber.setRightVoltage(rightVolts.getAsDouble());
+    RobotContainer.climber.setRightVoltage(rightVolts.getAsDouble());
     RobotContainer.climber.setLeftVoltage(leftVolts.getAsDouble());
   }
 
