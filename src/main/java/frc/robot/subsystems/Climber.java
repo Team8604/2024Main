@@ -28,7 +28,7 @@ public class Climber extends SubsystemBase{
 
     public void setLeftVoltage(double volts){
         if (getLeftInRange(volts)) {
-            if (!leftSlow()) {
+            if (!leftSlow(volts)) {
                 leftClimber.setVoltage(MathUtil.clamp(volts, -12, 12));
             } else {
                 leftClimber.setVoltage(MathUtil.clamp(volts/2, -12, 12));
@@ -40,7 +40,7 @@ public class Climber extends SubsystemBase{
     
     public void setRightVoltage(double volts){
         if (getRightInRange(volts)) {
-            if (!leftSlow()) {
+            if (!rightSlow(volts)) {
                 rightClimber.setVoltage(MathUtil.clamp(volts, -12, 12));
             } else {
                 rightClimber.setVoltage(MathUtil.clamp(volts/2, -12, 12));
@@ -57,8 +57,8 @@ public class Climber extends SubsystemBase{
         return false;
     }
 
-    public boolean leftSlow() {
-        if (leftClimberPosition < ClimberConstants.upPosition + leftEncoderStartPosition + ClimberConstants.toleranceToStartSlow || leftClimberPosition > ClimberConstants.downPosition + leftEncoderStartPosition - ClimberConstants.toleranceToStartSlow) {
+    public boolean leftSlow(double volts) {
+        if (volts < 0 && leftClimberPosition < ClimberConstants.upPosition + leftEncoderStartPosition + ClimberConstants.toleranceToStartSlow || volts > 0 && leftClimberPosition > ClimberConstants.downPosition + leftEncoderStartPosition - ClimberConstants.toleranceToStartSlow) {
             return true;
         }
         else {return false;}
@@ -71,8 +71,8 @@ public class Climber extends SubsystemBase{
         return false;
     }
 
-    public boolean rightSlow() {
-        if (rightClimberPosition < ClimberConstants.upPosition + rightEncoderStartPosition + ClimberConstants.toleranceToStartSlow || rightClimberPosition > ClimberConstants.downPosition + rightEncoderStartPosition - ClimberConstants.toleranceToStartSlow) {
+    public boolean rightSlow(double volts) {
+        if (volts<0 && rightClimberPosition < ClimberConstants.upPosition + rightEncoderStartPosition + ClimberConstants.toleranceToStartSlow || volts > 0 && rightClimberPosition > ClimberConstants.downPosition + rightEncoderStartPosition - ClimberConstants.toleranceToStartSlow) {
             return true;
         }
         else {return false;}
