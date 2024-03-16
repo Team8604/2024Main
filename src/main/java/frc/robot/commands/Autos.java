@@ -18,7 +18,7 @@ public class Autos {
 
   private static SendableChooser<Command> m_chooser = new SendableChooser<Command>();
 
-  private static Command shootNote = new SequentialCommandGroup(
+  public static Command shootNote = new SequentialCommandGroup(
     new SetArmToAngle(ArmConstants.kShootPosition),
     new ParallelDeadlineGroup(
       new WaitCommand(3),
