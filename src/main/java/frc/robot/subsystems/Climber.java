@@ -25,26 +25,28 @@ public class Climber extends SubsystemBase{
 
     public void setLeftVoltage(double volts){
         if (getLeftInRange(volts)) {
-            if (!leftSlow(volts)) {
-                leftClimber.setVoltage(MathUtil.clamp(volts, -12, 12));
-            } else {
-                leftClimber.setVoltage(MathUtil.clamp(volts/2, -12, 12));
-            }
+            if (leftSlow(volts)) {
+                volts *= 0.5;
+            } 
         } else if (RobotContainer.climbOverideButton.getAsBoolean()) {
-            leftClimber.setVoltage(MathUtil.clamp(volts/2, -12, 12));
+            volts *= 0.5;
+        } else {
+            volts = 0;
         }
+        leftClimber.setVoltage(MathUtil.clamp(volts, -12, 12));
     }
     
     public void setRightVoltage(double volts){
         if (getRightInRange(volts)) {
-            if (!rightSlow(volts)) {
-                rightClimber.setVoltage(MathUtil.clamp(volts, -12, 12));
-            } else {
-                rightClimber.setVoltage(MathUtil.clamp(volts/2, -12, 12));
-            }
+            if (rightSlow(volts)) {
+                volts *= ClimberConstants.slowModeSpeed;
+            } 
         } else if (RobotContainer.climbOverideButton.getAsBoolean()) {
-            rightClimber.setVoltage(MathUtil.clamp(volts/2, -12, 12));
+            volts *= 0.5;
+        } else {
+            volts = 0;
         }
+        rightClimber.setVoltage(MathUtil.clamp(volts, -12, 12));
     }
 
     public boolean getLeftInRange(double volts){

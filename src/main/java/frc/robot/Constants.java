@@ -132,6 +132,8 @@ public final class Constants {
     public static final double upPosition = -358; // to be determined
 
     public static final double toleranceToStartSlow = 20;
+
+    public static final double slowModeSpeed = 0.5; // 50 percentage of normal
   }
 }
 
