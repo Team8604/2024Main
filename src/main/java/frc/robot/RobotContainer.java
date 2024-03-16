@@ -66,8 +66,9 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
-    // Configure the trigger bindings
+    // Configure the trigger bindings and auto options
     configureButtonBindings();
+    Autos.configureAutos();
 
     // Set default commands
     CommandScheduler.getInstance().setDefaultCommand(RobotContainer.drivetrain, new DriveRobot());
@@ -92,14 +93,14 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     operatorA.whileTrue(new RunIntake());
-    operatorX.whileTrue(new RunShooter(arm.getAngle()));
+    operatorX.whileTrue(new RunShooter());
     operatorB.whileTrue(new BackOut());
     operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
 
     buttonBoardOne.whileTrue(new RunIntake());
-    buttonBoardTwo.whileTrue(new RunShooter(ShooterConstants.kMaxSpeed));
+    buttonBoardTwo.whileTrue(new RunShooter());
     buttonBoardThree.whileTrue(new BackOut());
-    buttonBoardFour.whileTrue(new RunShooter(ShooterConstants.kAmpSpeed));
+    buttonBoardFour.whileTrue(new RunShooter());
 
     buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition, arm));
     buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition, arm));
@@ -114,6 +115,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(drivetrain);//add intake,shooter,arm to this later
+    return Autos.getAuto();//add intake,shooter,arm to this later
   }
 }
