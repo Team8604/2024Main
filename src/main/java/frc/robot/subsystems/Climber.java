@@ -58,6 +58,7 @@ public class Climber extends SubsystemBase{
     }
 
     public boolean leftSlow(double volts) {
+        // used to slow down arm right before limit
         if (volts < 0 && leftClimberPosition < ClimberConstants.upPosition + leftEncoderStartPosition + ClimberConstants.toleranceToStartSlow || volts > 0 && leftClimberPosition > ClimberConstants.downPosition + leftEncoderStartPosition - ClimberConstants.toleranceToStartSlow) {
             return true;
         }
@@ -72,7 +73,8 @@ public class Climber extends SubsystemBase{
     }
 
     public boolean rightSlow(double volts) {
-        if (volts<0 && rightClimberPosition < ClimberConstants.upPosition + rightEncoderStartPosition + ClimberConstants.toleranceToStartSlow || volts > 0 && rightClimberPosition > ClimberConstants.downPosition + rightEncoderStartPosition - ClimberConstants.toleranceToStartSlow) {
+        // used to slow down arm right before limit
+        if (volts < 0 && rightClimberPosition < ClimberConstants.upPosition + rightEncoderStartPosition + ClimberConstants.toleranceToStartSlow || volts > 0 && rightClimberPosition > ClimberConstants.downPosition + rightEncoderStartPosition - ClimberConstants.toleranceToStartSlow) {
             return true;
         }
         else {return false;}
