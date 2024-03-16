@@ -85,7 +85,7 @@ public class Drivetrain extends SubsystemBase {
   */
   public void drive(double xSpeed, double rot) {  
     xSpeed *= DriveConstants.kMaxSpeedMetric;
-    rot *= DriveConstants.kMaxSpeedMetric;
+    rot *= (0.75 * DriveConstants.kMaxSpeedMetric);
     var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
     setSpeeds(wheelSpeeds);
   }
