@@ -100,12 +100,11 @@ public class RobotContainer {
     operatorB.whileTrue(new BackOut());
     operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
 
-    if (buttonBoardOne.getAsBoolean() || joystickButton4.getAsBoolean()){
-      new RunIntake();
-    }
+    buttonBoardOne.or(joystickButton4).whileTrue(new RunIntake());
+    //buttonBoardOne.whileTrue(new RunIntake());
     buttonBoardTwo.whileTrue(new RunShooter(ShooterConstants.kMaxSpeed));
     buttonBoardThree.whileTrue(new BackOut());
-    buttonBoardFour.whileTrue(new RunShooter(ShooterConstants.kAmpSpeed));
+    //buttonBoardFour.whileTrue(new RunShooter(ShooterConstants.kAmpSpeed));
 
     buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition, arm));
     buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition, arm));

@@ -36,8 +36,8 @@ public final class Constants {
     public static final double kMaxSpeedMetric = 25;
     
     // Speed modifier
-    public static final double kMaxSpeed = 0.7;
-    public static final double kSpeedIncrease = 0.3;
+    public static final double kMaxSpeed = 0.6;
+    public static final double kSpeedIncrease = 0.4;
     public static final double kSpeedDecrease = -0.3;
 
     // PID

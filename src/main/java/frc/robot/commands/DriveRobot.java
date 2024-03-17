@@ -9,6 +9,7 @@ import frc.robot.RobotContainer;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** An example command that uses an example subsystem. */
 public class DriveRobot extends Command {
@@ -38,7 +39,7 @@ public class DriveRobot extends Command {
       /* Get forward and rotational throttle from joystick */
       /* invert the joystick Y because forward Y is negative */
       //code from joystick for drivetrain
-      fwd = -1 * MathUtil.applyDeadband(RobotContainer.m_driverController.getY(), 0.02);
+      fwd = -1 * MathUtil.applyDeadband(RobotContainer.m_driverController.getY(), 0.04);
       rot1 = -1 * MathUtil.applyDeadband(RobotContainer.m_driverController.getX(), 0.02);
       rot2 = -1 * MathUtil.applyDeadband(RobotContainer.m_driverController.getZ(), 0.07);
 
@@ -46,13 +47,15 @@ public class DriveRobot extends Command {
       rot = Math.abs(rot1) >= Math.abs(rot2) ? rot1 : rot2;
 
       multiplier = DriveConstants.kMaxSpeed + (RobotContainer.fastButton.getAsBoolean() ? DriveConstants.kSpeedIncrease : 0) + (RobotContainer.slowButton.getAsBoolean() ? DriveConstants.kSpeedDecrease : 0);
+      SmartDashboard.putNumber("multiplier", multiplier);
       fwd = Math.pow(fwd, 3) * multiplier;
-      rot = Math.pow(rot, 3) * multiplier;
+      rot = Math.pow(rot, 3)*.7;
+      SmartDashboard.putNumber("fwd", fwd);
+      SmartDashboard.putNumber("rot", rot);
 
       // slider on flight stick for direction change
       if (RobotContainer.m_driverController.getRawAxis(3)>0){
         fwd *= -1;
-        rot *= -1;
       }
 
       /* Set output to control frames */
