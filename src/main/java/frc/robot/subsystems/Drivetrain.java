@@ -19,6 +19,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -47,6 +48,7 @@ public class Drivetrain extends SubsystemBase {
   double leftPos, leftVelocity, rightPos, rightVelocity;
 
   ChassisSpeeds chassisSpeeds;
+  private Field2d m_field = new Field2d();
   
   //navx values
   private double xAxis, yAxis, zAxis; //Roll, Pitch, Yaw
@@ -68,6 +70,9 @@ public class Drivetrain extends SubsystemBase {
     //set navx
     ahrs = new AHRS();
     ahrs.enableLogging(true);
+    
+    // Add field to SmartDashboard
+    SmartDashboard.putData("Field", m_field);
 
     // Configuring AutoBuilder at the end
     AutoBuilder.configureRamsete(
@@ -134,11 +139,12 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    m_field.setRobotPose(getPose());
+
     SmartDashboard.putNumber("Left out", leftOut);
     SmartDashboard.putNumber("Right out", rightVelocity);
     SmartDashboard.putNumber("Left Position", leftForward);
     SmartDashboard.putNumber("Right Position", rightPos);
-
 
     xAxis = ahrs.getRoll();
     yAxis = ahrs.getPitch(); 
