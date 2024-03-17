@@ -43,6 +43,8 @@ public class RobotContainer {
   public static Trigger joystickButton8 = m_driverController.button(8);
   public static Trigger joystickButton9 = m_driverController.button(9);
   public static Trigger joystickButton10 = m_driverController.button(10);
+  public static Trigger joystickButton4 = m_driverController.button(4);
+
 
     //operator buttons
     public static Trigger operatorA = m_operatorController.b();
@@ -99,6 +101,7 @@ public class RobotContainer {
     operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
 
     buttonBoardOne.whileTrue(new RunIntake());
+    joystickButton4.whileTrue(new RunIntake());
     buttonBoardTwo.whileTrue(new RunShooter(ShooterConstants.kMaxSpeed));
     buttonBoardThree.whileTrue(new BackOut());
     buttonBoardFour.whileTrue(new RunShooter(ShooterConstants.kAmpSpeed));
