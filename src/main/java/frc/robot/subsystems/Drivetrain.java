@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.sql.Driver;
+
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -21,6 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.kauailabs.navx.frc.AHRS;
 
 import frc.robot.Constants.DriveConstants;
@@ -42,6 +46,7 @@ public class Drivetrain extends SubsystemBase {
   double leftForward, rightForward, leftOut, rightOut;
   double leftPos, leftVelocity, rightPos, rightVelocity;
 
+  ChassisSpeeds chassisSpeeds;
   
   //navx values
   private double xAxis, yAxis, zAxis; //Roll, Pitch, Yaw
@@ -63,6 +68,20 @@ public class Drivetrain extends SubsystemBase {
     //set navx
     ahrs = new AHRS();
     ahrs.enableLogging(true);
+
+    // Configuring AutoBuilder at the end
+    AutoBuilder.configureRamsete(
+      this::getPose, 
+      this::resetPose, 
+      this::getCurrentSpeeds, 
+      this::drive,
+      new ReplanningConfig(), 
+      () -> { 
+        return DriverStation.getAlliance().isPresent() ? 
+        DriverStation.getAlliance().get() == DriverStation.Alliance.Red : 
+        false;}, 
+      this
+      );
   }
 
   public void setSpeeds(DifferentialDriveWheelSpeeds speed){
@@ -85,17 +104,31 @@ public class Drivetrain extends SubsystemBase {
   public void drive(double xSpeed, double rot) {  
     xSpeed *= DriveConstants.kMaxSpeedMetric;
     rot *= DriveConstants.kMaxSpeedMetric;
-    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
+    chassisSpeeds = new ChassisSpeeds(xSpeed, 0.0, rot);
+    var wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
     setSpeeds(wheelSpeeds);
   }
 
   public void drive(ChassisSpeeds speeds) {
+    chassisSpeeds = speeds;
     var wheelSpeeds = m_kinematics.toWheelSpeeds(speeds);
     setSpeeds(wheelSpeeds);
   }
 
-  public void updateOdometry(Pose2d pose) {
+  public void updateOdometry() {
     m_odometry.update(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
+  }
+
+  public void resetPose(Pose2d pose) {
+    m_odometry.resetPosition(Rotation2d.fromDegrees(yAxis), leftPos, rightPos, pose);
+  }
+
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+
+  public ChassisSpeeds getCurrentSpeeds() {
+    return chassisSpeeds;
   }
 
   @Override

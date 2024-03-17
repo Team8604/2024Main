@@ -70,7 +70,8 @@ public class RobotContainer {
   public RobotContainer() { 
     // Configure command names for PathPlanner
     NamedCommands.registerCommand("Shoot Note", SetupAuto.shootNote);
-    NamedCommands.registerCommand("Set Shoot Angle", new SetArmToAngle(ArmConstants.kShootPosition));
+    NamedCommands.registerCommand("Intake", new RunIntake());
+    NamedCommands.registerCommand("Pickup Position", new SetArmToAngle(ArmConstants.kIntakePosition));
 
     // Configure the trigger bindings and auto options
     configureButtonBindings();

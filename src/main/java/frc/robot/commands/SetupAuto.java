@@ -10,13 +10,17 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.arm.SetArmToAngle;
 
 
 public class SetupAuto {
 
-  private static SendableChooser<Command> m_chooser = new SendableChooser<Command>();
+  private static SendableChooser<Integer> m_AutoType = new SendableChooser<Integer>();
+  private static SendableChooser<Integer> m_StartPosition = new SendableChooser<Integer>();
 
   public static Command shootNote = new SequentialCommandGroup(
     new SetArmToAngle(ArmConstants.kShootPosition),
@@ -31,12 +35,44 @@ public class SetupAuto {
   );
 
   public static void configureAutos() {
-    m_chooser.setDefaultOption("Shoot and Stay", shootNote);
+    m_StartPosition.setDefaultOption("Source Side", 1);
+    m_StartPosition.addOption("Middle", 2);
+    m_StartPosition.addOption("Amp Side", 3);
+
+    m_AutoType.setDefaultOption("Shoot and Stay", 10);
+    m_AutoType.addOption("Absolutely Nothing", 20);
+    m_AutoType.addOption("Shoot and Move Out", 30);
   }
 
   public static Command getAuto() {
+    int autoValue = m_AutoType.getSelected() + m_StartPosition.getSelected();
 
-    return m_chooser.getSelected();
+    m_AutoType.close();
+    m_StartPosition.close();
+    
+    Command chosenAuto = new WaitCommand(5);
+
+    switch (autoValue) {
+      case 11:
+        chosenAuto = shootNote;
+        break;
+      case 12:
+        chosenAuto = shootNote;
+        break;
+      case 13:
+        chosenAuto = shootNote;
+        break;
+      case 31:
+        chosenAuto = new PathPlannerAuto("SaMO Source");
+        break;
+      case 32:
+        chosenAuto = new PathPlannerAuto("SaMO Middle");
+        break;
+      case 33:
+        chosenAuto = new PathPlannerAuto("SaMO Amp");
+        break;
+    }
+    return chosenAuto;
   }
   
   private SetupAuto() {
