@@ -65,9 +65,6 @@ public class SetupAuto {
       case 13:
         chosenAuto = shootNote;
         break;
-      case 22: 
-        chosenAuto = new SetArmToAngle(ArmConstants.kShootPosition);
-        break;
       case 31:
         chosenAuto = new PathPlannerAuto("SaMO Source");
         break;

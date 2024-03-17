@@ -109,7 +109,7 @@ public final class Constants {
     public static final double kI = 3;
     public static final double kD = 0.9;
     public static final double kPosTolerance = 0.004;
-    public static final double kSpeedTolerance = 0.08;  
+    public static final double kSpeedTolerance = 0.01;  
   }
 
   public static class NavXConstants {
