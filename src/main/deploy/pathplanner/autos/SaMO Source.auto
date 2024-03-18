@@ -12,12 +12,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Shoot Note"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Move Out Source"

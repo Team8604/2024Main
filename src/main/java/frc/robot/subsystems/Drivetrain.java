@@ -47,7 +47,7 @@ public class Drivetrain extends SubsystemBase {
   double leftForward, rightForward, leftOut, rightOut;
   double leftPos, leftVelocity, rightPos, rightVelocity;
 
-  ChassisSpeeds chassisSpeeds;
+  ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0,0,0);
   private Field2d m_field = new Field2d();
   
   //navx values
@@ -149,6 +149,8 @@ public class Drivetrain extends SubsystemBase {
     xAxis = ahrs.getRoll();
     yAxis = ahrs.getPitch(); 
     zAxis = ahrs.getYaw();
+
+    updateOdometry();
 
     leftPos = leftLeader.getPosition().getValueAsDouble() * DriveConstants.kMotorMultiplier;
     rightPos = rightLeader.getPosition().getValueAsDouble() * DriveConstants.kMotorMultiplier;

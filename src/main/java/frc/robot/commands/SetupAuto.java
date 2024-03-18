@@ -35,6 +35,8 @@ public class SetupAuto {
     )
   );
 
+  public static Command SaMOMid = new SequentialCommandGroup(shootNote, new ParallelDeadlineGroup(new WaitCommand(1), new DriveRobot()));
+
   public static void configureAutos() {
     m_StartPosition.setDefaultOption("Source Side", 1);
     m_StartPosition.addOption("Middle", 2);
@@ -69,7 +71,7 @@ public class SetupAuto {
         chosenAuto = new PathPlannerAuto("SaMO Source");
         break;
       case 32:
-        chosenAuto = new PathPlannerAuto("SaMO Middle");
+        chosenAuto = SaMOMid;
         break;
       case 33:
         chosenAuto = new PathPlannerAuto("SaMO Amp");
