@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3737079726411703,
-      "y": 5.546821904454621
+      "x": 0.6940411352377713,
+      "y": 6.56951281032777
     },
-    "rotation": 0
+    "rotation": 56.97613244420338
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Move Out Middle"
+            "pathName": "back"
           }
         }
       ]

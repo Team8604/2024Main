@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,12 +17,14 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.arm.SetArmToAngle;
+import frc.robot.commands.DriveRobot;
 
 
 public class SetupAuto {
 
   private static SendableChooser<Integer> m_AutoType = new SendableChooser<Integer>();
   private static SendableChooser<Integer> m_StartPosition = new SendableChooser<Integer>();
+  private static SendableChooser<Integer> m_PathOrTime = new SendableChooser<Integer>();
 
   public static Command shootNote = new SequentialCommandGroup(
     new SetArmToAngle(ArmConstants.kShootPosition),
@@ -35,7 +38,17 @@ public class SetupAuto {
     )
   );
 
-  public static Command SaMOMid = new SequentialCommandGroup(shootNote, new ParallelDeadlineGroup(new WaitCommand(1), new DriveRobot()));
+  private static Command SaMOAmpBlue = new SequentialCommandGroup(
+    new DriveRobot(0.3, 0.3, 1)
+  );
+  
+  private static Command SaMOAmpRed = new SequentialCommandGroup(
+    new DriveRobot(0.3, -0.3, 1)
+  );
+
+  private static Command SaMOMid = new SequentialCommandGroup(
+    new DriveRobot(0.1, 0, 3)
+  );
 
   public static void configureAutos() {
     m_StartPosition.setDefaultOption("Source Side", 1);
@@ -47,10 +60,15 @@ public class SetupAuto {
     m_AutoType.addOption("Absolutely Nothing", 20);
     m_AutoType.addOption("Shoot and Move Out", 30);
     SmartDashboard.putData(m_AutoType);
+
+    m_PathOrTime.setDefaultOption("Primitive Path", 100);
+    m_PathOrTime.addOption("PathPlanner Path", 200);
+    SmartDashboard.putData(m_PathOrTime);
   } 
 
   public static Command getAuto() {
-    int autoValue = m_AutoType.getSelected() + m_StartPosition.getSelected();
+    int autoValue = m_PathOrTime.getSelected() + m_AutoType.getSelected() + m_StartPosition.getSelected();
+    boolean isRed = DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == DriverStation.Alliance.Red : false;
 
     m_AutoType.close();
     m_StartPosition.close();
@@ -58,22 +76,22 @@ public class SetupAuto {
     Command chosenAuto = new WaitCommand(5);
 
     switch (autoValue) {
-      case 11:
+      case 111, 112, 113, 211, 212, 213:
         chosenAuto = shootNote;
         break;
-      case 12:
-        chosenAuto = shootNote;
+      case 132:
+        chosenAuto = new DriveRobot(0.1, 0, 3);
         break;
-      case 13:
-        chosenAuto = shootNote;
+      case 133:
+        chosenAuto = isRed ? SaMOAmpRed : SaMOAmpBlue;
         break;
-      case 31:
+      case 231:
         chosenAuto = new PathPlannerAuto("SaMO Source");
         break;
-      case 32:
-        chosenAuto = SaMOMid;
+      case 232:
+        chosenAuto = new PathPlannerAuto("SaMO Middle");
         break;
-      case 33:
+      case 233:
         chosenAuto = new PathPlannerAuto("SaMO Amp");
         break;
     }

@@ -65,7 +65,7 @@ public class Drivetrain extends SubsystemBase {
     rightLeader.setSafetyEnabled(false);
 
     //add limelight generated default pose later
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(zAxis), leftPos, rightPos);
 
     //set navx
     ahrs = new AHRS();
@@ -100,6 +100,15 @@ public class Drivetrain extends SubsystemBase {
     rightLeader.setVoltage(MathUtil.clamp(rightOut + rightForward, -12, 12));
   }
 
+  public void setSpeeds(ChassisSpeeds speeds) {
+    var speed = m_kinematics.toWheelSpeeds(speeds);
+    leftOut = m_leftPIDController.calculate(leftVelocity, speed.leftMetersPerSecond); //add encoder value
+    rightOut = m_rightPIDController.calculate(rightVelocity, speed.rightMetersPerSecond);  //add encoder value 
+
+    leftLeader.setVoltage(MathUtil.clamp(leftOut, -12, 12));
+    rightLeader.setVoltage(MathUtil.clamp(rightOut, -12, 12));    
+  }
+
   /**
   * Drives the robot with the given linear velocity and angular velocity.
   *
@@ -116,16 +125,15 @@ public class Drivetrain extends SubsystemBase {
 
   public void drive(ChassisSpeeds speeds) {
     chassisSpeeds = speeds;
-    var wheelSpeeds = m_kinematics.toWheelSpeeds(speeds);
-    setSpeeds(wheelSpeeds);
+    setSpeeds(speeds);
   }
 
   public void updateOdometry() {
-    m_odometry.update(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
+    m_odometry.update(Rotation2d.fromDegrees(zAxis), leftPos, rightPos);
   }
 
   public void resetPose(Pose2d pose) {
-    m_odometry.resetPosition(Rotation2d.fromDegrees(yAxis), leftPos, rightPos, pose);
+    m_odometry.resetPosition(Rotation2d.fromDegrees(zAxis), leftPos, rightPos, pose);
   }
 
   public Pose2d getPose() {
