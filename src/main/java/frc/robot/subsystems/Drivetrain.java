@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.sql.Driver;
-
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -23,7 +21,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.kauailabs.navx.frc.AHRS.SerialDataType;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.kauailabs.navx.frc.AHRS;

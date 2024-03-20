@@ -46,19 +46,19 @@ public class RobotContainer {
   public static Trigger joystickButton10 = m_driverController.button(10);
   public static Trigger joystickButton4 = m_driverController.button(4);
 
-    //operator buttonboard buttons
-    public static Trigger buttonBoardOne = m_operatorButtonBoard.button(1);
-    public static Trigger buttonBoardTwo = m_operatorButtonBoard.button(2);
-    public static Trigger buttonBoardThree = m_operatorButtonBoard.button(3);
-    public static Trigger buttonBoardFour = m_operatorButtonBoard.button(4);
-    public static Trigger buttonBoardFive = m_operatorButtonBoard.button(5);
-    public static Trigger buttonBoardSix = m_operatorButtonBoard.button(6);
-    public static Trigger buttonBoardSeven = m_operatorButtonBoard.button(7);
-    public static Trigger buttonBoardEight = m_operatorButtonBoard.button(8);
-    public static Trigger buttonBoardNine = m_operatorButtonBoard.button(9);
-    public static Trigger buttonBoardTen = m_operatorButtonBoard.button(10);
-    public static Trigger buttonBoardEleven = m_operatorButtonBoard.button(11);
-    public static Trigger buttonBoardTwelve = m_operatorButtonBoard.button(12);
+  //operator buttonboard buttons
+  public static Trigger buttonBoardOne = m_operatorButtonBoard.button(1);
+  public static Trigger buttonBoardTwo = m_operatorButtonBoard.button(2);
+  public static Trigger buttonBoardThree = m_operatorButtonBoard.button(3);
+  public static Trigger buttonBoardFour = m_operatorButtonBoard.button(4);
+  public static Trigger buttonBoardFive = m_operatorButtonBoard.button(5);
+  public static Trigger buttonBoardSix = m_operatorButtonBoard.button(6);
+  public static Trigger buttonBoardSeven = m_operatorButtonBoard.button(7);
+  public static Trigger buttonBoardEight = m_operatorButtonBoard.button(8);
+  public static Trigger buttonBoardNine = m_operatorButtonBoard.button(9);
+  public static Trigger buttonBoardTen = m_operatorButtonBoard.button(10);
+  public static Trigger buttonBoardEleven = m_operatorButtonBoard.button(11);
+  public static Trigger buttonBoardTwelve = m_operatorButtonBoard.button(12);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */

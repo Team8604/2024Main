@@ -12,13 +12,10 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.arm.SetArmToAngle;
-import frc.robot.commands.DriveRobot;
-
 
 public class SetupAuto {
 
@@ -80,7 +77,7 @@ public class SetupAuto {
         chosenAuto = shootNote;
         break;
       case 132:
-        chosenAuto = new DriveRobot(0.1, 0, 3);
+        chosenAuto = SaMOMid;
         break;
       case 133:
         chosenAuto = isRed ? SaMOAmpRed : SaMOAmpBlue;
