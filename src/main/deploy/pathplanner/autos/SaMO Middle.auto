@@ -2,19 +2,38 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6940411352377713,
-      "y": 6.56951281032777
+      "x": 1.3686356576252992,
+      "y": 5.635458856252733
     },
-    "rotation": 56.97613244420338
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "back"
+            "name": "Shoot Note"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "back"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
           }
         }
       ]

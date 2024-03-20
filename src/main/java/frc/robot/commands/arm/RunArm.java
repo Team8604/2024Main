@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 
 public class RunArm extends Command {
-
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    
     public static double adjustArm = 0;
 
     public RunArm() {
