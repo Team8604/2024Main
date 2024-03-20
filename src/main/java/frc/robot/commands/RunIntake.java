@@ -37,9 +37,9 @@ public class RunIntake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-     if (!RobotContainer.shooter.running && RobotContainer.intake.isNote()) {
+    if (!RobotContainer.shooter.running && RobotContainer.intake.isNote()) {
       return true;
-     }
+    }
      
     return false;
   }

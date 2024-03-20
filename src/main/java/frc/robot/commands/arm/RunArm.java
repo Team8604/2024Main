@@ -23,9 +23,6 @@ public class RunArm extends Command {
     @Override
     public void execute() {
         adjustArm = 0.3 * MathUtil.applyDeadband(RobotContainer.m_operatorButtonBoard.getRawAxis(1), 0.2);
-        /*if (RobotContainer.arm.getAngle() <= 0.243 || RobotContainer.arm.getAngle() >= 4.5){
-            adjustArm /= 2;
-        }*/
 
         if (RobotContainer.m_operatorButtonBoard.button(6).getAsBoolean()){
             adjustArm *= 0.5;
@@ -38,7 +35,7 @@ public class RunArm extends Command {
             RobotContainer.arm.setSpeed(0);
         } else if (Math.abs(adjustArm)<0.1){
             RobotContainer.arm.setSpeed(0);
-        }else {
+        } else {
             RobotContainer.arm.setSpeed(-0.7*adjustArm);
         }      
     }

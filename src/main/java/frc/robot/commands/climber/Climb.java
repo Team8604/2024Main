@@ -22,7 +22,7 @@ public class Climb extends Command {
     addRequirements(RobotContainer.climber);
     rightVolts = () -> { return ((rightUp.getAsBoolean() ? ClimberConstants.kManualVolts : 0) - (rightDown.getAsBoolean() ? ClimberConstants.kManualVolts : 0)); };
     leftVolts = () -> { return ((leftUp.getAsBoolean() ? ClimberConstants.kManualVolts : 0) - (leftDown.getAsBoolean() ? ClimberConstants.kManualVolts : 0)); };
-}
+  }
 
   // Called when the command is initially scheduled.
   @Override
