@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.sql.Driver;
+
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -16,9 +18,14 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.kauailabs.navx.frc.AHRS.SerialDataType;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.kauailabs.navx.frc.AHRS;
 
 import frc.robot.Constants.DriveConstants;
@@ -40,6 +47,8 @@ public class Drivetrain extends SubsystemBase {
   double leftForward, rightForward, leftOut, rightOut;
   double leftPos, leftVelocity, rightPos, rightVelocity;
 
+  ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0,0,0);
+  private Field2d m_field = new Field2d();
   
   //navx values
   private double xAxis, yAxis, zAxis; //Roll, Pitch, Yaw
@@ -56,11 +65,28 @@ public class Drivetrain extends SubsystemBase {
     rightLeader.setSafetyEnabled(false);
 
     //add limelight generated default pose later
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(zAxis), leftPos, rightPos);
 
     //set navx
     ahrs = new AHRS();
     ahrs.enableLogging(true);
+    
+    // Add field to SmartDashboard
+    SmartDashboard.putData("Field", m_field);
+
+    // Configuring AutoBuilder at the end
+    AutoBuilder.configureRamsete(
+      this::getPose, 
+      this::resetPose, 
+      this::getCurrentSpeeds, 
+      this::drive,
+      new ReplanningConfig(), 
+      () -> { 
+        return DriverStation.getAlliance().isPresent() ? 
+        DriverStation.getAlliance().get() == DriverStation.Alliance.Red : 
+        false;}, 
+      this
+      );
   }
 
   public void setSpeeds(DifferentialDriveWheelSpeeds speed){
@@ -74,6 +100,15 @@ public class Drivetrain extends SubsystemBase {
     rightLeader.setVoltage(MathUtil.clamp(rightOut + rightForward, -12, 12));
   }
 
+  public void setSpeeds(ChassisSpeeds speeds) {
+    var speed = m_kinematics.toWheelSpeeds(speeds);
+    leftOut = m_leftPIDController.calculate(leftVelocity, speed.leftMetersPerSecond); //add encoder value
+    rightOut = m_rightPIDController.calculate(rightVelocity, speed.rightMetersPerSecond);  //add encoder value 
+
+    leftLeader.setVoltage(MathUtil.clamp(leftOut, -12, 12));
+    rightLeader.setVoltage(MathUtil.clamp(rightOut, -12, 12));    
+  }
+
   /**
   * Drives the robot with the given linear velocity and angular velocity.
   *
@@ -82,27 +117,48 @@ public class Drivetrain extends SubsystemBase {
   */
   public void drive(double xSpeed, double rot) {  
     xSpeed *= DriveConstants.kMaxSpeedMetric;
-    rot *= (0.75 * DriveConstants.kMaxSpeedMetric);
-    var wheelSpeeds = m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0.0, rot));
+    rot *= 0.75 * DriveConstants.kMaxSpeedMetric;
+    chassisSpeeds = new ChassisSpeeds(xSpeed, 0.0, rot);
+    var wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
     setSpeeds(wheelSpeeds);
   }
 
-  public void updateOdometry(Pose2d pose) {
-    m_odometry.update(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
+  public void drive(ChassisSpeeds speeds) {
+    chassisSpeeds = speeds;
+    setSpeeds(speeds);
+  }
+
+  public void updateOdometry() {
+    m_odometry.update(Rotation2d.fromDegrees(zAxis), leftPos, rightPos);
+  }
+
+  public void resetPose(Pose2d pose) {
+    m_odometry.resetPosition(Rotation2d.fromDegrees(zAxis), leftPos, rightPos, pose);
+  }
+
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+
+  public ChassisSpeeds getCurrentSpeeds() {
+    return chassisSpeeds;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    m_field.setRobotPose(getPose());
+
     SmartDashboard.putNumber("Left out", leftOut);
     SmartDashboard.putNumber("Right out", rightVelocity);
     SmartDashboard.putNumber("Left Position", leftForward);
     SmartDashboard.putNumber("Right Position", rightPos);
 
-
     xAxis = ahrs.getRoll();
     yAxis = ahrs.getPitch(); 
     zAxis = ahrs.getYaw();
+
+    updateOdometry();
 
     leftPos = leftLeader.getPosition().getValueAsDouble() * DriveConstants.kMotorMultiplier;
     rightPos = rightLeader.getPosition().getValueAsDouble() * DriveConstants.kMotorMultiplier;

@@ -10,6 +10,8 @@ import frc.robot.commands.arm.*;
 import frc.robot.commands.climber.Climb;
 import frc.robot.subsystems.*;
 
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -23,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  // The robot's subsystems are defined here...
   public static Drivetrain drivetrain = new Drivetrain();
   public static Intake intake = new Intake();
   public static Shooter shooter = new Shooter();
@@ -61,8 +63,14 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
-    // Configure the trigger bindings
+    // Configure command names for PathPlanner
+    NamedCommands.registerCommand("Shoot Note", SetupAuto.shootNote);
+    NamedCommands.registerCommand("Intake", new RunIntake());
+    NamedCommands.registerCommand("Pickup Position", new SetArmToAngle(ArmConstants.kIntakePosition));
+
+    // Configure the trigger bindings and auto options
     configureButtonBindings();
+    SetupAuto.configureAutos();
 
     // Set default commands
     CommandScheduler.getInstance().setDefaultCommand(RobotContainer.drivetrain, new DriveRobot());
@@ -87,15 +95,14 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
    
     buttonBoardOne.or(joystickButton4).whileTrue(new RunIntake());
-    //buttonBoardOne.whileTrue(new RunIntake());
-    buttonBoardTwo.whileTrue(new RunShooter(ShooterConstants.kMaxSpeed));
+    buttonBoardTwo.whileTrue(new RunShooter());
     buttonBoardThree.whileTrue(new BackOut());
-    //buttonBoardFour.whileTrue(new RunShooter(ShooterConstants.kAmpSpeed));
 
-    buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition, arm));
-    buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition, arm));
-    buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
-    buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition, arm));
+    buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition));
+    buttonBoardNine.whileTrue(new SetArmToAngle(ArmConstants.kDistanceShoot));
+    buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition));
+    buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle));
+    buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition));
   }
 
   /**
@@ -105,6 +112,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(drivetrain);//add intake,shooter,arm to this later
+    return SetupAuto.getAuto();//add intake,shooter,arm to this later
   }
 }

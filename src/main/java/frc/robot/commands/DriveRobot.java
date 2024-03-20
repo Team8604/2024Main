@@ -8,6 +8,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.RobotContainer;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,13 +22,28 @@ public class DriveRobot extends Command {
      * @param subsystem The subsystem used by this command.
      */
 
-    double multiplier, fwd, rot, rot1, rot2;
+    private double multiplier, fwd, rot, rot1, rot2;
+
+    private double autoFwd, autoRot, time;
+    private Timer timer = new Timer();
 
     public DriveRobot() {
       // Use addRequirements() here to declare subsystem dependencies.
       addRequirements(RobotContainer.drivetrain);
     }
 
+    /**
+     * Command to drive robot in one direction during autonomous
+     * @param forward speed forward (-1 to 1)
+     * @param rotation curvature of the robot (-1 to 1)
+     * @param duration time driving (0 to 15)
+     */
+    public DriveRobot(double forward, double rotation, double duration) {
+      timer.restart();
+      autoFwd = forward;
+      autoRot = rotation;
+      time = duration;
+    }
 
     // Called when the command is initially scheduled.
     @Override
@@ -59,10 +75,17 @@ public class DriveRobot extends Command {
       }
 
       /* Set output to control frames */
-      RobotContainer.drivetrain.drive(fwd, rot);
+      RobotContainer.drivetrain.drive(fwd + autoFwd, rot + autoRot);
     }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+      RobotContainer.drivetrain.drive(0,0);
+    }
+
+    @Override
+    public boolean isFinished() {
+      return timer.hasElapsed(time);
+    }
 }

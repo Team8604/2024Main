@@ -85,14 +85,14 @@ public final class Constants {
 
     // Arm positions
     // Note - arm range on encoder is about 0.224-0.467
-    public static final double kAmpAngle = 0.22;
-    public static final double kIntakePosition = 0.467;
-    public static final double kShootPosition = 0.447; 
-    public static final double kTrapPosition = 0.25; // TO BE DETERMINED
-    public static final double kClimbPosition = 0.25; // TO BE DETERMINED
-    public static final double kStartPosition = 0.305; 
-    public static final double kDistaneShootPosition = 0.4206; // about 1 robot distance away
-    public static final double kDistancedddd = 0.405; //distance is about 1.5-2 robots
+    public static final double kAmpAngle = 0.224;
+    public static final double kIntakePosition = 0.471;
+    public static final double kShootPosition = 0.451; 
+    public static final double kTrapPosition = 0.254; // TO BE DETERMINED
+    public static final double kClimbPosition = 0.254; // TO BE DETERMINED
+    public static final double kStartPosition = 0.309; 
+    public static final double kDistanceShoot = 0.4246; // about 1 robot distance away
+    public static final double kLongDistance = 0.409; //distance is about 1.5-2 robots
 
     //at 16 ft away and full speed 0.3708
 
@@ -108,8 +108,8 @@ public final class Constants {
     public static final double kP = 50;
     public static final double kI = 3;
     public static final double kD = 0.9;
-    public static final double kPosTolerance = 0.004;
-    public static final double kSpeedTolerance = 0.08;  
+    public static final double kPosTolerance = 0.002;
+    public static final double kSpeedTolerance = 0.01;  
   }
 
   public static class NavXConstants {
