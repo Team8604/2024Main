@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.climber;
+package frc.robot.commands;
 
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.RobotContainer;
@@ -22,7 +22,7 @@ public class Climb extends Command {
     addRequirements(RobotContainer.climber);
     rightVolts = () -> { return ((rightUp.getAsBoolean() ? ClimberConstants.kManualVolts : 0) - (rightDown.getAsBoolean() ? ClimberConstants.kManualVolts : 0)); };
     leftVolts = () -> { return ((leftUp.getAsBoolean() ? ClimberConstants.kManualVolts : 0) - (leftDown.getAsBoolean() ? ClimberConstants.kManualVolts : 0)); };
-  }
+}
 
   // Called when the command is initially scheduled.
   @Override

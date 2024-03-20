@@ -7,7 +7,6 @@ package frc.robot;
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.arm.*;
-import frc.robot.commands.climber.Climb;
 import frc.robot.subsystems.*;
 
 import com.pathplanner.lib.auto.NamedCommands;
