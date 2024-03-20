@@ -78,8 +78,6 @@ public class Climber extends SubsystemBase{
         }
         else {return false;}
     }
-
-
     
     @Override
     public void periodic(){
