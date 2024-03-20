@@ -32,7 +32,6 @@ public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   public static CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
-  public static CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
   public static CommandXboxController m_operatorButtonBoard = new CommandXboxController(OperatorConstants.kOperatorButtonBoardPort);
 
   //driver buttons
@@ -44,14 +43,6 @@ public class RobotContainer {
   public static Trigger joystickButton9 = m_driverController.button(9);
   public static Trigger joystickButton10 = m_driverController.button(10);
   public static Trigger joystickButton4 = m_driverController.button(4);
-
-
-    //operator buttons
-    public static Trigger operatorA = m_operatorController.b();
-    public static Trigger operatorB = m_operatorController.x();
-    public static Trigger operatorX = m_operatorController.a();
-    public static Trigger operatorY = m_operatorController.y();
-    public static Trigger operatorRightBumper = m_operatorController.rightBumper();
 
     //operator buttonboard buttons
     public static Trigger buttonBoardOne = m_operatorButtonBoard.button(1);
@@ -94,12 +85,7 @@ public class RobotContainer {
         //.onTrue(new DriveRobot(drivetrain));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    operatorA.whileTrue(new RunIntake());
-    operatorX.whileTrue(new RunShooter(arm.getAngle()));
-    operatorB.whileTrue(new BackOut());
-    operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
-
+   
     buttonBoardOne.or(joystickButton4).whileTrue(new RunIntake());
     //buttonBoardOne.whileTrue(new RunIntake());
     buttonBoardTwo.whileTrue(new RunShooter(ShooterConstants.kMaxSpeed));
