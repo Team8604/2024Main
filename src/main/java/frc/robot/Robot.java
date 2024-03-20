@@ -68,9 +68,10 @@ public class Robot extends TimedRobot {
     }
   }
 
-  /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousExit() {
+    RobotContainer.drivetrain.fullBrake();
+  }
 
   @Override
   public void teleopInit() {
@@ -81,11 +82,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    RobotContainer.drivetrain.coast();
   }
-
-  /** This function is called periodically during operator control. */
-  @Override
-  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
