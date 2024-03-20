@@ -60,7 +60,6 @@ public class RobotContainer {
   public static Trigger buttonBoardEleven = m_operatorButtonBoard.button(11);
   public static Trigger buttonBoardTwelve = m_operatorButtonBoard.button(12);
 
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
     // Configure command names for PathPlanner
@@ -89,11 +88,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    //new Trigger(drivetrain::exampleCondition)
-        //.onTrue(new DriveRobot(drivetrain));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-   
     buttonBoardOne.or(joystickButton4).whileTrue(new RunIntake());
     buttonBoardTwo.whileTrue(new RunShooter());
     buttonBoardThree.whileTrue(new BackOut());
