@@ -87,11 +87,11 @@ public final class Constants {
     // Note - arm range on encoder is about 0.224-0.467
     public static final double kAmpAngle = 0.224;
     public static final double kIntakePosition = 0.471;
-    public static final double kShootPosition = 0.416; 
+    public static final double kShootPosition = 0.451; 
     public static final double kTrapPosition = 0.254; // TO BE DETERMINED
     public static final double kClimbPosition = 0.254; // TO BE DETERMINED
     public static final double kStartPosition = 0.309; 
-    public static final double kDistanceShoot = 0.4246; // about 1 robot distance away
+    public static final double kDistanceShoot = 0.416; // about 1 robot distance away
     public static final double kLongDistance = 0.409; //distance is about 1.5-2 robots
 
     //at 16 ft away and full speed 0.3708
@@ -108,8 +108,8 @@ public final class Constants {
     public static final double kP = 50;
     public static final double kI = 3;
     public static final double kD = 0.9;
-    public static final double kPosTolerance = 0.004;
-    public static final double kSpeedTolerance = 0.08;  
+    public static final double kPosTolerance = 0.002;
+    public static final double kSpeedTolerance = 0.01;  
   }
 
   public static class NavXConstants {
@@ -130,15 +130,16 @@ public final class Constants {
     public static final int kRightClimber = 9;
     public static final int kLeftClimber = 10;
 
-    public static final double kManualVolts = 3;
+    public static final double kManualVolts = 7;
 
     //positions
-    public static final double downPosition = -1; // to be determined
-    public static final double upPosition = -358; // to be determined
+    public static final double rightDownPosition = 0; // to be determined
+    public static final double rightUpPosition = -372.85; // to be determined
+    public static final double leftDownPosition = 0; // to be determined
+    public static final double leftUpPosition = -372.85; // to be determined
 
     public static final double toleranceToStartSlow = 20;
 
-    public static final double slowModeSpeed = 0.5; // 50 percentage of normal
+    public static final double slowModeSpeed = 0.8; // 50 percentage of normal
   }
 }
-
