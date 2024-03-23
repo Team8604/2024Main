@@ -7,8 +7,10 @@ package frc.robot;
 import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.commands.arm.*;
-import frc.robot.commands.climber.Climb;
+import frc.robot.commands.climber.*;
 import frc.robot.subsystems.*;
+
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -23,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  // The robot's subsystems are defined here...
   public static Drivetrain drivetrain = new Drivetrain();
   public static Intake intake = new Intake();
   public static Shooter shooter = new Shooter();
@@ -32,7 +34,6 @@ public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   public static CommandJoystick m_driverController = new CommandJoystick(OperatorConstants.kDriverControllerPort); 
-  public static CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
   public static CommandXboxController m_operatorButtonBoard = new CommandXboxController(OperatorConstants.kOperatorButtonBoardPort);
 
   //driver buttons
@@ -45,33 +46,30 @@ public class RobotContainer {
   public static Trigger joystickButton10 = m_driverController.button(10);
   public static Trigger joystickButton4 = m_driverController.button(4);
 
-
-    //operator buttons
-    public static Trigger operatorA = m_operatorController.b();
-    public static Trigger operatorB = m_operatorController.x();
-    public static Trigger operatorX = m_operatorController.a();
-    public static Trigger operatorY = m_operatorController.y();
-    public static Trigger operatorRightBumper = m_operatorController.rightBumper();
-
-    //operator buttonboard buttons
-    public static Trigger buttonBoardOne = m_operatorButtonBoard.button(1);
-    public static Trigger buttonBoardTwo = m_operatorButtonBoard.button(2);
-    public static Trigger buttonBoardThree = m_operatorButtonBoard.button(3);
-    public static Trigger buttonBoardFour = m_operatorButtonBoard.button(4);
-    public static Trigger buttonBoardFive = m_operatorButtonBoard.button(5);
-    public static Trigger buttonBoardSix = m_operatorButtonBoard.button(6);
-    public static Trigger buttonBoardSeven = m_operatorButtonBoard.button(7);
-    public static Trigger buttonBoardEight = m_operatorButtonBoard.button(8);
-    public static Trigger buttonBoardNine = m_operatorButtonBoard.button(9);
-    public static Trigger buttonBoardTen = m_operatorButtonBoard.button(10);
-    public static Trigger buttonBoardEleven = m_operatorButtonBoard.button(11);
-    public static Trigger buttonBoardTwelve = m_operatorButtonBoard.button(12);
-
+  //operator buttonboard buttons
+  public static Trigger buttonBoardOne = m_operatorButtonBoard.button(1);
+  public static Trigger buttonBoardTwo = m_operatorButtonBoard.button(2);
+  public static Trigger buttonBoardThree = m_operatorButtonBoard.button(3);
+  public static Trigger buttonBoardFour = m_operatorButtonBoard.button(4);
+  public static Trigger buttonBoardFive = m_operatorButtonBoard.button(5);
+  public static Trigger buttonBoardSix = m_operatorButtonBoard.button(6);
+  public static Trigger buttonBoardSeven = m_operatorButtonBoard.button(7);
+  public static Trigger buttonBoardEight = m_operatorButtonBoard.button(8);
+  public static Trigger buttonBoardNine = m_operatorButtonBoard.button(9);
+  public static Trigger buttonBoardTen = m_operatorButtonBoard.button(10);
+  public static Trigger buttonBoardEleven = m_operatorButtonBoard.button(11);
+  public static Trigger buttonBoardTwelve = m_operatorButtonBoard.button(12);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
-    // Configure the trigger bindings
+    // Configure command names for PathPlanner
+    NamedCommands.registerCommand("Shoot Note", SetupAuto.shootNote);
+    NamedCommands.registerCommand("Intake", new RunIntake());
+    NamedCommands.registerCommand("Pickup Position", new SetArmToAngle(ArmConstants.kIntakePosition));
+
+    // Configure the trigger bindings and auto options
     configureButtonBindings();
+    SetupAuto.configureAutos();
 
     // Set default commands
     CommandScheduler.getInstance().setDefaultCommand(RobotContainer.drivetrain, new DriveRobot());
@@ -90,26 +88,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    //new Trigger(drivetrain::exampleCondition)
-        //.onTrue(new DriveRobot(drivetrain));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    operatorA.whileTrue(new RunIntake());
-    operatorX.whileTrue(new RunShooter(arm.getAngle()));
-    operatorB.whileTrue(new BackOut());
-    operatorY.onTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
-
     buttonBoardOne.or(joystickButton4).whileTrue(new RunIntake());
-    //buttonBoardOne.whileTrue(new RunIntake());
-    buttonBoardTwo.whileTrue(new RunShooter(ShooterConstants.kMaxSpeed));
+    buttonBoardTwo.whileTrue(new RunShooter());
     buttonBoardThree.whileTrue(new BackOut());
-    //buttonBoardFour.whileTrue(new RunShooter(ShooterConstants.kAmpSpeed));
 
-    buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition, arm));
-    buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition, arm));
-    buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle, arm));
-    buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition, arm));
+    buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition));
+    buttonBoardNine.whileTrue(new SetArmToAngle(ArmConstants.kDistanceShoot));
+    buttonBoardTen.whileTrue(new SetArmToAngle(ArmConstants.kIntakePosition));
+    buttonBoardEleven.whileTrue(new SetArmToAngle(ArmConstants.kAmpAngle));
+    buttonBoardTwelve.whileTrue(new SetArmToAngle(ArmConstants.kStartPosition));
   }
 
   /**
@@ -119,6 +106,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(drivetrain);//add intake,shooter,arm to this later
+    return SetupAuto.getAuto();//add intake,shooter,arm to this later
   }
 }
