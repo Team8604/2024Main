@@ -27,7 +27,7 @@ public class RunShooter extends Command {
   public void initialize() {
     angle = RobotContainer.arm.getAngle();
     double error = angle - ArmConstants.kAmpAngle;
-    if (Math.abs(error) < ArmConstants.kMaxError && RobotContainer.buttonBoardSix.getAsBoolean() == false) {
+    if (Math.abs(error) < ArmConstants.kMaxError && !RobotContainer.buttonBoardSix.getAsBoolean() && !RobotContainer.joystickButton5.getAsBoolean()) {
       RobotContainer.shooter.setSpeed(ShooterConstants.kAmpSpeed);
     } else {
       RobotContainer.shooter.setSpeed(ShooterConstants.kMaxSpeed);

@@ -40,6 +40,8 @@ public class RobotContainer {
   public static Trigger fastButton = m_driverController.button(1);
   public static Trigger slowButton = m_driverController.button(2);
   public static Trigger climbOverideButton = m_driverController.button(3); // determine overide button #
+  public static Trigger joystickButton5 = m_driverController.button(5);
+  public static Trigger joystickButton6 = m_driverController.button(6);
   public static Trigger joystickButton7 = m_driverController.button(7);
   public static Trigger joystickButton8 = m_driverController.button(8);
   public static Trigger joystickButton9 = m_driverController.button(9);
@@ -89,7 +91,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     buttonBoardOne.or(joystickButton4).whileTrue(new RunIntake());
-    buttonBoardTwo.whileTrue(new RunShooter());
+    buttonBoardTwo.or(joystickButton6).whileTrue(new RunShooter());
     buttonBoardThree.whileTrue(new BackOut());
 
     buttonBoardEight.whileTrue(new SetArmToAngle(ArmConstants.kShootPosition));

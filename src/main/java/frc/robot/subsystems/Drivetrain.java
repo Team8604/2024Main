@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -114,5 +115,19 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("X axis", xAxis);
     SmartDashboard.putNumber("Y axis", yAxis);
     SmartDashboard.putNumber("Z axis", zAxis);
+  }
+
+  public void fullBrake() {
+    leftLeader.setNeutralMode(NeutralModeValue.Brake);
+    leftFollower.setNeutralMode(NeutralModeValue.Brake);
+    rightLeader.setNeutralMode(NeutralModeValue.Brake);
+    rightFollower.setNeutralMode(NeutralModeValue.Brake);
+  }
+
+  public void coast() {
+    leftLeader.setNeutralMode(NeutralModeValue.Coast);
+    leftFollower.setNeutralMode(NeutralModeValue.Coast);
+    rightLeader.setNeutralMode(NeutralModeValue.Coast);
+    rightFollower.setNeutralMode(NeutralModeValue.Coast);
   }
 }
