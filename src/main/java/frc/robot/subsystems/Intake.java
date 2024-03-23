@@ -41,6 +41,7 @@ public class Intake extends SubsystemBase{
 
     public boolean isNote() {
         if (getIntakeSensorDistance() <= IntakeConstants.kNoteDistance) {
+            SmartDashboard.putBoolean("Note Collected", isNote());
             return true;
         }
 
