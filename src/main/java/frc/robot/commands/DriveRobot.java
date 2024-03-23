@@ -22,7 +22,7 @@ public class DriveRobot extends Command {
      * @param subsystem The subsystem used by this command.
      */
 
-    double multiplier, fwd, rot, rot1, rot2;
+    double multiplier, rotMultiplier, fwd, rot, rot1, rot2;
 
     public DriveRobot() {
       // Use addRequirements() here to declare subsystem dependencies.
@@ -47,14 +47,16 @@ public class DriveRobot extends Command {
       //gets either the bigger of twist or sideways
       rot = Math.abs(rot1) >= Math.abs(rot2) ? rot1 : rot2;
 
-      //if (RobotContainer.joystickButton12.getAsBoolean()){
-        
-      //}
+      if (RobotContainer.joystickButton12.getAsBoolean()){
+        rotMultiplier = DriveConstants.kMaxRotate;
+      } else {
+        rotMultiplier = DriveConstants.kNormalRotate;
+      }
 
       multiplier = DriveConstants.kMaxSpeed + (RobotContainer.fastButton.getAsBoolean() ? DriveConstants.kSpeedIncrease : 0) + (RobotContainer.slowButton.getAsBoolean() ? DriveConstants.kSpeedDecrease : 0);
       SmartDashboard.putNumber("multiplier", multiplier);
       fwd = Math.pow(fwd, 3) * multiplier;
-      rot = Math.pow(rot, 3)*.7;
+      rot = Math.pow(rot, 3) * rotMultiplier;
       SmartDashboard.putNumber("fwd", fwd);
       SmartDashboard.putNumber("rot", rot);
 

@@ -41,7 +41,7 @@ public final class Constants {
     public static final double kSpeedDecrease = -0.3;
 
     public static final double kMaxRotate = 1;
-    public static final double kNormalRotate = 0.7;
+    public static final double kNormalRotate = 0.525;
 
     // PID
     public static final double kP = 1; //to be determined
