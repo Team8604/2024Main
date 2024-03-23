@@ -46,8 +46,11 @@ public class RobotContainer {
   public static Trigger joystickButton8 = m_driverController.button(8);
   public static Trigger joystickButton9 = m_driverController.button(9);
   public static Trigger joystickButton10 = m_driverController.button(10);
-  public static Trigger joystickButton4 = m_driverController.button(4);
+  public static Trigger joystickButton11 = m_driverController.button(11);
+  public static Trigger joystickButton12 = m_driverController.button(12);
 
+  public static Trigger joystickButton4 = m_driverController.button(4);
+  
   //operator buttonboard buttons
   public static Trigger buttonBoardOne = m_operatorButtonBoard.button(1);
   public static Trigger buttonBoardTwo = m_operatorButtonBoard.button(2);

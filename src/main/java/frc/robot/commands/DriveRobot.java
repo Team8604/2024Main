@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +46,10 @@ public class DriveRobot extends Command {
 
       //gets either the bigger of twist or sideways
       rot = Math.abs(rot1) >= Math.abs(rot2) ? rot1 : rot2;
+
+      //if (RobotContainer.joystickButton12.getAsBoolean()){
+        
+      //}
 
       multiplier = DriveConstants.kMaxSpeed + (RobotContainer.fastButton.getAsBoolean() ? DriveConstants.kSpeedIncrease : 0) + (RobotContainer.slowButton.getAsBoolean() ? DriveConstants.kSpeedDecrease : 0);
       SmartDashboard.putNumber("multiplier", multiplier);

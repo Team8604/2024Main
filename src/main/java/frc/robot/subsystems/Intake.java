@@ -8,6 +8,7 @@ import com.revrobotics.Rev2mDistanceSensor.Port;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase{
@@ -25,6 +26,7 @@ public class Intake extends SubsystemBase{
         // This method will be called once per scheduler run
         
         SmartDashboard.putNumber("Distance Sensor", getIntakeSensorDistance());
+        SmartDashboard.putBoolean("Note Collected", isNote());
         //RobotContainer.operatorA.onTrue(new RunIntake());
     }
 
@@ -40,8 +42,9 @@ public class Intake extends SubsystemBase{
     }
 
     public boolean isNote() {
-        if (getIntakeSensorDistance() <= IntakeConstants.kNoteDistance) {
-            SmartDashboard.putBoolean("Note Collected", isNote());
+        if (RobotContainer.buttonBoardSix.getAsBoolean()) {
+            return false;
+        } else if (getIntakeSensorDistance() <= IntakeConstants.kNoteDistance) {
             return true;
         }
 

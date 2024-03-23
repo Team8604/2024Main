@@ -75,7 +75,7 @@ public class AutoDriveRobot extends Command {
       }
 
       /* Set output to control frames */
-      RobotContainer.drivetrain.drive(fwd + autoFwd, rot + autoRot);
+      RobotContainer.drivetrain.drive(autoFwd, autoRot);
     }
 
     // Called once the command ends or is interrupted.

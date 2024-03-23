@@ -66,9 +66,6 @@ public class SetupAuto {
   public static Command getAuto() {
     int autoValue = m_PathOrTime.getSelected() + m_AutoType.getSelected() + m_StartPosition.getSelected();
     boolean isRed = DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == DriverStation.Alliance.Red : false;
-
-    m_AutoType.close();
-    m_StartPosition.close();
     
     Command chosenAuto = new WaitCommand(5);
 
