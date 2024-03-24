@@ -57,7 +57,7 @@ public final class Constants {
     // Speed modifiers
     public static final double kMaxSpeed = 1;
     public static final double kIntakeSpeed = 0.25;
-    public static final double kBackOut = -0.1;
+    public static final double kBackOut = -0.2;
 
 
     // Distance options
