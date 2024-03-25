@@ -145,4 +145,9 @@ public final class Constants {
 
     public static final double slowModeSpeed = 0.8; // 50 percentage of normal
   }
+
+  public static class AutoConstants {
+    public static final double kDrivetime = 2;
+    public static final double kDrivePower = 0.8;
+  }
 }

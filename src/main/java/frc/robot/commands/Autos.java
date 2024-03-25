@@ -12,21 +12,22 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-import com.pathplanner.lib.commands.PathPlannerAuto;
-
 import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.arm.SetArmToAngle;
 
-public class SetupAuto {
+public class Autos {
 
   private static SendableChooser<Integer> m_AutoType = new SendableChooser<Integer>();
   private static SendableChooser<Integer> m_StartPosition = new SendableChooser<Integer>();
-  private static SendableChooser<Integer> m_PathOrTime = new SendableChooser<Integer>();
 
-  public static Command shootNote = new SequentialCommandGroup(
+    public static Command nothing = new SequentialCommandGroup(
+      new WaitCommand(5)
+    );
+
+  public static Command shootNoteAndStay = new SequentialCommandGroup(
     new SetArmToAngle(ArmConstants.kShootPosition),
     new ParallelDeadlineGroup(
-      new WaitCommand(2),
+      new WaitCommand(1),
       new RunShooter(),
       new SequentialCommandGroup(
         new WaitCommand(1),
@@ -35,16 +36,17 @@ public class SetupAuto {
     )
   );
 
-  private static Command SaMOAmpBlue = new SequentialCommandGroup(
-    new AutoDriveRobot(0.3, 0.3, 1)
-  );
-  
-  private static Command SaMOAmpRed = new SequentialCommandGroup(
-    new AutoDriveRobot(0.3, -0.3, 1)
-  );
-
-  private static Command SaMOMid = new SequentialCommandGroup(
-    new AutoDriveRobot(0.1, 0, 3)
+  public static Command shootNoteAndmove = new SequentialCommandGroup(
+    new SetArmToAngle(ArmConstants.kShootPosition),
+    new ParallelDeadlineGroup(
+      new WaitCommand(1),
+      new RunShooter(),
+      new SequentialCommandGroup(
+        new WaitCommand(1),
+        new RunIntake()
+      )
+      //add drive command part here
+    )  
   );
 
   public static void configureAutos() {
@@ -53,46 +55,32 @@ public class SetupAuto {
     m_StartPosition.addOption("Amp Side", 3);
     SmartDashboard.putData(m_StartPosition);
 
-    m_AutoType.setDefaultOption("Shoot and Stay", 10);
-    m_AutoType.addOption("Absolutely Nothing", 20);
+    m_AutoType.setDefaultOption("Absolutely Nothing", 10);
+    m_AutoType.addOption("Shoot and Stay", 20);
     m_AutoType.addOption("Shoot and Move Out", 30);
     SmartDashboard.putData(m_AutoType);
-
-    m_PathOrTime.setDefaultOption("Primitive Path", 100);
-    m_PathOrTime.addOption("PathPlanner Path", 200);
-    SmartDashboard.putData(m_PathOrTime);
   } 
 
   public static Command getAuto() {
-    int autoValue = m_PathOrTime.getSelected() + m_AutoType.getSelected() + m_StartPosition.getSelected();
+    int autoValue = m_AutoType.getSelected() + m_StartPosition.getSelected();
     boolean isRed = DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == DriverStation.Alliance.Red : false;
     
-    Command chosenAuto = new WaitCommand(5);
+    Command chosenAuto = nothing;
 
     switch (autoValue) {
-      case 111, 112, 113, 211, 212, 213:
-        chosenAuto = shootNote;
+      case 11, 12, 13:
+        chosenAuto = nothing;
         break;
-      case 132:
-        chosenAuto = SaMOMid;
+      case 21, 22, 23:
+        chosenAuto = shootNoteAndStay;
         break;
-      case 133:
-        chosenAuto = isRed ? SaMOAmpRed : SaMOAmpBlue;
-        break;
-      case 231:
-        chosenAuto = new PathPlannerAuto("SaMO Source");
-        break;
-      case 232:
-        chosenAuto = new PathPlannerAuto("SaMO Middle");
-        break;
-      case 233:
-        chosenAuto = new PathPlannerAuto("SaMO Amp");
-        break;
+      case 31, 32, 33:
+        chosenAuto = shootNoteAndmove;
     }
     return chosenAuto;
   }
   
-  private SetupAuto() {
+  private Autos() {
     throw new UnsupportedOperationException("This is a utility class!");
   }
 }

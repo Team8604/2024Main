@@ -10,7 +10,6 @@ import frc.robot.commands.arm.*;
 import frc.robot.commands.climber.*;
 import frc.robot.subsystems.*;
 
-import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -67,14 +66,9 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
-    // Configure command names for PathPlanner
-    NamedCommands.registerCommand("Shoot Note", SetupAuto.shootNote);
-    NamedCommands.registerCommand("Intake", new RunIntake());
-    NamedCommands.registerCommand("Pickup Position", new SetArmToAngle(ArmConstants.kIntakePosition));
-
     // Configure the trigger bindings and auto options
     configureButtonBindings();
-    SetupAuto.configureAutos();
+    Autos.configureAutos();
 
     // Set default commands
     CommandScheduler.getInstance().setDefaultCommand(RobotContainer.drivetrain, new DriveRobot());
@@ -111,6 +105,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return SetupAuto.getAuto();//add intake,shooter,arm to this later
+    return Autos.getAuto();//add intake,shooter,arm to this later
   }
 }

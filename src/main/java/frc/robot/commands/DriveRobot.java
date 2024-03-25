@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,10 +28,10 @@ public class DriveRobot extends Command {
       addRequirements(RobotContainer.drivetrain);
     }
 
-
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {}
+
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
