@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
@@ -17,7 +18,7 @@ public class AutoDrive extends Command {
      *
      * @param subsystem The subsystem used by this command.
      */
-    private double fwd, rot, time;
+    private double fwd, rot, time, slowDownTimer;
     private Timer timer = new Timer();
 
     public AutoDrive() {
@@ -30,6 +31,7 @@ public class AutoDrive extends Command {
         this.fwd = foward;
         this.rot = rotation;
         this.time = duration;
+        this.slowDownTimer = duration/0.8;
     }
 
     // Called when the command is initially scheduled.
@@ -43,7 +45,11 @@ public class AutoDrive extends Command {
     @Override
     public void execute() {
         /* Set output to control frames */
-        RobotContainer.drivetrain.drive(fwd, rot); //fwd, rot
+        if (!timer.hasElapsed(slowDownTimer)){
+            RobotContainer.drivetrain.drive(fwd, rot); 
+        } else {
+            RobotContainer.drivetrain.drive(fwd/2, rot);
+        }
     }
 
     // Called once the command ends or is interrupted.

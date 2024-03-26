@@ -60,6 +60,8 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    RobotContainer.drivetrain.coast();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -70,7 +72,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousExit() {
-    RobotContainer.drivetrain.fullBrake();
+    //RobotContainer.drivetrain.fullBrake();
   }
 
   @Override

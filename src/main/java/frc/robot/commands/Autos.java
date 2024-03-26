@@ -28,7 +28,7 @@ public class Autos {
   public static Command shootNoteAndStay = new SequentialCommandGroup(
     new SetArmToAngle(ArmConstants.kShootPosition),
     new ParallelDeadlineGroup(
-      new WaitCommand(1),
+      new WaitCommand(2),
       new RunShooter(),
       new SequentialCommandGroup(
         new WaitCommand(1),
@@ -37,10 +37,10 @@ public class Autos {
     )
   );
 
-  public static Command shootNoteAndmove = new SequentialCommandGroup(
+  public static Command shootNoteAndmoveOut = new SequentialCommandGroup(
     new SetArmToAngle(ArmConstants.kShootPosition),
     new ParallelDeadlineGroup(
-      new WaitCommand(1),
+      new WaitCommand(2),
       new RunShooter(),
       new SequentialCommandGroup(
         new WaitCommand(1),
@@ -53,7 +53,26 @@ public class Autos {
   public static Command moveOut = new SequentialCommandGroup(
     new AutoDrive(AutoConstants.kDrivePower, 0, AutoConstants.kMoveOutDrivetime)
   );
+  public static Command moveOutCurve = new SequentialCommandGroup(
+    new AutoDrive(AutoConstants.kDrivePower, 0.1, AutoConstants.kMoveOutDrivetime)
+  );
+    public static Command movePos = new SequentialCommandGroup(
+    new AutoEncoderDrive(20,20)
+  );
 
+  public static Command shootmovePos = new SequentialCommandGroup(
+
+    new SetArmToAngle(ArmConstants.kShootPosition),
+    new ParallelDeadlineGroup(
+      new WaitCommand(2),
+      new RunShooter(),
+      new SequentialCommandGroup(
+        new WaitCommand(1),
+        new RunIntake()
+      )
+    ),
+    new AutoEncoderDrive(20,20)
+  );
 
   public static void configureAutos() {
     m_StartPosition.setDefaultOption("Source Side", 1);
@@ -64,6 +83,11 @@ public class Autos {
     m_AutoType.setDefaultOption("Absolutely Nothing", 10);
     m_AutoType.addOption("Shoot and Stay", 20);
     m_AutoType.addOption("Shoot and Move Out", 30);
+    m_AutoType.addOption("Move Out", 40);
+    m_AutoType.addOption("moveOutCurve", 50);
+    m_AutoType.addOption("movePos", 60);
+    m_AutoType.addOption("shootmovePos", 70);
+
     SmartDashboard.putData(m_AutoType);
   } 
 
@@ -81,9 +105,15 @@ public class Autos {
         chosenAuto = shootNoteAndStay;
         break;
       case 31, 32, 33:
-        chosenAuto = shootNoteAndmove;
+        chosenAuto = shootNoteAndmoveOut;
       case 41, 42, 43:
         chosenAuto = moveOut;
+      case 51, 52, 53:
+        chosenAuto = moveOutCurve;
+      case 61,62,63:
+        chosenAuto = movePos;
+      case 71,72,73:
+        chosenAuto = shootmovePos;
     }
     return chosenAuto;
   }

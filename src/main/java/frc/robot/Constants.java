@@ -149,6 +149,6 @@ public final class Constants {
   public static class AutoConstants {
     public static final double kMoveOutDrivetime = 1;
     public static final double kMoveDrivetime = 1;
-    public static final double kDrivePower = 0.1;
+    public static final double kDrivePower = 0.2;
   }
 }

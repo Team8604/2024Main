@@ -27,9 +27,9 @@ import frc.robot.Constants.DriveConstants;
 public class Drivetrain extends SubsystemBase {
 
   //initialize motors
-  private final TalonFX leftLeader = new TalonFX(DriveConstants.kLeftLeader, DriveConstants.CANBUS_NAME);
+  private final static TalonFX leftLeader = new TalonFX(DriveConstants.kLeftLeader, DriveConstants.CANBUS_NAME);
   private final TalonFX leftFollower = new TalonFX(DriveConstants.kLeftFollower, DriveConstants.CANBUS_NAME);
-  private final TalonFX rightLeader = new TalonFX(DriveConstants.kRightLeader, DriveConstants.CANBUS_NAME);
+  private final static TalonFX rightLeader = new TalonFX(DriveConstants.kRightLeader, DriveConstants.CANBUS_NAME);
   private final TalonFX rightFollower = new TalonFX(DriveConstants.kRightFollower, DriveConstants.CANBUS_NAME);
 
   private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(DriveConstants.kTrackWidth);
@@ -92,6 +92,22 @@ public class Drivetrain extends SubsystemBase {
     m_odometry.update(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
   }
 
+  public void runLeftMotor(double speed){
+    leftLeader.set(speed);
+  }
+  
+  public void runRightMotor(double speed){
+    rightLeader.set(speed);
+  }
+
+  public static double getLeftEncoder(){
+    return leftLeader.getPosition().getValueAsDouble();
+  }
+
+  public static double getrightEncoder(){
+    return rightLeader.getPosition().getValueAsDouble();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -99,6 +115,11 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Right out", rightVelocity);
     SmartDashboard.putNumber("Left Position", leftForward);
     SmartDashboard.putNumber("Right Position", rightPos);
+
+    SmartDashboard.putNumber("Right Position", rightPos);
+
+    SmartDashboard.putNumber("right clicks", getrightEncoder());
+    SmartDashboard.putNumber("left clicks", getLeftEncoder());
 
 
     xAxis = ahrs.getRoll();
