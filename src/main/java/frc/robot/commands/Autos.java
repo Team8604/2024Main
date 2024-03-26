@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.arm.SetArmToAngle;
 
 public class Autos {
@@ -43,11 +44,16 @@ public class Autos {
       new RunShooter(),
       new SequentialCommandGroup(
         new WaitCommand(1),
-        new RunIntake()
+        new RunIntake(),
+        new AutoDrive(AutoConstants.kDrivePower, 0, AutoConstants.kMoveDrivetime)
       )
-      //add drive command part here
     )  
   );
+
+  public static Command moveOut = new SequentialCommandGroup(
+    new AutoDrive(AutoConstants.kDrivePower, 0, AutoConstants.kMoveOutDrivetime)
+  );
+
 
   public static void configureAutos() {
     m_StartPosition.setDefaultOption("Source Side", 1);
@@ -76,6 +82,8 @@ public class Autos {
         break;
       case 31, 32, 33:
         chosenAuto = shootNoteAndmove;
+      case 41, 42, 43:
+        chosenAuto = moveOut;
     }
     return chosenAuto;
   }
