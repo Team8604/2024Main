@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */

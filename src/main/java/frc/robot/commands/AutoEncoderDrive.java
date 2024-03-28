@@ -4,11 +4,7 @@
 
 package frc.robot.commands;
 
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.subsystems.Drivetrain;
 import frc.robot.RobotContainer;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
@@ -31,16 +27,14 @@ public class AutoEncoderDrive extends Command {
     public AutoEncoderDrive(double leftclicks, double rightclicks){
         this.leftclicks = leftclicks;
         this.rightclicks = rightclicks;
-        
     }
 
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        leftStart = Drivetrain.getLeftEncoder();
-        rightStart = Drivetrain.getrightEncoder();
-
+        leftStart = RobotContainer.drivetrain.getLeftEncoder();
+        rightStart = RobotContainer.drivetrain.getRightEncoder();
     }
 
 
@@ -48,24 +42,27 @@ public class AutoEncoderDrive extends Command {
     @Override
     public void execute() {
         /* Set output to control frames */
-        
-
         System.out.println("left Start" + leftStart);
         System.out.println("right start" + rightStart);
-
         
-        if (Drivetrain.getLeftEncoder() <= leftStart+leftclicks && Drivetrain.getrightEncoder() <= rightStart+rightclicks ) {
+        if (RobotContainer.drivetrain.getLeftEncoder() <= leftStart+leftclicks && RobotContainer.drivetrain.getRightEncoder() <= rightStart+rightclicks ) {
             RobotContainer.drivetrain.drive(0.2, 0);
-        } /*else if (Drivetrain.getrightEncoder() <= rightStart+rightclicks+20 ) {
+        } /*else if (Drivetrain.getRightEncoder() <= rightStart+rightclicks+20 ) {
             RobotContainer.drivetrain.drive(0, 0.2);
 
             //RobotContainer.drivetrain.runLeftMotor(1);
             //RobotContainer.drivetrain.runRightMotor(0);
-        } else if (Drivetrain.getrightEncoder() <= rightStart+rightclicks+20 ) {
+        } else if (Drivetrain.getRightEncoder() <= rightStart+rightclicks+20 ) {
             RobotContainer.drivetrain.runRightMotor(1);
             RobotContainer.drivetrain.runLeftMotor(0);
-        } */else {
+        } */
+        /*else if (RobotContainer.drivetrain.getLeftEncoder() <= leftStart+leftclicks) {
+            RobotContainer.drivetrain.setMotorVoltages(2, 0);
+        } else if (RobotContainer.drivetrain.getRightEncoder() <= leftStart+leftclicks){
+            RobotContainer.drivetrain.setMotorVoltages(0, 2);
+        }*/else {
             RobotContainer.drivetrain.drive(0, 0);
+            System.out.println("end");
         }
     }
 }

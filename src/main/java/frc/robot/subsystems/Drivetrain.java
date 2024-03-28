@@ -27,9 +27,9 @@ import frc.robot.Constants.DriveConstants;
 public class Drivetrain extends SubsystemBase {
 
   //initialize motors
-  private final static TalonFX leftLeader = new TalonFX(DriveConstants.kLeftLeader, DriveConstants.CANBUS_NAME);
+  private final TalonFX leftLeader = new TalonFX(DriveConstants.kLeftLeader, DriveConstants.CANBUS_NAME);
   private final TalonFX leftFollower = new TalonFX(DriveConstants.kLeftFollower, DriveConstants.CANBUS_NAME);
-  private final static TalonFX rightLeader = new TalonFX(DriveConstants.kRightLeader, DriveConstants.CANBUS_NAME);
+  private final TalonFX rightLeader = new TalonFX(DriveConstants.kRightLeader, DriveConstants.CANBUS_NAME);
   private final TalonFX rightFollower = new TalonFX(DriveConstants.kRightFollower, DriveConstants.CANBUS_NAME);
 
   private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(DriveConstants.kTrackWidth);
@@ -92,6 +92,11 @@ public class Drivetrain extends SubsystemBase {
     m_odometry.update(Rotation2d.fromDegrees(yAxis), leftPos, rightPos);
   }
 
+  public void setMotorVoltages(double left, double right){
+    leftLeader.setVoltage(MathUtil.clamp(left, -12, 12));
+    rightLeader.setVoltage(MathUtil.clamp(right, -12, 12));
+  }
+
   public void runLeftMotor(double speed){
     leftLeader.set(speed);
   }
@@ -100,11 +105,11 @@ public class Drivetrain extends SubsystemBase {
     rightLeader.set(speed);
   }
 
-  public static double getLeftEncoder(){
+  public double getLeftEncoder(){
     return leftLeader.getPosition().getValueAsDouble();
   }
 
-  public static double getrightEncoder(){
+  public double getRightEncoder(){
     return rightLeader.getPosition().getValueAsDouble();
   }
 
@@ -118,7 +123,7 @@ public class Drivetrain extends SubsystemBase {
 
     SmartDashboard.putNumber("Right Position", rightPos);
 
-    SmartDashboard.putNumber("right clicks", getrightEncoder());
+    SmartDashboard.putNumber("right clicks", getRightEncoder());
     SmartDashboard.putNumber("left clicks", getLeftEncoder());
 
 
