@@ -75,13 +75,15 @@ public class Autos {
       new AutoEncoderDrive(20,20)
       
     ),
-    new ParallelCommandGroup(
-      new SetArmToAngle(ArmConstants.kAutoShootPos),
+    new SetArmToAngle(ArmConstants.kAutoShootPos),
+    new ParallelDeadlineGroup(
+      new WaitCommand(2),
       new RunShooter(),
       new SequentialCommandGroup(
-        new WaitCommand(2),
-        new RunIntake()
-      )
+        new WaitCommand(1),
+        new RunIntake(),
+        new WaitCommand(1)
+      )   
     )
   );
 
