@@ -56,7 +56,7 @@ public class Autos {
   public static Command moveOutCurve = new SequentialCommandGroup(
     new AutoDrive(AutoConstants.kDrivePower, 0.1, AutoConstants.kMoveOutDrivetime)
   );
-    public static Command movePos = new SequentialCommandGroup(
+  public static Command movePos = new SequentialCommandGroup(
     new AutoEncoderDrive(20,20)
   );
 
@@ -74,6 +74,27 @@ public class Autos {
     new AutoEncoderDrive(20,20)
   );
 
+  /*public static Command twoNoteAuto = new SequentialCommandGroup(
+
+    new SetArmToAngle(ArmConstants.kShootPosition),
+    new ParallelDeadlineGroup(
+      new WaitCommand(2),
+      new RunShooter(),
+      new SequentialCommandGroup(
+        new WaitCommand(1),
+        new RunIntake()
+      ),
+      new SequentialCommandGroup(        
+        new SetArmToAngle(ArmConstants.kAutoShootPos),
+        new RunIntake(),
+        new AutoEncoderDrive(20,20),
+        new RunShooter(),
+        new WaitCommand(2),
+        new RunIntake()
+      )
+    )
+  );*/
+
   public static void configureAutos() {
     m_StartPosition.setDefaultOption("Source Side", 1);
     m_StartPosition.addOption("Middle", 2);
@@ -83,8 +104,8 @@ public class Autos {
     m_AutoType.setDefaultOption("Absolutely Nothing", 10);
     m_AutoType.addOption("Shoot and Stay", 20);
     m_AutoType.addOption("Shoot and Move Out", 30);
-    m_AutoType.addOption("Move Out", 40);
-    m_AutoType.addOption("moveOutCurve", 50);
+    //m_AutoType.addOption("Move Out", 40);
+    //m_AutoType.addOption("moveOutCurve", 50);
     m_AutoType.addOption("movePos", 60);
     m_AutoType.addOption("shootmovePos", 70);
 
