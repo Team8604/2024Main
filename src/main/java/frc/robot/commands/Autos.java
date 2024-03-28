@@ -78,9 +78,10 @@ public class Autos {
     new ParallelCommandGroup(
       new SetArmToAngle(ArmConstants.kAutoShootPos),
       new RunShooter(),
-      
-      new WaitCommand(2),
-      new RunIntake()
+      new SequentialCommandGroup(
+        new WaitCommand(2),
+        new RunIntake()
+      )
     )
   );
 
