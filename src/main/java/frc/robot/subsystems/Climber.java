@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -77,6 +79,11 @@ public class Climber extends SubsystemBase{
             return true;
         }
         else {return false;}
+    }
+
+    public void fullBreak(){
+        rightClimber.setNeutralMode(NeutralModeValue.Brake);
+        leftClimber.setNeutralMode(NeutralModeValue.Brake);
     }
     
     @Override

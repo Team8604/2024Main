@@ -24,6 +24,10 @@ public class Climb extends Command {
     leftVolts = () -> { return ((leftUp.getAsBoolean() ? ClimberConstants.kManualVolts : 0) - (leftDown.getAsBoolean() ? ClimberConstants.kManualVolts : 0)); };
 }
 
+  @Override
+  public void initialize(){
+    RobotContainer.climber.fullBreak();
+  }
   // Called when the command is initially scheduled.
   @Override
   public void execute() {
