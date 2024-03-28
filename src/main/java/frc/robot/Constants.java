@@ -96,7 +96,7 @@ public final class Constants {
     public static final double kStartPosition = 0.309; 
     public static final double kDistanceShoot = 0.416; // about 1 robot distance away
     public static final double kLongDistance = 0.409; //distance is about 1.5-2 robots
-    public static final double kAutoShootPos = 0.409; //distance is about 1.5-2 robots
+    public static final double kAutoShootPos = 0.405; //distance is about 1.5-2 robots
 
     //at 16 ft away and full speed 0.3708
 

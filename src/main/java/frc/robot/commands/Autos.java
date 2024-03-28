@@ -56,6 +56,33 @@ public class Autos {
     new AutoEncoderDrive(20,20)
 
   );
+  public static Command TwoNoteAuto = new SequentialCommandGroup(
+    new SetArmToAngle(ArmConstants.kShootPosition),
+    new ParallelDeadlineGroup(
+      new WaitCommand(2),
+      new RunShooter(),
+      new SequentialCommandGroup(
+        new WaitCommand(1),
+        new RunIntake(),
+        new WaitCommand(1)
+
+      )   
+    ),
+    new SetArmToAngle(ArmConstants.kIntakePosition),
+    new ParallelDeadlineGroup(
+      new RunIntake(),
+      new WaitCommand(2),
+      new AutoEncoderDrive(20,20)
+      
+    ),
+    new ParallelCommandGroup(
+      new SetArmToAngle(ArmConstants.kAutoShootPos),
+      new RunShooter(),
+      
+      new WaitCommand(2),
+      new RunIntake()
+    )
+  );
 
   public static void configureAutos() {
     /*m_StartPosition.setDefaultOption("Source Side", 1);
@@ -68,6 +95,7 @@ public class Autos {
     m_AutoType.addOption("Shoot and Stay", 20);
     m_AutoType.addOption("moveOut", 30);
     m_AutoType.addOption("shootmoveFromSide", 40);
+    m_AutoType.addOption("TwoNoteAuto", 50);
 
     SmartDashboard.putData(m_AutoType);
   } 
@@ -93,6 +121,8 @@ public class Autos {
       case 40:
         chosenAuto = shootmoveFromSide;
         break;
+      case 50:
+      chosenAuto = TwoNoteAuto;
 
     }
     return chosenAuto;
