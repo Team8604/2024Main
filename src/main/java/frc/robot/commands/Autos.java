@@ -38,7 +38,7 @@ public class Autos {
   );
   
   public static Command moveOut = new SequentialCommandGroup(
-    new AutoEncoderDrive(20,20)
+    new AutoEncoderDrive(30,30)
   );
 
   public static Command shootmoveFromSide = new SequentialCommandGroup(
@@ -53,7 +53,7 @@ public class Autos {
 
       )   
     ),
-    new AutoEncoderDrive(20,20)
+    new AutoEncoderDrive(64,64)
 
   );
   public static Command TwoNoteAuto = new SequentialCommandGroup(
@@ -94,23 +94,21 @@ public class Autos {
     SmartDashboard.putData(m_StartPosition);
     */
 
-    m_AutoType.setDefaultOption("Absolutely Nothing", 10);
+    /*m_AutoType.setDefaultOption("Absolutely Nothing", 40);//10
     m_AutoType.addOption("Shoot and Stay", 20);
     m_AutoType.addOption("moveOut", 30);
     m_AutoType.addOption("shootmoveFromSide", 40);
-    m_AutoType.addOption("TwoNoteAuto", 50);
+    m_AutoType.addOption("TwoNoteAuto", 50);*/
 
-    SmartDashboard.putData(m_AutoType);
+    //SmartDashboard.putData(m_AutoType);
   } 
 
   public static Command getAuto() {
-    int autoValue = m_AutoType.getSelected();// + m_StartPosition.getSelected();
+    //int autoValue = m_AutoType.getSelected();// + m_StartPosition.getSelected();
     //boolean isRed = DriverStation.getAlliance().isPresent() ? DriverStation.getAlliance().get() == DriverStation.Alliance.Red : false;
     
-    Command chosenAuto = shootNoteAndStay;
-    System.out.println("Auto value" + autoValue);
-    System.out.println("Chosen auto" + chosenAuto);
-    switch (autoValue) {
+    Command chosenAuto = shootmoveFromSide;//shootNoteAndStay;
+    /*switch (autoValue) {
       case 10:
         chosenAuto = nothing;
         break;
@@ -127,7 +125,7 @@ public class Autos {
       case 50:
       chosenAuto = TwoNoteAuto;
 
-    }
+    }*/
     return chosenAuto;
   }
   
